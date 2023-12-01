@@ -11,7 +11,8 @@ python_jose==3.3.0
 pytz==2023.3.post1
 redis==5.0.1
 SQLAlchemy==2.0.23
-starlette==0.20.4
 torch==2.1.1
 typing_extensions==4.8.0
 ultralytics==8.0.212
+uvicorn==0.24.0.post1
+python-multipart==0.0.6

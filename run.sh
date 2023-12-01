@@ -1,4 +1,4 @@
-uvicorn apps:app --host 127.0.0.1 --port 3000 &
+uvicorn apps:app --host 0.0.0.0 --port 8000 &
 
 celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule --autoscale=2,16
 
