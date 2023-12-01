@@ -147,3 +147,23 @@ async def delete_algorithm_file(
         return GeneralResponse(code=0, msg="算法模型文件删除成功")
     else:
         return GeneralResponse(code=1, msg="文件不存在")
+
+
+@router.get(
+    "/algorithms",
+    response_model=GeneralResponse,  # 请根据实际情况调整返回的数据模型
+    description="算法搜索",
+)
+def search_algorithm_by_name(
+        name: str,
+        session: Session = Depends(get_db_session),
+):
+    algorithms = session.query(Algorithm).filter(Algorithm.name.ilike(f"%{name}%")).all()
+
+    if not algorithms:
+        raise HTTPException(status_code=404, detail="No algorithms found with the given name")
+
+    return GeneralResponse(
+        code=200,
+        data=algorithms
+    )
