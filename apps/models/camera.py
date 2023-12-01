@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.orm import Session, relationship
-from typing_extensions import List
+from typing import List
 
 from apps.database import Base
 

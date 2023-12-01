@@ -1,8 +1,8 @@
-import logging
 from typing import Optional
 
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from apps.database import get_db_session
 from apps.models import Account, Algorithm
@@ -54,13 +54,14 @@ async def get_all_cameras(
 
 
 @router.get(
-    '/camera/{camera_id}',
+    '/camera',
     response_model=GeneralResponse,
     status_code=status.HTTP_200_OK,
     description="获取摄像头设备",
 )
 async def get_camera_info(
-        camera_id: int,
+        camera_id: Optional[int] = None,
+        camera_name: Optional[str] = None,
         db_session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
@@ -70,7 +71,16 @@ async def get_camera_info(
             detail="Access denied",
         )
 
-    camera = db_session.query(Camera).get(camera_id)
+    query = db_session.query(Camera)
+
+    if camera_name:
+        # 使用 like 操作符进行模糊搜索
+        query = query.filter(or_(Camera.name.ilike(f'%{camera_name}%')))
+
+    if camera_id:
+        query = query.filter(Camera.camera_id == camera_id)
+
+    camera = query.first()
 
     if not camera:
         raise HTTPException(status_code=404, detail="Camera not found")
@@ -333,6 +343,7 @@ async def save_camera_algorithm_config(
     algorithm.update(session, algorithm_config.dict())
 
     config = VideoTaskConfig(
+        alarm_name=algorithm.name,
         model_name=algorithm.modelName,
         camera_id=cameraId,
         algorithm_id=algorithm.id,
