@@ -16,3 +16,5 @@ typing_extensions==4.8.0
 ultralytics==8.0.212
 uvicorn==0.24.0.post1
 python-multipart==0.0.6
+python-jose==3.3.0
+bcrypt==4.0.1
