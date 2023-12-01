@@ -1,0 +1,17 @@
+celery==5.3.5
+easyocr==1.7.1
+fastapi==0.104.1
+opencv_python==4.8.1.78
+opencv_python_headless==4.8.1.78
+passlib==1.7.4
+Pillow==10.1.0
+psutil==5.9.6
+pydantic==1.10.13
+python_jose==3.3.0
+pytz==2023.3.post1
+redis==5.0.1
+SQLAlchemy==2.0.23
+starlette==0.20.4
+torch==2.1.1
+typing_extensions==4.8.0
+ultralytics==8.0.212

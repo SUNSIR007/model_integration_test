@@ -1,0 +1,46 @@
+# Repo-specific GitIgnore -----------------------------------------------------------
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+*.heic
+*.JPG
+*.JPEG
+*.PNG
+*.BMP
+*.TIF
+*.TIFF
+*.HEIC
+*.mp4
+*.mov
+*.MOV
+*.avi
+*.data
+*.json
+*.cfg
+
+# Datasets ----------------------------------------------------------------------------------
+apps/detection/input/
+apps/detection/output/
+
+# Neural Network weights --------------------------------------------------------------------
+*.weights
+*.pt
+*.pb
+*.onnx
+*.engine
+# GitHub Python GitIgnore --------------------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.idea
+
+# virtualenv
+.venv*
+venv*/
+ENV*/
+venv/
