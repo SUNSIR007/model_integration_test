@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class VideoTaskConfig(BaseModel):
+    alarm_name: str
     model_name: str
     camera_id: int
     algorithm_id: int

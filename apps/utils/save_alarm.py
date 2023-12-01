@@ -8,7 +8,7 @@ from apps.models import Alarm, Camera
 tz = pytz.timezone('Asia/Shanghai')
 
 
-def save_alarm(model_name, algorithm_id, camera_id, image_input, image_output):
+def save_alarm(name, model_name, algorithm_id, camera_id, image_input, image_output):
     session = next(get_db_session())
     camera = session.query(Camera).filter_by(camera_id=camera_id).first()
     alarm_info = {
@@ -16,6 +16,7 @@ def save_alarm(model_name, algorithm_id, camera_id, image_input, image_output):
         "cameraId": camera_id,
         "cameraChannelNum": camera.channelNum,
         "cameraName": camera.name,
+        "alarm_type": name,
         "address": camera.address,
         "imageIn": image_input,
         "imageOut": image_output,

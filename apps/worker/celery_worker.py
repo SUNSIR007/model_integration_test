@@ -59,6 +59,7 @@ def screenshot(url):
 @celery_app.task
 def start_video_task(video_task_config):
     """视频分析任务开始"""
+    name = video_task_config["alarm_name"]
     algorithm_id = video_task_config["algorithm_id"]
     camera_id = video_task_config["camera_id"]
     session = next(get_db_session())
@@ -92,7 +93,7 @@ def start_video_task(video_task_config):
         yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
         classnames = yolo_processor.process(input_file, output_file)
         if classnames:
-            save_alarm(model_name, algorithm_id, camera_id, input_file, output_file)
+            save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
     except Exception as e:
         logger.error(f"Error in start_video_task: {e}")
