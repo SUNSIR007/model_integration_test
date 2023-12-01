@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import Session
-from typing_extensions import List
+from typing import List
 
 from apps.database import Base
 
@@ -19,6 +19,7 @@ class Alarm(Base):
     cameraChannelNum = Column(Integer, doc="摄像头通道")
     cameraName = Column(String(255), doc="摄像头名称")
     address = Column(String(255), doc="地址")
+    alarm_type = Column(String(255), doc="告警类型")
     imageIn = Column(String(255), nullable=False, doc="原始图片")
     imageOut = Column(String(255), nullable=False, doc="报警图片")
     algorithmName = Column(String(255), doc="算法名称")

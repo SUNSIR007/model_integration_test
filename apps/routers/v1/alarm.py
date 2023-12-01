@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
@@ -64,11 +67,14 @@ def update_alarm_record(
 
 
 @router.get(
-    "/alarms/{alarm_id}",
+    "/alarms",
     description="查询告警记录",
 )
 def get_alarm_record(
-        alarm_id: int,
+        alarm_id: Optional[int] = None,
+        alarm_type: Optional[str] = None,
+        start_time: Optional[datetime] = None,
+        end_time: Optional[datetime] = None,
         current_user: Account = Depends(get_current_user),
         db_session: Session = Depends(get_db_session),
 ):
@@ -78,8 +84,19 @@ def get_alarm_record(
             detail="Access denied",
         )
 
-    # 查询告警记录
-    alarm = db_session.query(Alarm).get(alarm_id)
+    query = db_session.query(Alarm)
+
+    if alarm_id:
+        query = query.filter(Alarm.id == alarm_id)
+    if alarm_type:
+        query = query.filter(Alarm.alarm_type == alarm_type)
+    if start_time:
+        query = query.filter(Alarm.alarmTime >= start_time)
+    if end_time:
+        query = query.filter(Alarm.alarmTime <= end_time)
+
+    alarm = query.all()
+
     if not alarm:
         raise HTTPException(status_code=404, detail="Alarm record not found")
 
