@@ -45,5 +45,6 @@ class CameraUpdateReq(CameraCreate):
 
 class AlgorithmConfig(BaseModel):
     algorithmId: int
+    status: int = 1
     frameFrequency: int = None
     alamInterval: int = None

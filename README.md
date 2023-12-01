@@ -1,4 +1,4 @@
-# 边缘计算平台盒子终端管理api服务
+# 边缘计算平台盒子终端管理后端api服务
 
 在边缘对采集的数据、视频进行分析
 
@@ -53,5 +53,4 @@ pip install -r requirements.txt
 ./run.sh
 
 ```
-
 
