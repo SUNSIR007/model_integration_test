@@ -2,7 +2,9 @@ import os
 from typing import List
 
 from fastapi import APIRouter, UploadFile, File, status, Depends, Query, HTTPException, Form
+from sqlalchemy import func
 from sqlalchemy.orm import Session
+from starlette import status
 
 from apps.database import get_db_session
 from apps.models import Algorithm, Account
@@ -167,3 +169,29 @@ def search_algorithm_by_name(
         code=200,
         data=algorithms
     )
+
+
+@router.get(
+    "/algorithms/stats",
+    description="按算法状态统计",
+)
+def get_algorithm_stats(
+        current_user: Account = Depends(get_current_user),
+        db_session: Session = Depends(get_db_session),
+):
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied",
+        )
+
+    stats = (
+        db_session.query(Algorithm.status, func.count().label('count'))
+        .group_by(Algorithm.status)
+        .all()
+    )
+
+    return {
+        "code": 200,
+        "data": [{"status": status, "count": count} for status, count in stats]
+    }
