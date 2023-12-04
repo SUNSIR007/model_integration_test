@@ -1,7 +1,9 @@
 import cv2
 import torch
-from PIL import Image
+from PIL import Image, ImageDraw
 from ultralytics import YOLO
+from modelscope.pipelines import pipeline
+from modelscope.utils.constant import Tasks
 
 
 class YOLODetector:
@@ -61,6 +63,8 @@ class Detector:
             self.processor = self.YOLOProcessor(model_path)
         elif self.model_type == 'yolov5':
             self.processor = self.GarbageProcessor(model_path)
+        elif self.model_type == 'modelscope':
+            self.processor = self.ModelscopeDetector(model_path)
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
@@ -97,8 +101,26 @@ class Detector:
             image.save(output_path)
             return classnames
 
+    class ModelscopeDetector:
+        def __init__(self, model_path):
+            self.model_id = model_path
+            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path)
+
+        def process(self, input_path, output_path):
+            result = self.detector(input_path)
+            classnames = result['labels']
+            image = Image.open(input_path)
+            draw = ImageDraw.Draw(image)
+
+            for box, label in zip(result['boxes'], result['labels']):
+                x_min, y_min, x_max, y_max = box
+                draw.rectangle([x_min, y_min, x_max, y_max], outline="red", width=3)
+
+            image.save(output_path)
+
+            return classnames
+
 
 if __name__ == '__main__':
-    model_type = 'yolov8'
-    model_wrapper = Detector('./weights/fall.pt', model_type)
-    model_wrapper.process('input/fall.jpg', './output/fall.jpg')
+    model_wrapper = Detector('weights/damo/cigarette', 'yolov8')
+    model_wrapper.process('input/smoke.jpg', 'output/smoke.jpg')
