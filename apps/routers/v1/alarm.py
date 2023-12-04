@@ -2,12 +2,12 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from sqlalchemy.orm import Session
 from starlette import status
 
 from apps.database import get_db_session
-from apps.models import Account, Alarm
+from apps.models import Account, Alarm, Camera
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
 from apps.schemas.alarm import AlarmRecordCreateReq, UpdateAlarmRecordRequest, AlarmFilterParams
@@ -172,3 +172,65 @@ def get_alarm_records_page(
             "total": total_count,
         }
     }
+
+
+@router.get(
+    "/alarms/statistics",
+    description="按告警统计",
+)
+def get_alarm_type_stats(
+        current_user: Account = Depends(get_current_user),
+        db_session: Session = Depends(get_db_session),
+        statistic_type: str = Query(...)
+):
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied",
+        )
+
+    query = db_session.query(Alarm)
+
+    if statistic_type == "alarmType":
+        stats = (
+            query
+            .group_by(Alarm.alarm_type)
+            .with_entities(Alarm.alarm_type, func.count().label('count'))
+            .all()
+        )
+        return {
+            "code": 200,
+            "data": [{"alarm_type": alarm_type, "count": count} for alarm_type, count in stats]
+        }
+
+    elif statistic_type == "time":
+        stats = (
+            query
+            .group_by(func.date(Alarm.alarmTime))
+            .with_entities(func.date(Alarm.alarmTime).label('alarmTime'), func.count().label('count'))
+            .all()
+        )
+        return {
+            "code": 200,
+            "data": [{"alarmTime": alarmTime, "count": count} for alarmTime, count in stats]
+        }
+
+    elif statistic_type == "place":
+        stats = (
+            query
+            .join(Camera, Alarm.cameraId == Camera.camera_id)
+            .group_by(Camera.address)
+            .with_entities(Camera.address.label('address'), func.count().label('count'))
+            .order_by(func.count().desc())
+            .all()
+        )
+        return {
+            "code": 200,
+            "data": [{"address": address, "count": count} for address, count in stats]
+        }
+
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid statistics parameter. Use 'type' or 'time'.",
+        )
