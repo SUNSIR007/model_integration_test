@@ -35,13 +35,16 @@ class ServiceBaseSettings(BaseSettings):
     # 文件路径
     data_dir: str
 
+    # 运行设备
+    device: str
+
 
 class ProdSettings(ServiceBaseSettings):
     password: str = "1234"
     # redis config
     redis_url: RedisDsn = "redis://127.0.0.1/0"
     # database config
-    db_url: str = "mysql://root:aiyouyou.@127.0.0.1:3306:model_integration"
+    db_url: str = "sqlite:///model_integration.db"
 
     # celery config
     celery_broker_url: str = "redis://127.0.0.1/1"
@@ -53,6 +56,8 @@ class ProdSettings(ServiceBaseSettings):
     proj_dir: str = PROJ_DIR
     # 文件路径
     data_dir: str = os.path.join(PROJ_DIR, 'data')
+
+    device: str = 'gpu'
 
     # 回传结果地址
     return_result_url: AnyHttpUrl = 'http://192.168.3.114:8000'
@@ -85,6 +90,8 @@ class LocalSettings(ServiceBaseSettings):
     proj_dir: str = PROJ_DIR
     # 文件路径
     data_dir: str = os.path.join(PROJ_DIR, 'data')
+
+    device: str = 'cpu'
 
     # 回传结果地址
     return_result_url: AnyHttpUrl = 'http://192.168.3.114:8000'
