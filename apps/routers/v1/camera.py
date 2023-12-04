@@ -232,7 +232,7 @@ async def get_camera_algorithms(
 
 
 @router.get(
-    '/camera',
+    '/camera/page',
     status_code=status.HTTP_200_OK,
     description="获取摄像头设备分页"
 )
