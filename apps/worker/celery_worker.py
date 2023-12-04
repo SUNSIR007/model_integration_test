@@ -1,6 +1,6 @@
 import os
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import cv2
 from celery.result import AsyncResult
@@ -41,6 +41,22 @@ def create_directory(directory):
 def delete_file(file_path):
     if os.path.exists(file_path):
         os.remove(file_path)
+
+
+def delete_folder(folder_path, folder_type):
+    """
+    删除指定类型的文件夹
+    :param folder_path: 文件夹路径
+    :param folder_type: 文件夹类型，用于日志输出
+    """
+    if os.path.exists(folder_path):
+        try:
+            os.rmdir(folder_path)
+            logger.info(f"已删除{folder_type}文件夹: {folder_path}")
+        except Exception as e:
+            logger.error(f"删除{folder_type}文件夹时发生错误: {e}")
+    else:
+        logger.info(f"{folder_type}文件夹不存在: {folder_path}")
 
 
 def screenshot(url):
@@ -97,6 +113,21 @@ def start_video_task(video_task_config):
 
     except Exception as e:
         logger.error(f"Error in start_video_task: {e}")
+
+
+@celery_app.task
+def delete_tmp_folder():
+    base_path = "data/"
+
+    previous_day = datetime.now() - timedelta(days=1)
+    previous_day_str = previous_day.strftime("%Y-%m-%d")
+
+    input_folder_to_delete = os.path.join(base_path, "input", previous_day_str)
+    output_folder_to_delete = os.path.join(base_path, "output", previous_day_str)
+
+    delete_folder(input_folder_to_delete, "输入")
+
+    delete_folder(output_folder_to_delete, "输出")
 
 
 # def upload_analyse_result(**kwargs):
