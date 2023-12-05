@@ -7,6 +7,7 @@ class AlgorithmInstance(BaseModel):
     algorithmId: int
     algorithmName: str
     algorithmStatus: int
+    algorithmInterval: int
     algorithmVersion: str
     algorithmIntro: str
     sdkConfig: str = None
