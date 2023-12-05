@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class AlgorithmInstance(BaseModel):
     algorithmId: int
     algorithmName: str
+    algorithmStatus: int
     algorithmVersion: str
     algorithmIntro: str
     sdkConfig: str = None

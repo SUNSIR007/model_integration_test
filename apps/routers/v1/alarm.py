@@ -191,6 +191,12 @@ def get_alarm_stats(
 
     query = db_session.query(Alarm)
 
+    if statistic_types is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Missing statistics parameter. Use 'alarmType', 'time', or 'place'.",
+        )
+
     results = {}
 
     for statistic_type in statistic_types:

@@ -92,6 +92,7 @@ async def get_camera_info(
             algorithm_instance = AlgorithmInstance(
                 algorithmId=algorithm.id,
                 algorithmName=algorithm.name,
+                algorithmStatus=algorithm.status,
                 algorithmVersion=algorithm.version,
                 algorithmIntro=algorithm.algorithmIntro,
                 sdkConfig=algorithm.sdkConfig
@@ -258,6 +259,7 @@ async def get_camera_page(
             algorithm_instance = AlgorithmInstance(
                 algorithmId=algorithm.id,
                 algorithmName=algorithm.name,
+                algorithmStatus=algorithm.status,
                 algorithmVersion=algorithm.version,
                 algorithmIntro=algorithm.algorithmIntro,
                 sdkConfig=algorithm.sdkConfig
