@@ -80,26 +80,29 @@ async def get_camera_info(
     if camera_id:
         query = query.filter(Camera.camera_id == camera_id)
 
-    camera = query.first()
+    cameras = query.all()
 
-    if not camera:
+    if not cameras:
         raise HTTPException(status_code=404, detail="Camera not found")
 
-    related_algorithm_instances = []
-    for algorithm in camera.algorithms:
-        algorithm_instance = AlgorithmInstance(
-            algorithmId=algorithm.id,
-            algorithmName=algorithm.name,
-            algorithmVersion=algorithm.version,
-            algorithmIntro=algorithm.algorithmIntro,
-            sdkConfig=algorithm.sdkConfig
-        )
-        related_algorithm_instances.append(algorithm_instance)
+    result = []
+    for camera in cameras:
+        related_algorithm_instances = []
+        for algorithm in camera.algorithms:
+            algorithm_instance = AlgorithmInstance(
+                algorithmId=algorithm.id,
+                algorithmName=algorithm.name,
+                algorithmVersion=algorithm.version,
+                algorithmIntro=algorithm.algorithmIntro,
+                sdkConfig=algorithm.sdkConfig
+            )
+            related_algorithm_instances.append(algorithm_instance)
 
-    camera_info = CameraInfo.from_orm(camera)
-    camera_info.relatedAlgorithmInstances = related_algorithm_instances
+        camera_info = CameraInfo.from_orm(camera)
+        camera_info.relatedAlgorithmInstances = related_algorithm_instances
+        result.append(camera_info)
 
-    return GeneralResponse(code=200, data=camera_info)
+    return GeneralResponse(code=200, data=result)
 
 
 @router.post(
