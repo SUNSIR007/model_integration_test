@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List, Union
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import or_, func
@@ -140,7 +140,7 @@ def delete_alarm_record(
 
 
 @router.get(
-    "/alarms",
+    "/alarms/page",
     description="告警记录分页",
 )
 def get_alarm_records_page(
@@ -178,10 +178,10 @@ def get_alarm_records_page(
     "/alarms/statistics",
     description="按告警统计",
 )
-def get_alarm_type_stats(
+def get_alarm_stats(
         current_user: Account = Depends(get_current_user),
         db_session: Session = Depends(get_db_session),
-        statistic_type: str = Query(...)
+        statistic_types: Union[List[str], None] = Query(default=None),
 ):
     if not current_user.is_active:
         raise HTTPException(
@@ -191,46 +191,42 @@ def get_alarm_type_stats(
 
     query = db_session.query(Alarm)
 
-    if statistic_type == "alarmType":
-        stats = (
-            query
-            .group_by(Alarm.alarm_type)
-            .with_entities(Alarm.alarm_type, func.count().label('count'))
-            .all()
-        )
-        return {
-            "code": 200,
-            "data": [{"alarm_type": alarm_type, "count": count} for alarm_type, count in stats]
-        }
+    results = {}
 
-    elif statistic_type == "time":
-        stats = (
-            query
-            .group_by(func.date(Alarm.alarmTime))
-            .with_entities(func.date(Alarm.alarmTime).label('alarmTime'), func.count().label('count'))
-            .all()
-        )
-        return {
-            "code": 200,
-            "data": [{"alarmTime": alarmTime, "count": count} for alarmTime, count in stats]
-        }
+    for statistic_type in statistic_types:
+        if statistic_type == "alarmType":
+            stats = (
+                query
+                .group_by(Alarm.alarm_type)
+                .with_entities(Alarm.alarm_type, func.count().label('count'))
+                .all()
+            )
+            results["alarmType"] = [{"alarm_type": alarm_type, "count": count} for alarm_type, count in stats]
 
-    elif statistic_type == "place":
-        stats = (
-            query
-            .join(Camera, Alarm.cameraId == Camera.camera_id)
-            .group_by(Camera.address)
-            .with_entities(Camera.address.label('address'), func.count().label('count'))
-            .order_by(func.count().desc())
-            .all()
-        )
-        return {
-            "code": 200,
-            "data": [{"address": address, "count": count} for address, count in stats]
-        }
+        elif statistic_type == "time":
+            stats = (
+                query
+                .group_by(func.date(Alarm.alarmTime))
+                .with_entities(func.date(Alarm.alarmTime).label('alarmTime'), func.count().label('count'))
+                .all()
+            )
+            results["time"] = [{"alarmTime": alarmTime, "count": count} for alarmTime, count in stats]
 
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid statistics parameter. Use 'type' or 'time'.",
-        )
+        elif statistic_type == "place":
+            stats = (
+                query
+                .join(Camera, Alarm.cameraId == Camera.camera_id)
+                .group_by(Camera.address)
+                .with_entities(Camera.address.label('address'), func.count().label('count'))
+                .order_by(func.count().desc())
+                .all()
+            )
+            results["place"] = [{"address": address, "count": count} for address, count in stats]
+
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid statistics parameter: {statistic_type}. Use 'alarmType', 'time', or 'place'.",
+            )
+
+    return {"code": 200, "data": results}
