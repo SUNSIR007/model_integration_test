@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 import pytz
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.orm import Session, relationship
 
 from apps.database import Base
@@ -19,14 +19,10 @@ class Algorithm(Base):
     version = Column(String(32), nullable=False, doc="算法版本")
     repoSource = Column(String(255), nullable=False, doc="算法文件地址")
     algorithmIntro = Column(String(255), doc="算法描述")
-    status = Column(Boolean, nullable=False, default=False, doc='算法启用状态')
     modelType = Column(String(255), default="yolov8", doc="算法类型")
-    frameFrequency = Column(Integer, default=30, nullable=False, doc="抽帧频率(秒)")
-    alamInterval = Column(Integer, default=30, nullable=False, doc="报警间隔时间(秒)")
     sdkConfig = Column(String(255), doc="SDK配置")
     createTime = Column(DateTime, nullable=False, default=datetime.now(tz), doc="创建时间")
-    camera_id = Column(Integer, ForeignKey('cameras.camera_id'))
-    camera = relationship("Camera", back_populates="algorithms")
+    cameras = relationship("Camera", secondary="camera_algorithm_association", back_populates="algorithms")
 
     @classmethod
     def create_algorithm(cls, session: Session, name: str, modelName: str, version: str,

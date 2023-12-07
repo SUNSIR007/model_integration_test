@@ -8,6 +8,7 @@ from starlette import status
 
 from apps.database import get_db_session
 from apps.models import Algorithm, Account
+from apps.models.camera import CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
 from apps.schemas.algorithm import PageResultAlgorithmInfoResp, AlgorithmInfoResp
@@ -186,8 +187,8 @@ def get_algorithm_stats(
         )
 
     stats = (
-        db_session.query(Algorithm.status, func.count().label('count'))
-        .group_by(Algorithm.status)
+        db_session.query(CameraAlgorithmAssociation.status, func.count().label('count'))
+        .group_by(CameraAlgorithmAssociation.status)
         .all()
     )
 

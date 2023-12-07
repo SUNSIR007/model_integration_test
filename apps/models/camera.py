@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytz
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import Session, relationship
 from typing import List
 
@@ -26,7 +26,7 @@ class Camera(Base):
     password = Column(String(255), doc="密码")
     createTime = Column(DateTime, default=datetime.now(tz), doc="创建时间")
     updateTime = Column(DateTime, default=datetime.now(tz), onupdate=datetime.now(tz), doc="更新时间")
-    algorithms = relationship("Algorithm", back_populates="camera")
+    algorithms = relationship("Algorithm", secondary="camera_algorithm_association")
 
     @classmethod
     def create(cls, data: dict) -> 'Camera':
@@ -67,3 +67,21 @@ class Camera(Base):
         video_stream_url = f"{protocol}://{username}:{password}@{ip}:{port}/{url}"
 
         return video_stream_url
+
+
+class CameraAlgorithmAssociation(Base):
+    __tablename__ = "camera_algorithm_association"
+
+    association_id = Column(Integer, primary_key=True, autoincrement=True, doc="主键")
+    camera_id = Column(Integer, ForeignKey("cameras.camera_id"), nullable=False, doc="摄像头ID")
+    algorithm_id = Column(Integer, ForeignKey("algorithms.id"), nullable=False, doc="算法ID")
+    status = Column(Boolean, nullable=False, default=False, doc='算法启用状态')
+    frameFrequency = Column(Integer, default=30, nullable=False, doc="抽帧频率(秒)")
+    alamInterval = Column(Integer, default=30, nullable=False, doc="报警间隔时间(秒)")
+
+    def update(self, session: Session, data: dict) -> None:
+        for key, value in data.items():
+            if value is not None and hasattr(self, key):
+                setattr(self, key, value)
+
+        session.commit()

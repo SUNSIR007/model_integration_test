@@ -1,12 +1,12 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, status, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
 
 from apps.database import get_db_session
 from apps.models import Account, Algorithm
-from apps.models.camera import Camera
+from apps.models.camera import Camera, CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
 from apps.schemas.camera import AlgorithmInstance, CameraInfo, CameraCreate, CameraUpdateReq, AlgorithmConfig
@@ -68,7 +68,7 @@ async def get_camera_info(
     if not current_user.is_active:
         raise HTTPException(
             status_code=403,
-            detail="Access denied",
+            detail="拒绝访问",
         )
 
     query = db_session.query(Camera)
@@ -80,31 +80,35 @@ async def get_camera_info(
     if camera_id:
         query = query.filter(Camera.camera_id == camera_id)
 
-    cameras = query.all()
+    cameras = query.options(joinedload(Camera.algorithms)).all()
 
     if not cameras:
-        raise HTTPException(status_code=404, detail="Camera not found")
+        raise HTTPException(status_code=404, detail="摄像头未找到")
 
     result = []
     for camera in cameras:
         related_algorithm_instances = []
         for algorithm in camera.algorithms:
-            algorithm_instance = AlgorithmInstance(
-                algorithmId=algorithm.id,
-                algorithmName=algorithm.name,
-                algorithmStatus=algorithm.status,
-                algorithmInterval=algorithm.frameFrequency,
-                algorithmVersion=algorithm.version,
-                algorithmIntro=algorithm.algorithmIntro,
-                sdkConfig=algorithm.sdkConfig
-            )
-            related_algorithm_instances.append(algorithm_instance)
+            if algorithm:
+                association = db_session.query(CameraAlgorithmAssociation).filter(
+                    CameraAlgorithmAssociation.algorithm_id == algorithm.id).first()
+
+                algorithm_instance = AlgorithmInstance(
+                    algorithmId=algorithm.id,
+                    algorithmName=algorithm.name,
+                    algorithmStatus=association.status,
+                    algorithmInterval=association.frameFrequency,
+                    algorithmVersion=algorithm.version,
+                    algorithmIntro=algorithm.algorithmIntro,
+                    sdkConfig=algorithm.sdkConfig
+                )
+                related_algorithm_instances.append(algorithm_instance)
 
         camera_info = CameraInfo.from_orm(camera)
         camera_info.relatedAlgorithmInstances = related_algorithm_instances
         result.append(camera_info)
 
-    return GeneralResponse(code=200, data=result)
+    return GeneralResponse(code=200, data=result, msg="摄像头信息获取成功")
 
 
 @router.post(
@@ -209,22 +213,26 @@ async def get_camera_algorithms(
             detail="Access denied",
         )
 
-    camera = session.query(Camera).get(cameraId)
+    camera = session.query(Camera).options(joinedload(Camera.algorithms)).get(cameraId)
+
     if camera:
         algorithms = camera.algorithms
+
         if algorithmName:
             algorithms = [algorithm for algorithm in algorithms if algorithm.name == algorithmName]
 
         algorithm_data = []
         for algorithm in algorithms:
+            association = session.query(CameraAlgorithmAssociation).filter(
+                CameraAlgorithmAssociation.algorithm_id == algorithm.id).first()
             algorithm_data.append({
                 "algorithmId": algorithm.id,
                 "algorithmName": algorithm.name,
                 "cameraId": camera.camera_id,
                 "cameraName": camera.name,
                 "status": camera.status,
-                "frameFrequency": "",
-                "alamInterval": 0,
+                "frameFrequency": association.frameFrequency,
+                "alamInterval": association.alamInterval,
                 "sdkConfig": algorithm.sdkConfig,
                 "roiValues": []
             })
@@ -257,11 +265,14 @@ async def get_camera_page(
     for camera in cameras:
         related_algorithm_instances = []
         for algorithm in camera.algorithms:
+            association = db_session.query(CameraAlgorithmAssociation).filter(
+                CameraAlgorithmAssociation.algorithm_id == algorithm.id,
+                CameraAlgorithmAssociation.camera_id == camera.camera_id).first()
             algorithm_instance = AlgorithmInstance(
                 algorithmId=algorithm.id,
                 algorithmName=algorithm.name,
-                algorithmStatus=algorithm.status,
-                algorithmInterval=algorithm.frameFrequency,
+                algorithmStatus=association.status,
+                algorithmInterval=association.frameFrequency,
                 algorithmVersion=algorithm.version,
                 algorithmIntro=algorithm.algorithmIntro,
                 sdkConfig=algorithm.sdkConfig
@@ -300,21 +311,38 @@ async def get_camera_algorithm(
             detail="Access denied",
         )
 
-    algorithms = Algorithm.get_camera_algorithms(session, cameraId)
-
-    algorithm = next((algo for algo in algorithms if algo.id == cameraAlgorithmId), None)
+    algorithm = (
+        session.query(Algorithm)
+        .options(joinedload(Algorithm.cameras))
+        .filter(Algorithm.id == cameraAlgorithmId)
+        .first()
+    )
 
     if not algorithm:
         raise HTTPException(status_code=404, detail="Camera algorithm not found")
 
+    camera_info = None
+    for camera in algorithm.cameras:
+        if camera.camera_id == cameraId:
+            camera_info = CameraInfo.from_orm(camera)
+            break
+
+    if not camera_info:
+        raise HTTPException(status_code=404, detail="Camera not found")
+
+    association = session.query(CameraAlgorithmAssociation).filter(
+        CameraAlgorithmAssociation.algorithm_id == cameraAlgorithmId,
+        CameraAlgorithmAssociation.camera_id == cameraId
+    ).first()
+
     algorithm_data = {
         "algorithmId": algorithm.id,
         "algorithmName": algorithm.name,
-        "cameraId": algorithm.camera_id,
-        "cameraName": algorithm.camera.name,
-        "status": algorithm.status,
-        "frameFrequency": algorithm.frameFrequency,
-        "alamInterval": algorithm.alamInterval,
+        "cameraId": camera_info.camera_id,
+        "cameraName": camera_info.name,
+        "status": camera_info.status,
+        "frameFrequency": association.frameFrequency,
+        "alamInterval": association.alamInterval,
         "sdkConfig": algorithm.sdkConfig,
         "roiValues": ''
     }
@@ -344,31 +372,20 @@ async def save_camera_algorithm_config(
     camera = session.query(Camera).filter_by(camera_id=cameraId).first()
 
     if not algorithm:
-        raise HTTPException(status_code=404, detail="Algorithm not found")
+        raise HTTPException(status_code=404, detail="算法未找到")
 
-    existing_config = (
-        session.query(Algorithm)
-        .filter_by(camera_id=cameraId, id=algorithm.id)
+    association_exists = (
+        session.query(CameraAlgorithmAssociation)
+        .filter_by(camera_id=cameraId, algorithm_id=algorithm.id)
         .first()
     )
 
-    if existing_config:
-        algorithm.update(session, algorithm_config.dict())
-
+    if association_exists:
+        association_exists.update(session, algorithm_config.dict())
     else:
-        existing_config = (
-            session.query(Algorithm)
-            .filter_by(name=algorithm.name, camera_id=cameraId)
-            .first()
-        )
-
-        if existing_config:
-            raise HTTPException(status_code=400, detail="摄像头已配置该算法")
-
-        algorithm.create_algorithm(
-            session, algorithm.name, algorithm.modelName, algorithm.version, algorithm.repoSource, cameraId,
-            algorithm_config.status
-        )
+        association = CameraAlgorithmAssociation(camera_id=cameraId, algorithm_id=algorithm.id)
+        session.add(association)
+        session.commit()
 
     config = VideoTaskConfig(
         alarm_name=algorithm.name,
@@ -376,7 +393,7 @@ async def save_camera_algorithm_config(
         camera_id=cameraId,
         algorithm_id=algorithm.id,
         video_stream_url=camera.get_video_stream_url(),
-        interval=algorithm.frameFrequency,
+        interval=association_exists.frameFrequency,
         model_type=algorithm.modelType
     )
 
@@ -387,5 +404,5 @@ async def save_camera_algorithm_config(
     return GeneralResponse(
         code=200,
         data=None,
-        msg="Camera algorithm configuration saved"
+        msg="摄像头算法配置已保存"
     )

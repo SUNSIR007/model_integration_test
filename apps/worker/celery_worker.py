@@ -9,14 +9,15 @@ from apps.config import logger
 from apps.config import settings
 from apps.database import get_db_session
 from apps.detection.infer import Detector
-from apps.models import Algorithm
+from apps.models.camera import CameraAlgorithmAssociation
 from apps.utils.save_alarm import save_alarm
 from apps.worker.celery_app import celery_app
 
 
-def get_algo_status(session: Session, algorithm_id: int) -> bool:
+def get_algo_status(session: Session, algorithm_id: int, camera_id: int) -> bool:
     """检查算法是否启用，返回 True 表示需要中止任务."""
-    algorithm = session.query(Algorithm).filter_by(id=algorithm_id).first()
+    algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
+                                                                    camera_id=camera_id).first()
     logger.info(algorithm.status)
     status = 0
     if algorithm and algorithm.status:
@@ -85,7 +86,7 @@ def start_video_task(video_task_config):
 
     while True:
         # 判断算法开启状态
-        status = get_algo_status(session, algorithm_id)
+        status = get_algo_status(session, algorithm_id, camera_id)
         if not status:
             logger.info(f"算法{video_task_config['model_name']}预测任务结束----------------------------")
             break

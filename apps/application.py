@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
+
 from apps.routers import setup_routers
 from .database import Base, engine
 
@@ -26,6 +28,7 @@ def create_application():
         allow_headers=['*']
     )
     setup_routers(app)
+    app.mount("/static", StaticFiles(directory="static"), name="static")
     Base.metadata.create_all(bind=engine)
 
     return app

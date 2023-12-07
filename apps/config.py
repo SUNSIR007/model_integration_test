@@ -55,7 +55,7 @@ class ProdSettings(ServiceBaseSettings):
     # 项目路径
     proj_dir: str = PROJ_DIR
     # 文件路径
-    data_dir: str = os.path.join(PROJ_DIR, 'data')
+    data_dir: str = os.path.join(PROJ_DIR, 'static/data')
 
     device: str = 'gpu'
 
@@ -89,7 +89,7 @@ class LocalSettings(ServiceBaseSettings):
     # 项目路径
     proj_dir: str = PROJ_DIR
     # 文件路径
-    data_dir: str = os.path.join(PROJ_DIR, 'data')
+    data_dir: str = os.path.join(PROJ_DIR, 'static/data')
 
     device: str = 'cpu'
 
