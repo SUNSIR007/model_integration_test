@@ -3,34 +3,39 @@ import time
 from datetime import datetime, timedelta
 
 import cv2
-from celery.result import AsyncResult
-from celery.utils.log import get_task_logger
 from sqlalchemy.orm import Session
 
+from apps.config import logger
 from apps.config import settings
 from apps.database import get_db_session
 from apps.detection.infer import Detector
 from apps.models import Algorithm
-from apps.worker.celery_app import celery_app
 from apps.utils.save_alarm import save_alarm
+from apps.worker.celery_app import celery_app
 
-logger = get_task_logger(__name__)
 
-
-def should_abort_task(session: Session, algorithm_id: int) -> bool:
+def get_algo_status(session: Session, algorithm_id: int) -> bool:
     """检查算法是否启用，返回 True 表示需要中止任务."""
     algorithm = session.query(Algorithm).filter_by(id=algorithm_id).first()
     logger.info(algorithm.status)
-
-    if algorithm is None:
-        logger.warning(f"Algorithm with id {algorithm_id} not found.")
-        return True
-
-    if not algorithm.status:
-        logger.warning(f"Algorithm with id {algorithm_id} is not enabled.")
-        return True
+    status = 0
+    if algorithm and algorithm.status:
+        status = algorithm.status
     session.close()
-    return False
+    return status
+
+
+def screenshot(url):
+    """视频流抽帧"""
+    cap = cv2.VideoCapture(url)
+    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+    if not cap.isOpened():
+        cap.release()
+
+    flag, frame = cap.read()
+    cap.release()
+
+    return frame
 
 
 def create_directory(directory):
@@ -59,60 +64,53 @@ def delete_folder(folder_path, folder_type):
         logger.info(f"{folder_type}文件夹不存在: {folder_path}")
 
 
-def screenshot(url):
-    """视频流抽帧"""
-    cap = cv2.VideoCapture(url)
-    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-    if not cap.isOpened():
-        cap.release()
-
-    flag, frame = cap.read()
-    cap.release()
-
-    return frame
-
-
 @celery_app.task
 def start_video_task(video_task_config):
     """视频分析任务开始"""
-    name = video_task_config["alarm_name"]
     algorithm_id = video_task_config["algorithm_id"]
+    video_url = video_task_config["video_stream_url"]
     camera_id = video_task_config["camera_id"]
-    session = next(get_db_session())
-    task_id = start_video_task.request.id
-    if should_abort_task(session, algorithm_id):
-        logger.warning(f"Aborting start_video_task for algorithm_id {algorithm_id}.")
-        AsyncResult(task_id).revoke(terminate=True)
-
+    name = video_task_config["alarm_name"]
     model_name = video_task_config["model_name"]
+    frame_frequency = video_task_config["interval"]
+    session = next(get_db_session())
+    logger.info(f"当前处理视频流地址：{video_url}")
+
     # 获取当前日期，并创建文件夹路径
     current_date = datetime.now().strftime('%Y-%m-%d')
     input_dir = os.path.join(settings.data_dir, "input", current_date)
     output_dir = os.path.join(settings.data_dir, "output", current_date)
-
     create_directory(input_dir)
     create_directory(output_dir)
 
-    try:
-        frame = screenshot(video_task_config["video_stream_url"])
-        filename = f"{algorithm_id}-{time.time()}.jpg"
-        input_file = os.path.join(input_dir, filename)
-        output_file = os.path.join(output_dir, filename)
+    while True:
+        # 判断算法开启状态
+        status = get_algo_status(session, algorithm_id)
+        if not status:
+            logger.info(f"算法{video_task_config['model_name']}预测任务结束----------------------------")
+            break
 
-        if frame is None:
-            logger.info("未截取到图片")
+        frame = screenshot(video_url)
+        if frame is not None:
+            current_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
+            filename = f"{algorithm_id}-{current_time}.jpg"
+            input_file = os.path.join(input_dir, filename)
+            output_file = os.path.join(output_dir, filename)
+            cv2.imwrite(input_file, frame)
+            try:
+                # 算法调用
+                model_type = video_task_config['model_type']
+                yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
+                classnames = yolo_processor.process(input_file, output_file)
+                if classnames:
+                    save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
-        cv2.imwrite(input_file, frame)
+            except Exception as e:
+                logger.error(f"Error in model predict: {e}")
+        else:
+            logger.info("未截取到相关图片----------------------")
 
-        # 算法调用
-        model_type = video_task_config['model_type']
-        yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
-        classnames = yolo_processor.process(input_file, output_file)
-        if classnames:
-            save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
-
-    except Exception as e:
-        logger.error(f"Error in start_video_task: {e}")
+    time.sleep(frame_frequency)
 
 
 @celery_app.task
@@ -128,7 +126,6 @@ def delete_tmp_folder():
     delete_folder(input_folder_to_delete, "输入")
 
     delete_folder(output_folder_to_delete, "输出")
-
 
 # def upload_analyse_result(**kwargs):
 #     """上传视频流分析结果"""

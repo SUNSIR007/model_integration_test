@@ -21,8 +21,8 @@ class Algorithm(Base):
     algorithmIntro = Column(String(255), doc="算法描述")
     status = Column(Boolean, nullable=False, default=False, doc='算法启用状态')
     modelType = Column(String(255), default="yolov8", doc="算法类型")
-    frameFrequency = Column(Integer, doc="抽帧频率(秒)")
-    alamInterval = Column(Integer, doc="报警间隔时间(秒)")
+    frameFrequency = Column(Integer, default=30, nullable=False, doc="抽帧频率(秒)")
+    alamInterval = Column(Integer, default=30, nullable=False, doc="报警间隔时间(秒)")
     sdkConfig = Column(String(255), doc="SDK配置")
     createTime = Column(DateTime, nullable=False, default=datetime.now(tz), doc="创建时间")
     camera_id = Column(Integer, ForeignKey('cameras.camera_id'))
@@ -30,8 +30,9 @@ class Algorithm(Base):
 
     @classmethod
     def create_algorithm(cls, session: Session, name: str, modelName: str, version: str,
-                         repoSource: str) -> "Algorithm":
-        algorithm = Algorithm(name=name, modelName=modelName, version=version, repoSource=repoSource)
+                         repoSource: str, camera_id: int, status: int) -> "Algorithm":
+        algorithm = Algorithm(name=name, modelName=modelName, version=version, repoSource=repoSource,
+                              camera_id=camera_id, status=status)
         session.add(algorithm)
         session.commit()
         session.refresh(algorithm)

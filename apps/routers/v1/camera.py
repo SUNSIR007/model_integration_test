@@ -346,8 +346,29 @@ async def save_camera_algorithm_config(
     if not algorithm:
         raise HTTPException(status_code=404, detail="Algorithm not found")
 
-    # 更新算法配置
-    algorithm.update(session, algorithm_config.dict())
+    existing_config = (
+        session.query(Algorithm)
+        .filter_by(camera_id=cameraId, id=algorithm.id)
+        .first()
+    )
+
+    if existing_config:
+        algorithm.update(session, algorithm_config.dict())
+
+    else:
+        existing_config = (
+            session.query(Algorithm)
+            .filter_by(name=algorithm.name, camera_id=cameraId)
+            .first()
+        )
+
+        if existing_config:
+            raise HTTPException(status_code=400, detail="摄像头已配置该算法")
+
+        algorithm.create_algorithm(
+            session, algorithm.name, algorithm.modelName, algorithm.version, algorithm.repoSource, cameraId,
+            algorithm_config.status
+        )
 
     config = VideoTaskConfig(
         alarm_name=algorithm.name,
@@ -359,9 +380,9 @@ async def save_camera_algorithm_config(
         model_type=algorithm.modelType
     )
 
-    # 启动视频任务
-    video_task_server = VideoTaskServer()
-    video_task_server.start(config)
+    if algorithm_config.status:
+        video_task_server = VideoTaskServer()
+        video_task_server.start(config)
 
     return GeneralResponse(
         code=200,

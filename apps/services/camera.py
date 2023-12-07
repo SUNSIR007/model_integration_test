@@ -1,5 +1,4 @@
-import threading
-from datetime import timedelta
+from celery.result import AsyncResult
 
 from apps.config import logger, settings
 from apps.schemas.video_task import VideoTaskConfig
@@ -8,15 +7,30 @@ from apps.worker.celery_worker import start_video_task
 
 class VideoTaskServer:
     def __init__(self):
-        self.timer = None
+        self.task_id = None
 
     def start(self, config: VideoTaskConfig):
-        logger.info("算法异步调用--------")
-        self.timer = threading.Timer(0, self._start_task, args=[config])  # 初始延迟设为0
-        self.timer.start()
+        logger.info(f"算法识别任务开始----------------------------")
+        task_result = start_video_task.apply_async(args=[config.__dict__], queue=settings.celery_quene_name)
+        self.task_id = task_result.id
+        return task_result.id
 
-    def _start_task(self, config: VideoTaskConfig):
-        start_video_task.apply_async(args=[config.__dict__], queue=settings.celery_quene_name)
-        interval = timedelta(seconds=config.interval)  # 任务执行间隔
-        self.timer = threading.Timer(interval.total_seconds(), self._start_task, args=[config])
-        self.timer.start()
+    def stop(self):
+        try:
+            result = AsyncResult(self.task_id)
+            result.revoke(terminate=True)
+            logger.info(f"Task with ID {self.task_id} stopped successfully.")
+            return True
+        except Exception as e:
+            logger.error(f"Error stopping task with ID {self.task_id}: {e}")
+            return False
+
+    def delete(self):
+        try:
+            result = AsyncResult(self.task_id)
+            result.forget()
+            logger.info(f"Task with ID {self.task_id} deleted successfully.")
+            return True
+        except Exception as e:
+            logger.error(f"Error deleting task with ID {self.task_id}: {e}")
+            return False
