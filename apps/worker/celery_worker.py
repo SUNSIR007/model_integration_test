@@ -1,8 +1,10 @@
+import base64
 import os
 import time
 from datetime import datetime, timedelta
 
 import cv2
+import httpx
 from sqlalchemy.orm import Session
 
 from apps.config import logger
@@ -62,6 +64,39 @@ def delete_folder(folder_path, folder_type):
             logger.error(f"删除{folder_type}文件夹时发生错误: {e}")
     else:
         logger.info(f"{folder_type}文件夹不存在: {folder_path}")
+
+
+def upload_analyse_result(**kwargs):
+    """上传视频流分析结果"""
+
+    analyse_result_url = 'analysis/api/analyseResult'
+    base_url = settings.return_result_url
+
+    analyse_results = kwargs['analyse_results']
+    process_image_data = None
+    logger.info(analyse_results)
+    if analyse_results:
+        with open(kwargs['output_file'], 'rb') as osd_fr:
+            process_image_data = str(base64.b64encode(osd_fr.read()), encoding='utf-8')
+
+    _json = {
+        "modelName": kwargs['modelName'],
+        "analyseId": kwargs['analyseId'],
+        "analyseTime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "analyseResults": analyse_results,
+        "filename": kwargs['filename'],
+        "ImageData": process_image_data,
+    }
+    try:
+        logger.info("开始上传分析结果！")
+        httpx.post(
+            os.path.join(base_url, analyse_result_url.strip('/')),
+            json=_json,
+            timeout=10
+        )
+        logger.info("分析结果上传完成！")
+    except httpx.HTTPError as exc:
+        logger.error(exc)
 
 
 @celery_app.task
@@ -125,38 +160,6 @@ def delete_tmp_folder():
 
     delete_folder(input_folder_to_delete, "输入")
     delete_folder(output_folder_to_delete, "输出")
-
-# def upload_analyse_result(**kwargs):
-#     """上传视频流分析结果"""
-#
-#     analyse_result_url = 'analysis/api/analyseResult'
-#     base_url = settings.return_result_url
-#
-#     analyse_results = kwargs['analyse_results']
-#     process_image_data = None
-#     logger.info(analyse_results)
-#     if analyse_results:
-#         with open(kwargs['output_file'], 'rb') as osd_fr:
-#             process_image_data = str(base64.b64encode(osd_fr.read()), encoding='utf-8')
-#
-#     _json = {
-#         "modelName": kwargs['modelName'],
-#         "analyseId": kwargs['analyseId'],
-#         "analyseTime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-#         "analyseResults": analyse_results,
-#         "filename": kwargs['filename'],
-#         "ImageData": process_image_data,
-#     }
-#     try:
-#         logger.info("开始上传分析结果！")
-#         httpx.post(
-#             os.path.join(base_url, analyse_result_url.strip('/')),
-#             json=_json,
-#             timeout=10
-#         )
-#         logger.info("分析结果上传完成！")
-#     except httpx.HTTPError as exc:
-#         logger.error(exc)
 
 
 # @celery_app.task

@@ -10,7 +10,7 @@ from apps.models import Account
 from apps.models.box import Box
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateIpRequest, UpdateConfig
+from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateConfig
 from apps.utils.box import get_memory_total, get_memory_usage, get_disk_total, get_disk_usage, get_temperature, \
     get_cpu_usage
 

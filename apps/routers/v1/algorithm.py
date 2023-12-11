@@ -21,7 +21,11 @@ router = APIRouter(tags=["算法管理"])
     status_code=status.HTTP_201_CREATED
 )
 async def create_algorithm(
-        algorithm_data: AlgorithmCreate,
+        file: UploadFile = File(...),
+        path: str = Form(None),
+        name: str = Form(...),
+        modelName: str = Form(...),
+        modelType: str = Form(...),
         db: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user)
 ) -> GeneralResponse:
@@ -30,47 +34,28 @@ async def create_algorithm(
             status_code=403,
             detail="Access denied",
         )
+    # 上传算法文件
+    contents = file.file.read()
+    repo_source = ''
+    if path is None:
+        repo_source = f"apps/detection/weights/{file.filename}"
+        # 将文件保存到指定路径
+        with open(repo_source, "wb") as f:
+            f.write(contents)
+    else:
+        repo_source = f"apps/detection/weights/{path}/{file.filename}"
+        os.makedirs(path, exist_ok=True)
+        with open(repo_source, "wb") as f:
+            f.write(contents)
 
-    algorithm = Algorithm(**algorithm_data.dict())
+    # 创建算法
+    algorithm = Algorithm(name=name, modelName=modelName, modelType=modelType, repoSource=repo_source)
     db.add(algorithm)
     db.commit()
     db.refresh(algorithm)
     return GeneralResponse(
         code=200,
         msg="算法创建成功"
-    )
-
-
-@router.post(
-    "/algorithm/uploadAlgorithmFile",
-    response_model=None,
-    status_code=status.HTTP_200_OK,
-    description="算法文件上传",
-)
-async def upload_algorithm_file(
-        file: UploadFile = File(...),
-        path: str = Form(None),
-        current_user: Account = Depends(get_current_user),
-) -> GeneralResponse:
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-    # 处理上传的文件
-    contents = file.file.read()
-    if path is None:
-        # 将文件保存到指定路径
-        with open(f"apps/detection/models/{file.filename}", "wb") as f:
-            f.write(contents)
-    else:
-        os.makedirs(path, exist_ok=True)
-        with open(f"apps/detection/models/{path}/{file.filename}", "wb") as f:
-            f.write(contents)
-
-    return GeneralResponse(
-        code=200,
-        msg="文件上传成功"
     )
 
 
