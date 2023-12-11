@@ -53,21 +53,6 @@ class Camera(Base):
         session.delete(self)
         session.commit()
 
-    def get_video_stream_url(self):
-        """
-        获取监控视频流地址
-        """
-        protocol = self.protocol.lower()
-        username = self.username if self.username else ""
-        password = self.password if self.password else ""
-        ip = self.ip
-        port = self.port
-        url = self.url
-
-        video_stream_url = f"{protocol}://{username}:{password}@{ip}:{port}/{url}"
-
-        return video_stream_url
-
 
 class CameraAlgorithmAssociation(Base):
     __tablename__ = "camera_algorithm_association"
@@ -85,3 +70,19 @@ class CameraAlgorithmAssociation(Base):
                 setattr(self, key, value)
 
         session.commit()
+
+
+def get_video_stream_url(self):
+    """
+    获取监控视频流地址
+    """
+    protocol = self.protocol.lower()
+    username = self.username if self.username else ""
+    password = self.password if self.password else ""
+    ip = self.ip
+    port = self.port
+    url = self.url
+
+    video_stream_url = f"{protocol}://{username}:{password}@{ip}:{port}/{url}"
+
+    return video_stream_url

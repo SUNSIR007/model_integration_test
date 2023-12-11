@@ -15,7 +15,6 @@ from apps.worker.celery_app import celery_app
 
 
 def get_algo_status(session: Session, algorithm_id: int, camera_id: int) -> bool:
-    """检查算法是否启用，返回 True 表示需要中止任务."""
     algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
                                                                     camera_id=camera_id).first()
     logger.info(algorithm.status)
@@ -111,12 +110,12 @@ def start_video_task(video_task_config):
         else:
             logger.info("未截取到相关图片----------------------")
 
-    time.sleep(frame_frequency)
+        time.sleep(frame_frequency)
 
 
 @celery_app.task
 def delete_tmp_folder():
-    base_path = "data/"
+    base_path = "static/data/"
 
     previous_day = datetime.now() - timedelta(days=1)
     previous_day_str = previous_day.strftime("%Y-%m-%d")
@@ -125,7 +124,6 @@ def delete_tmp_folder():
     output_folder_to_delete = os.path.join(base_path, "output", previous_day_str)
 
     delete_folder(input_folder_to_delete, "输入")
-
     delete_folder(output_folder_to_delete, "输出")
 
 # def upload_analyse_result(**kwargs):

@@ -57,7 +57,7 @@ class ProdSettings(ServiceBaseSettings):
     # 文件路径
     data_dir: str = os.path.join(PROJ_DIR, 'static/data')
 
-    device: str = 'gpu'
+    device: str = '0'
 
     # 回传结果地址
     return_result_url: AnyHttpUrl = 'http://192.168.3.114:8000'
