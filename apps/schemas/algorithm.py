@@ -5,7 +5,7 @@ from pydantic import BaseModel
 class AlgorithmInfoResp(BaseModel):
     name: str
     modelName: str
-    version: str
+    version: str = None
     repoSource: str
     id: int
     createTime: str
