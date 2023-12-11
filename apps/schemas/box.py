@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -14,3 +15,8 @@ class UpdateTimeRequest(BaseModel):
 
 class UpdateIpRequest(BaseModel):
     ip_address: str
+
+
+class UpdateConfig(BaseModel):
+    ip: Optional[str]
+    port: Optional[int]

@@ -32,7 +32,7 @@ class ServiceBaseSettings(BaseSettings):
 
     # 项目路径
     proj_dir: str
-    # 文件路径
+    # 静态文件路径
     data_dir: str
 
     # 运行设备
@@ -52,9 +52,7 @@ class ProdSettings(ServiceBaseSettings):
     celery_worker_max_tasks_per_child: int = 2
     celery_worker_concurrency: int = 3
 
-    # 项目路径
     proj_dir: str = PROJ_DIR
-    # 文件路径
     data_dir: str = os.path.join(PROJ_DIR, 'static/data')
 
     device: str = '0'
@@ -86,9 +84,7 @@ class LocalSettings(ServiceBaseSettings):
     celery_worker_max_tasks_per_child: int = 2
     celery_worker_concurrency: int = 3
 
-    # 项目路径
     proj_dir: str = PROJ_DIR
-    # 文件路径
     data_dir: str = os.path.join(PROJ_DIR, 'static/data')
 
     device: str = 'cpu'

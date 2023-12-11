@@ -15,3 +15,9 @@ class PageResultAlgorithmInfoResp(BaseModel):
     list: List[AlgorithmInfoResp]
     total: int
 
+
+class AlgorithmCreate(BaseModel):
+    name: str
+    modelName: str
+    modelType: str
+    repoSource: str

@@ -11,9 +11,34 @@ from apps.models import Algorithm, Account
 from apps.models.camera import CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.algorithm import PageResultAlgorithmInfoResp, AlgorithmInfoResp
+from apps.schemas.algorithm import PageResultAlgorithmInfoResp, AlgorithmInfoResp, AlgorithmCreate
 
 router = APIRouter(tags=["算法管理"])
+
+
+@router.post(
+    "/algorithm",
+    status_code=status.HTTP_201_CREATED
+)
+async def create_algorithm(
+        algorithm_data: AlgorithmCreate,
+        db: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user)
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    algorithm = Algorithm(**algorithm_data.dict())
+    db.add(algorithm)
+    db.commit()
+    db.refresh(algorithm)
+    return GeneralResponse(
+        code=200,
+        msg="算法创建成功"
+    )
 
 
 @router.post(
@@ -119,7 +144,7 @@ async def get_algorithm_list(
 
 
 @router.delete(
-    "/algorithm/delete",
+    "/algorithm",
     response_model=GeneralResponse,
     description="删除算法模型文件"
 )

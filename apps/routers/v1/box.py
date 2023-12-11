@@ -1,6 +1,6 @@
 from datetime import datetime
 from subprocess import run
-
+import re
 import pytz
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
@@ -10,11 +10,47 @@ from apps.models import Account
 from apps.models.box import Box
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateIpRequest
+from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateIpRequest, UpdateConfig
 from apps.utils.box import get_memory_total, get_memory_usage, get_disk_total, get_disk_usage, get_temperature, \
     get_cpu_usage
 
 router = APIRouter(tags=["盒子管理"])
+fronted_path = 'webconfig.js'
+run_path = 'run.sh'
+
+
+def read_config(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            config_content = f.read()
+        return config_content
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Config file not found")
+
+
+def write_config(config_content, path):
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(config_content)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to write config: {str(e)}")
+
+
+def update_shell_script(ip, port):
+    sh_content = read_config(run_path)
+    pattern = r'--host (\d{1,3}\.){3}\d{1,3} --port \d{4}'
+    replacement = rf'--host {ip} --port {port}'
+    updated_run_content = re.sub(pattern, replacement, sh_content)
+    write_config(updated_run_content, run_path)
+
+
+def update_js_config(ip, port):
+    js_content = read_config(fronted_path)
+    new_web_api_base_url = f'http://{ip}:{port}'
+    pattern = r'(webConfig = {\n\s*"webApiBaseUrl": ")(.*?)(",\n\s*"webSystemTitle)'
+    replacement = rf'\1{new_web_api_base_url}\3'
+    updated_js_content = re.sub(pattern, replacement, js_content)
+    write_config(updated_js_content, fronted_path)
 
 
 @router.put(
@@ -79,13 +115,13 @@ async def update_system_time(
 
 
 @router.put(
-    '/box/ip',
+    '/box/config',
     response_model=None,
     status_code=status.HTTP_200_OK,
-    description="更新IP地址",
+    description="更新IP和端口",
 )
 async def update_ip_address(
-        request: UpdateIpRequest,
+        config: UpdateConfig,
         db_session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
@@ -94,12 +130,21 @@ async def update_ip_address(
             status_code=403,
             detail="Access denied",
         )
+    ip = config.ip
+    port = config.port
+
     box = db_session.query(Box).first()
     if not box:
         raise HTTPException(status_code=404, detail="Server not found")
 
-    box.ip_address = request.ip_address
+    box.ip_address = config.ip
     db_session.commit()
+
+    # 更新前端配置文件
+    update_js_config(ip, port)
+    # 更新后端启动脚本
+    update_shell_script(ip, port)
+
     return GeneralResponse(
         code=200,
         data={},
