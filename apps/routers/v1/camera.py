@@ -270,8 +270,7 @@ async def get_camera_page(
                 algorithmName=algorithm.name,
                 algorithmStatus=association.status,
                 algorithmInterval=association.frameFrequency,
-                algorithmIntro=algorithm.algorithmIntro,
-                sdkConfig=algorithm.sdkConfig
+                algorithmIntro=algorithm.algorithmIntro
             )
             related_algorithm_instances.append(algorithm_instance)
 
@@ -339,7 +338,6 @@ async def get_camera_algorithm(
         "status": camera_info.status,
         "frameFrequency": association.frameFrequency,
         "alamInterval": association.alamInterval,
-        "sdkConfig": algorithm.sdkConfig,
         "roiValues": ''
     }
 
