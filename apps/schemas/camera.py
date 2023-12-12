@@ -8,9 +8,7 @@ class AlgorithmInstance(BaseModel):
     algorithmName: str
     algorithmStatus: int
     algorithmInterval: int
-    algorithmVersion: str
     algorithmIntro: str
-    sdkConfig: str = None
 
 
 class CameraCreate(BaseModel):
