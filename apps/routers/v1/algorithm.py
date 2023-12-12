@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from fastapi import APIRouter, UploadFile, File, status, Depends, Query, HTTPException, Form
+from fastapi import APIRouter, UploadFile, File, Depends, Query, HTTPException, Form
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from starlette import status
@@ -11,7 +11,7 @@ from apps.models import Algorithm, Account
 from apps.models.camera import CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.algorithm import PageResultAlgorithmInfoResp, AlgorithmInfoResp, AlgorithmCreate
+from apps.schemas.algorithm import PageResultAlgorithmInfoResp, AlgorithmInfoResp
 
 router = APIRouter(tags=["算法管理"])
 
@@ -83,7 +83,6 @@ async def get_paged_algorithm_info(
         AlgorithmInfoResp(
             name=algo.name,
             modelName=algo.modelName,
-            version=algo.version,
             repoSource=algo.repoSource,
             id=algo.id,
             createTime=str(algo.createTime)
@@ -117,7 +116,6 @@ async def get_algorithm_list(
         AlgorithmInfoResp(
             name=algo.name,
             modelName=algo.modelName,
-            version=algo.version,
             repoSource=algo.repoSource,
             id=algo.id,
             createTime=str(algo.createTime)

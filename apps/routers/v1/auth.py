@@ -133,19 +133,9 @@ async def login_for_access_token(
     description="系统登出",
 )
 async def logout(
-        token: str = Header(None),
-        db_session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
-        account = db_session.query(Account).filter(Account.token == token).first()
-        if not account:
-            raise HTTPException(status_code=400, detail="Account not found")
-
-        # 清除令牌字段
-        account.token = None
-        db_session.add(account)
-        db_session.commit()
-
-        return GeneralResponse(code=200, msg="Successfully logged out")
+    return GeneralResponse(code=200, msg=f"User {current_user.username} logged out successfully.")
 
 
 @router.put(
