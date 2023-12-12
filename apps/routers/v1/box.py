@@ -1,18 +1,19 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from subprocess import run
 import re
 import pytz
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
+from apps.config import settings
 from apps.database import get_db_session
 from apps.models import Account
 from apps.models.box import Box
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateConfig
+from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateConfig, CleanSpace
 from apps.utils.box import get_memory_total, get_memory_usage, get_disk_total, get_disk_usage, get_temperature, \
-    get_cpu_usage
+    get_cpu_usage, delete_folders_before_date
 
 router = APIRouter(tags=["盒子管理"])
 fronted_path = 'webconfig.js'
@@ -130,14 +131,15 @@ async def update_ip_address(
             status_code=403,
             detail="Access denied",
         )
-    ip = config.ip
-    port = config.port
+    ip, port = config.ip, config.port
 
     box = db_session.query(Box).first()
     if not box:
         raise HTTPException(status_code=404, detail="Server not found")
+    if not ip or not port:
+        raise HTTPException(status_code=422, detail="Missing required query parameter: query_param")
 
-    box.ip_address = config.ip
+    box.ip_address, box.port = ip, port
     db_session.commit()
 
     # 更新前端配置文件
@@ -268,7 +270,6 @@ async def get_device_info(
 
 @router.get(
     '/box/SystemInfo',
-    response_model=dict,
     status_code=status.HTTP_200_OK,
     description="获取系统资源信息",
 )
@@ -278,7 +279,7 @@ async def get_system_info() -> GeneralResponse:
     memory_usage = get_memory_usage()
     disk_total = get_disk_total()
     disk_usage = get_disk_usage()
-    # temperature = get_temperature()
+    temperature = get_temperature()
     cpu_usage = get_cpu_usage()
 
     # 构造返回数据字典
@@ -287,11 +288,37 @@ async def get_system_info() -> GeneralResponse:
         "memoryUsage": memory_usage,
         "diskTotal": disk_total,
         "diskUsage": disk_usage,
-        "temperature": 0,
+        "temperature": temperature,
         "cpuusage": cpu_usage
     }
 
     return GeneralResponse(
         code=200,
         data=data
+    )
+
+
+@router.post(
+    '/box/cleanSpace',
+    status_code=status.HTTP_200_OK,
+    description="磁盘清理配置",
+)
+async def clean_space(
+        cleanConfig: CleanSpace,
+        current_user: Account = Depends(get_current_user),
+
+) -> GeneralResponse:
+    if current_user.role != '管理员':
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    usage_percentage = get_disk_usage() / get_disk_total() * 100
+    if usage_percentage > cleanConfig.storageThreshold:
+        target_date = datetime.now() - timedelta(days=cleanConfig.storagePeriod)
+        delete_folders_before_date(base_folder=settings.data_dir, target_date=target_date)
+    return GeneralResponse(
+        code=200,
+        msg="配置保存成功"
     )

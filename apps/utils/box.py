@@ -1,3 +1,7 @@
+import os
+import shutil
+from datetime import datetime
+
 import psutil
 
 
@@ -37,3 +41,24 @@ def get_cpu_usage() -> float:
     # 获取 CPU 使用率
     cpu_usage = psutil.cpu_percent()
     return cpu_usage
+
+
+def delete_folders_before_date(base_folder, target_date):
+    try:
+        target_date = datetime.strptime(target_date, "%Y-%m-%d")
+    except ValueError:
+        print("Invalid date format. Please use 'YYYY-MM-DD'.")
+        return
+
+    for folder_name in os.listdir(base_folder):
+        folder_path = os.path.join(base_folder, folder_name)
+        try:
+            # 解析文件夹名中的日期部分
+            folder_date = datetime.strptime(folder_name, "%Y-%m-%d")
+
+            # 如果文件夹日期早于目标日期，删除文件夹及其内容
+            if folder_date < target_date:
+                shutil.rmtree(folder_path)
+                print(f"Deleted folder: {folder_path}")
+        except ValueError:
+            print(f"Skipping folder with invalid date format: {folder_path}")

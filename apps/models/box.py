@@ -10,19 +10,14 @@ class Box(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, doc='设备编号')
     system_name = Column(String(32), nullable=False, doc='系统名称')
     timezone = Column(String(32), nullable=False, doc='时区')
-    time = Column(DateTime, nullable=False, default=datetime.utcnow, doc='时间')
     ip_address = Column(String(32), nullable=False, doc='IP地址')
+    port = Column(Integer, doc='设备端口')
+    return_url = Column(String(255), doc='结果回传地址')
     device_name = Column(String(32), nullable=False, doc='设备名称')
     device_number = Column(String(32), nullable=False, doc='设备编号')
     hardware_version = Column(String(32), nullable=False, doc='硬件版本')
     web_version = Column(String(32), nullable=False, doc='Web版本')
     software_version = Column(String(32), nullable=False, doc='软件版本')
-    total_ram_storage = Column(Float, nullable=False, doc='RAM存储空间总量')
-    used_ram_storage = Column(Float, nullable=False, doc='RAM存储空间已使用量')
-    total_disk_storage = Column(Float, nullable=False, doc='磁盘存储空间总量')
-    used_disk_storage = Column(Float, nullable=False, doc='磁盘存储空间已使用量')
-    cpu_temperature = Column(Float, nullable=False, doc='CPU温度')
-    cpu_usage = Column(Float, nullable=False, doc='CPU使用率')
 
     @classmethod
     def query(cls, session: Session):

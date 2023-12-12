@@ -16,3 +16,8 @@ class UpdateTimeRequest(BaseModel):
 class UpdateConfig(BaseModel):
     ip: Optional[str]
     port: Optional[int]
+
+
+class CleanSpace(BaseModel):
+    storageThreshold: int
+    storagePeriod: int
