@@ -19,7 +19,6 @@ from apps.worker.celery_app import celery_app
 def get_algo_status(session: Session, algorithm_id: int, camera_id: int) -> bool:
     algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
                                                                     camera_id=camera_id).first()
-    logger.info(algorithm.status)
     status = 0
     if algorithm and algorithm.status:
         status = algorithm.status
@@ -68,29 +67,23 @@ def delete_folder(folder_path, folder_type):
 
 def upload_analyse_result(**kwargs):
     """上传视频流分析结果"""
-
-    analyse_result_url = 'analysis/api/analyseResult'
-    base_url = settings.return_result_url
-
-    analyse_results = kwargs['analyse_results']
+    url = kwargs['return_url']
+    output_file = kwargs['output_file']
     process_image_data = None
-    logger.info(analyse_results)
-    if analyse_results:
+    if output_file:
         with open(kwargs['output_file'], 'rb') as osd_fr:
             process_image_data = str(base64.b64encode(osd_fr.read()), encoding='utf-8')
 
     _json = {
-        "modelName": kwargs['modelName'],
-        "analyseId": kwargs['analyseId'],
+        "alarmName": kwargs['name'],
         "analyseTime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "analyseResults": analyse_results,
         "filename": kwargs['filename'],
         "ImageData": process_image_data,
     }
     try:
         logger.info("开始上传分析结果！")
         httpx.post(
-            os.path.join(base_url, analyse_result_url.strip('/')),
+            url=url,
             json=_json,
             timeout=10
         )
@@ -108,6 +101,7 @@ def start_video_task(video_task_config):
     name = video_task_config["alarm_name"]
     model_name = video_task_config["model_name"]
     frame_frequency = video_task_config["interval"]
+    return_url = video_task_config["return_url"]
     session = next(get_db_session())
     logger.info(f"当前处理视频流地址：{video_url}")
 
@@ -139,6 +133,18 @@ def start_video_task(video_task_config):
                 classnames = yolo_processor.process(input_file, output_file)
                 if classnames:
                     save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
+
+                    if return_url:
+                        # 上传分析结果
+                        upload_analyse_result(
+                            **{
+                                'alarmName': name,
+                                'modelName': model_name,
+                                'output_file': output_file,
+                                'return_url': return_url
+                            }
+                        )
+                        logger.info("分析结果回传成功-------------------")
 
             except Exception as e:
                 logger.error(f"Error in model predict: {e}")

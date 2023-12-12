@@ -1,11 +1,11 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Body
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_
 
 from apps.database import get_db_session
-from apps.models import Account, Algorithm
+from apps.models import Account, Algorithm, Box
 from apps.models.camera import Camera, CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
@@ -387,6 +387,10 @@ async def save_camera_algorithm_config(
         session.add(association)
         session.commit()
 
+    box = session.query(Box).first()
+    if not box:
+        raise HTTPException(status_code=404, detail="Device not found")
+
     config = VideoTaskConfig(
         alarm_name=algorithm.name,
         model_name=algorithm.modelName,
@@ -394,7 +398,8 @@ async def save_camera_algorithm_config(
         algorithm_id=algorithm.id,
         video_stream_url=camera.get_video_stream_url(),
         interval=association_exists.frameFrequency,
-        model_type=algorithm.modelType
+        model_type=algorithm.modelType,
+        return_url=box.return_url
     )
 
     if algorithm_config.status:
@@ -405,4 +410,29 @@ async def save_camera_algorithm_config(
         code=200,
         data=None,
         msg="摄像头算法配置已保存"
+    )
+
+
+@router.post(
+    "/camera/return",
+    description="告警回传地址配置"
+)
+async def save_camera_return_url(
+        return_url: str,
+        session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+    box = session.query(Box).first()
+    if not box:
+        raise HTTPException(status_code=404, detail="Device not found")
+    box.return_url = return_url
+    session.commit()
+    return GeneralResponse(
+        code=200,
+        msg="保存成功！"
     )
