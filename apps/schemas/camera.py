@@ -45,14 +45,10 @@ class CameraUpdateReq(CameraCreate):
 
 class AlgorithmConfig(BaseModel):
     algorithmId: int
-    modelName: Optional[str]
-    version: Optional[str]
-    repoSource: Optional[str]
-    status: Optional[int] = 0
-    frameFrequency: Optional[int] = 30
-    alamInterval: Optional[int] = 30
-
-    def update_config(self, update_params: dict):
-        for key, value in update_params.items():
-            if key in self.__annotations__:
-                setattr(self, key, value)
+    status: Optional[int]
+    startHour: Optional[int]
+    startMinute: Optional[int]
+    endHour: Optional[int]
+    endMinute: Optional[int]
+    frameFrequency: Optional[int]
+    alamInterval: Optional[int]

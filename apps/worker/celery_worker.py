@@ -1,7 +1,7 @@
 import base64
 import os
 import time
-from datetime import datetime, timedelta
+import datetime
 
 import cv2
 import httpx
@@ -11,19 +11,48 @@ from apps.config import logger
 from apps.config import settings
 from apps.database import get_db_session
 from apps.detection.infer import Detector
+from apps.models import Box
 from apps.models.camera import CameraAlgorithmAssociation
 from apps.utils.save_alarm import save_alarm
 from apps.worker.celery_app import celery_app
 
 
-def get_algo_status(session: Session, algorithm_id: int, camera_id: int) -> bool:
+def is_within_time_range(start_hour: int, start_minute: int, end_hour: int, end_minute: int):
+    """判断当前时间是否在指定范围"""
+    current_time = datetime.datetime.now().time()
+
+    start_time = datetime.time(start_hour, start_minute)
+    end_time = datetime.time(end_hour, end_minute)
+
+    return start_time <= current_time <= end_time
+
+
+def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
+    """判断算法是否可以执行"""
     algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
                                                                     camera_id=camera_id).first()
-    status = 0
-    if algorithm and algorithm.status:
-        status = algorithm.status
+
+    status, frequency, interval = algorithm.status, algorithm.frameFrequency, algorithm.alamInterval
+    if not algorithm.status:
+        logger.info("算法未启用----------------------------")
+        return False
+    res = is_within_time_range(int(algorithm.startHour),
+                               int(algorithm.startMinute),
+                               int(algorithm.endHour),
+                               int(algorithm.endMinute))
+    if not res:
+        logger.info("当前时间不在分析时段----------------------------")
+        return False
     session.close()
-    return status
+    return status, frequency, interval
+
+
+def get_return_url(session: Session):
+    """获取告警结果回传地址"""
+    box = session.query(Box).first()
+    url = box.return_url
+    session.close()
+    return url
 
 
 def screenshot(url):
@@ -76,7 +105,7 @@ def upload_analyse_result(**kwargs):
 
     _json = {
         "alarmName": kwargs['name'],
-        "analyseTime": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "analyseTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "filename": kwargs['filename'],
         "ImageData": process_image_data,
     }
@@ -93,151 +122,74 @@ def upload_analyse_result(**kwargs):
 
 
 @celery_app.task
-def start_video_task(video_task_config):
+def start_video_task(kwg):
     """视频分析任务开始"""
-    algorithm_id = video_task_config["algorithm_id"]
-    video_url = video_task_config["video_stream_url"]
-    camera_id = video_task_config["camera_id"]
-    name = video_task_config["alarm_name"]
-    model_name = video_task_config["model_name"]
-    frame_frequency = video_task_config["interval"]
-    return_url = video_task_config["return_url"]
+    algorithm_id = kwg["algorithm_id"]
+    video_url = kwg["video_stream_url"]
+    camera_id = kwg["camera_id"]
+    name = kwg["alarm_name"]
+    model_name = kwg["model_name"]
     session = next(get_db_session())
     logger.info(f"当前处理视频流地址：{video_url}")
 
     # 获取当前日期，并创建文件夹路径
-    current_date = datetime.now().strftime('%Y-%m-%d')
+    current_date = datetime.datetime.now().strftime('%Y-%m-%d')
     input_dir = os.path.join(settings.data_dir, "input", current_date)
     output_dir = os.path.join(settings.data_dir, "output", current_date)
     create_directory(input_dir)
     create_directory(output_dir)
+    last_upload_time = None
 
     while True:
-        # 判断算法开启状态
-        status = get_algo_status(session, algorithm_id, camera_id)
-        if not status:
-            logger.info(f"算法{video_task_config['name']}预测任务结束----------------------------")
-            break
+        return_url = get_return_url(session)
+        status, frequency, interval = get_algo_info(session, algorithm_id, camera_id)
+        if status:
+            frame = screenshot(video_url)
+            if frame is not None:
+                current_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
+                filename = f"{algorithm_id}-{current_time}.jpg"
+                input_file = os.path.join(input_dir, filename)
+                output_file = os.path.join(output_dir, filename)
+                cv2.imwrite(input_file, frame)
+                try:
+                    # 算法调用
+                    model_type = kwg['model_type']
+                    yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
+                    classnames = yolo_processor.process(input_file, output_file)
+                    if classnames:
+                        save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
-        frame = screenshot(video_url)
-        if frame is not None:
-            current_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
-            filename = f"{algorithm_id}-{current_time}.jpg"
-            input_file = os.path.join(input_dir, filename)
-            output_file = os.path.join(output_dir, filename)
-            cv2.imwrite(input_file, frame)
-            try:
-                # 算法调用
-                model_type = video_task_config['model_type']
-                yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
-                classnames = yolo_processor.process(input_file, output_file)
-                if classnames:
-                    save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
+                        if return_url:
+                            if last_upload_time is None or (time.time() - last_upload_time) >= interval:
+                                upload_analyse_result(
+                                    **{
+                                        'alarmName': name,
+                                        'modelName': model_name,
+                                        'output_file': output_file,
+                                        'return_url': return_url
+                                    }
+                                )
+                                logger.info("分析结果回传成功-------------------")
+                                last_upload_time = time.time()
 
-                    if return_url:
-                        # 上传分析结果
-                        upload_analyse_result(
-                            **{
-                                'alarmName': name,
-                                'modelName': model_name,
-                                'output_file': output_file,
-                                'return_url': return_url
-                            }
-                        )
-                        logger.info("分析结果回传成功-------------------")
+                except Exception as e:
+                    logger.error(f"Error in model predict: {e}")
+            else:
+                logger.info("未截取到相关图片----------------------")
 
-            except Exception as e:
-                logger.error(f"Error in model predict: {e}")
-        else:
-            logger.info("未截取到相关图片----------------------")
-
-        time.sleep(frame_frequency)
-
-
-@celery_app.task
-def delete_tmp_folder():
-    base_path = "static/data/"
-
-    previous_day = datetime.now() - timedelta(days=1)
-    previous_day_str = previous_day.strftime("%Y-%m-%d")
-
-    input_folder_to_delete = os.path.join(base_path, "input", previous_day_str)
-    output_folder_to_delete = os.path.join(base_path, "output", previous_day_str)
-
-    delete_folder(input_folder_to_delete, "输入")
-    delete_folder(output_folder_to_delete, "输出")
+        # 抽帧间隔
+        time.sleep(frequency)
 
 
 # @celery_app.task
-# def start_video_task(kwg):
-#     """视频分析任务开始"""
-#     start_time = int(kwg.get('startTime').timestamp())
-#     end_time = int(kwg.get('endTime').timestamp())
+# def delete_tmp_folder():
+#     base_path = "static/data/"
 #
-#     video_info = kwg.get('videoInfo')
-#     cache = RedisCache(settings.redis_url)
-#     model_name = model_config.get(kwg.get('modelName'))
+#     previous_day = datetime.now() - timedelta(days=7)
+#     previous_day_str = previous_day.strftime("%Y-%m-%d")
 #
-#     input_dir = os.path.join(settings.data_dir, "input")
-#     output_dir = os.path.join(settings.data_dir, "output")
-#     create_directory(output_dir)
+#     input_folder_to_delete = os.path.join(base_path, "input", previous_day_str)
+#     output_folder_to_delete = os.path.join(base_path, "output", previous_day_str)
 #
-#     logger.info("current %s" % (time.time()))
-#     now_local = datetime.fromtimestamp(int(time.time()))
-#     start_datetime = datetime.fromtimestamp(start_time)
-#     end_datetime = datetime.fromtimestamp(end_time)
-#     # 小于开始时间
-#     if now_local < start_datetime:
-#         time.sleep(int((start_datetime - now_local).total_seconds()))
-#         return
-#
-#     # 大于结束时间
-#     if now_local > end_datetime:
-#         return
-#
-#     if len(video_info) == 0:
-#         return
-#     try:
-#         for info in video_info:
-#             # 任务删除或停止
-#             analyse_id = info.get('analyseId')
-#             logger.info("analyseId is %s" % analyse_id)
-#             openid = f"analyseId:{analyse_id}"
-#             # 任务停止
-#             if cache.get(openid) == 0:
-#                 continue
-#             elif cache.get(openid) == 2 or cache.get(openid) is None:
-#                 video_info.remove(info)
-#
-#             frame = screenshot(info.get('videoUrl'))
-#             filename = f"{analyse_id}-{time.time()}.jpg"
-#             input_file = os.path.join(input_dir, filename)
-#             output_file = os.path.join(output_dir, filename)
-#
-#             if frame is None:
-#                 logger.info("未截取到图片")
-#                 continue
-#
-#             cv2.imwrite(input_file, frame)
-#
-#             # 算法调用
-#             yolo_processor = YOLOProcessor('apps/detection/weights/' + str(model_name))
-#             json_result, _ = yolo_processor.process(input_file, output_file)
-#
-#             # 上传分析结果
-#             upload_analyse_result(
-#                 **{
-#                     'modelName': model_name,
-#                     'analyseId': analyse_id,
-#                     'filename': filename,
-#                     'output_file': output_file,
-#                     'analyse_results': json_result,
-#                 }
-#             )
-#
-#             # delete local image data
-#             delete_file(input_file)
-#             delete_file(output_file)
-#
-#     except Exception as e:
-#         logger.info(e)
+#     delete_folder(input_folder_to_delete, "输入")
+#     delete_folder(output_folder_to_delete, "输出")

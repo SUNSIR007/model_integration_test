@@ -373,6 +373,7 @@ async def save_camera_algorithm_config(
         .filter_by(camera_id=cameraId, algorithm_id=algorithm.id)
         .first()
     )
+    original_status = association_exists.status
 
     if association_exists:
         association_exists.update(session, algorithm_config.dict())
@@ -392,11 +393,10 @@ async def save_camera_algorithm_config(
         algorithm_id=algorithm.id,
         video_stream_url=camera.get_video_stream_url(),
         interval=association_exists.frameFrequency,
-        model_type=algorithm.modelType,
-        return_url=box.return_url
+        model_type=algorithm.modelType
     )
 
-    if algorithm_config.status:
+    if algorithm_config.status and not original_status:
         video_task_server = VideoTaskServer()
         video_task_server.start(config)
 
