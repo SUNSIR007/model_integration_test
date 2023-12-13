@@ -32,7 +32,7 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
                                                                     camera_id=camera_id).first()
 
-    status, frequency, interval = algorithm.status, algorithm.frameFrequency, algorithm.alamInterval
+    status, frequency, interval, conf = algorithm.status, algorithm.frameFrequency, algorithm.alamInterval, algorithm.conf
     if not algorithm.status:
         logger.info("算法未启用----------------------------")
         return False
@@ -44,7 +44,7 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
         logger.info("当前时间不在分析时段----------------------------")
         return False
     session.close()
-    return status, frequency, interval
+    return status, frequency, interval, conf
 
 
 def get_return_url(session: Session):
@@ -142,7 +142,7 @@ def start_video_task(kwg):
 
     while True:
         return_url = get_return_url(session)
-        status, frequency, interval = get_algo_info(session, algorithm_id, camera_id)
+        status, frequency, interval, conf = get_algo_info(session, algorithm_id, camera_id)
         if status:
             frame = screenshot(video_url)
             if frame is not None:
@@ -155,7 +155,7 @@ def start_video_task(kwg):
                     # 算法调用
                     model_type = kwg['model_type']
                     yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
-                    classnames = yolo_processor.process(input_file, output_file)
+                    classnames = yolo_processor.process(input_file, output_file, conf)
                     if classnames:
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
@@ -179,7 +179,6 @@ def start_video_task(kwg):
 
         # 抽帧间隔
         time.sleep(frequency)
-
 
 # @celery_app.task
 # def delete_tmp_folder():

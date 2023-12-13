@@ -5,15 +5,15 @@ from ultralytics import YOLO
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
 
-from apps.config import settings
+# from apps.config import settings
 
 
 class YOLODetector:
     def __init__(self, model_path):
         self.model = YOLO(model_path)
 
-    def detect(self, img_path):
-        results = self.model.predict(source=img_path, conf=0.5, device=settings.device)
+    def detect(self, img_path, conf):
+        results = self.model.predict(source=img_path, conf=conf, device='cpu')
         return results[0]
 
 
@@ -70,15 +70,15 @@ class Detector:
         else:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
-    def process(self, input_path, output_path):
-        return self.processor.process(input_path, output_path)
+    def process(self, input_path, output_path, conf=0.5):
+        return self.processor.process(input_path, output_path, conf)
 
     class YOLOProcessor:
         def __init__(self, model_path):
             self.detector = YOLODetector(model_path)
 
-        def process(self, input_path, output_path):
-            result = self.detector.detect(input_path)
+        def process(self, input_path, output_path, conf):
+            result = self.detector.detect(input_path, conf)
             processor = ResultProcessor(result)
             processor.save_image(output_path)
             json_result = processor.save_json()
@@ -86,43 +86,60 @@ class Detector:
 
     class GarbageProcessor:
         def __init__(self, model_path):
-            self.device = torch.device(settings.device)
+            self.device = torch.device('cpu')
             self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')
             self.class_names = self.model.names
 
-        def process(self, input_path, output_path):
+        def process(self, input_path, output_path, conf):
             result = self.model(input_path)
-            if len(result.xyxy) == 0:
+
+            # 获取置信度
+            confidences = result.xyxy[0][:, -1]
+
+            # 过滤置信度低于阈值的检测结果
+            mask = confidences >= conf
+            filtered_result = result.xyxy[0][mask]
+
+            if len(filtered_result) == 0:
                 return None
 
-            classnames = [self.class_names[i.item()] for i in result.xyxy[0][:, -1].int()]
-            image_array = result.render()[0]
-
-            # Save image
-            image = Image.fromarray(image_array)
-            image.save(output_path)
+            classnames = [self.class_names[i.item()] for i in filtered_result[:, -1].int()]
+            filtered_image_array = result.render()[0]
+            filtered_image = Image.fromarray(filtered_image_array)
+            filtered_image.save(output_path)
             return classnames
 
     class ModelscopeDetector:
         def __init__(self, model_path):
             self.model_id = model_path
-            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device=settings.device)
+            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device='cpu')
 
-        def process(self, input_path, output_path):
+        def process(self, input_path, output_path, conf):
             result = self.detector(input_path)
-            classnames = result['labels']
+
+            # 获取置信度
+            confidences = result['scores']
+
+            # 过滤置信度低于阈值的检测结果
+            mask = confidences >= conf
+            filtered_boxes = [box for i, box in enumerate(result['boxes']) if mask[i]]
+            filtered_labels = [label for i, label in enumerate(result['labels']) if mask[i]]
+
+            if not filtered_boxes:
+                return None
+
             image = Image.open(input_path)
             draw = ImageDraw.Draw(image)
 
-            for box, label in zip(result['boxes'], result['labels']):
+            for box, label in zip(filtered_boxes, filtered_labels):
                 x_min, y_min, x_max, y_max = box
                 draw.rectangle([x_min, y_min, x_max, y_max], outline="red", width=3)
 
             image.save(output_path)
 
-            return classnames
+            return filtered_labels
 
 
 if __name__ == '__main__':
-    model_wrapper = Detector('weights/damo/cigarette', 'yolov8')
-    model_wrapper.process('input/smoke.jpg', 'output/smoke.jpg')
+    model_wrapper = Detector('weights/fire.pt', 'yolov8')
+    model_wrapper.process('input/fire3.jpg', 'output/fire.jpg', 0.4)

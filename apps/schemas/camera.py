@@ -52,3 +52,4 @@ class AlgorithmConfig(BaseModel):
     endMinute: Optional[int]
     frameFrequency: Optional[int]
     alamInterval: Optional[int]
+    conf: Optional[float]
