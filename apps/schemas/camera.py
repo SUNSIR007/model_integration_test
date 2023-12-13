@@ -45,7 +45,7 @@ class CameraUpdateReq(CameraCreate):
 
 class AlgorithmConfig(BaseModel):
     algorithmId: int
-    status: Optional[int]
+    status: Optional[int] = 0
     startHour: Optional[int]
     startMinute: Optional[int]
     endHour: Optional[int]
