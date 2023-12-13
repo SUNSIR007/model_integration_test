@@ -400,7 +400,6 @@ async def save_camera_algorithm_config(
         camera_id=cameraId,
         algorithm_id=algorithm.id,
         video_stream_url=camera.get_video_stream_url(),
-        interval=association_exists.frameFrequency,
         model_type=algorithm.modelType
     )
 
