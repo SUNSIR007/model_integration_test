@@ -231,7 +231,11 @@ async def get_camera_algorithms(
                 "status": camera.status,
                 "frameFrequency": association.frameFrequency,
                 "alamInterval": association.alamInterval,
-                "roiValues": []
+                "conf": association.conf,
+                "startHour": association.startHour,
+                "startMinute": association.startMinute,
+                "endHour": association.endHour,
+                "endMinute": association.endMinute
             })
         return GeneralResponse(
             code=200,
