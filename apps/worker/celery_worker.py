@@ -116,7 +116,7 @@ def start_video_task(video_task_config):
         # 判断算法开启状态
         status = get_algo_status(session, algorithm_id, camera_id)
         if not status:
-            logger.info(f"算法{video_task_config['model_name']}预测任务结束----------------------------")
+            logger.info(f"算法{video_task_config['name']}预测任务结束----------------------------")
             break
 
         frame = screenshot(video_url)

@@ -53,7 +53,7 @@ class ProdSettings(ServiceBaseSettings):
     celery_worker_concurrency: int = 3
 
     proj_dir: str = PROJ_DIR
-    data_dir: str = os.path.join(PROJ_DIR, 'static/data')
+    data_dir: str = os.path.join('static/data')
 
     device: str = '0'
 
@@ -85,7 +85,7 @@ class LocalSettings(ServiceBaseSettings):
     celery_worker_concurrency: int = 3
 
     proj_dir: str = PROJ_DIR
-    data_dir: str = os.path.join(PROJ_DIR, 'static/data')
+    data_dir: str = os.path.join('static/data')
 
     device: str = 'cpu'
 

@@ -24,6 +24,7 @@ class Camera(Base):
     port = Column(String(255), nullable=False, doc="端口")
     username = Column(String(255), doc="用户名")
     password = Column(String(255), doc="密码")
+    video_url = Column(String(255), nullable=False, doc="监控视频流地址")
     createTime = Column(DateTime, default=datetime.now(tz), doc="创建时间")
     updateTime = Column(DateTime, default=datetime.now(tz), onupdate=datetime.now(tz), doc="更新时间")
     algorithms = relationship("Algorithm", secondary="camera_algorithm_association")
@@ -57,14 +58,16 @@ class Camera(Base):
         """
         获取监控视频流地址
         """
-        protocol = self.protocol.lower()
-        username = self.username if self.username else ""
-        password = self.password if self.password else ""
-        ip = self.ip
-        port = self.port
-        url = self.url
-
-        video_stream_url = f"{protocol}://{username}:{password}@{ip}:{port}/{url}"
+        if self.video_url:
+            video_stream_url = self.video_url
+        else:
+            protocol = self.protocol.lower()
+            username = self.username if self.username else ""
+            password = self.password if self.password else ""
+            ip = self.ip
+            port = self.port
+            url = self.url
+            video_stream_url = f"{protocol}://{username}:{password}@{ip}:{port}/{url}"
 
         return video_stream_url
 
