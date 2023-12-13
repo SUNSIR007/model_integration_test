@@ -381,10 +381,10 @@ async def save_camera_algorithm_config(
         .filter_by(camera_id=cameraId, algorithm_id=algorithm.id)
         .first()
     )
-    original_status = association_exists.status
-
+    original_status = None
     if association_exists:
         association_exists.update(session, algorithm_config.dict())
+        original_status = association_exists.status
     else:
         association = CameraAlgorithmAssociation(camera_id=cameraId, algorithm_id=algorithm.id)
         session.add(association)

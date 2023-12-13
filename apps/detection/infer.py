@@ -5,7 +5,7 @@ from ultralytics import YOLO
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
 
-# from apps.config import settings
+from apps.config import settings
 
 
 class YOLODetector:
@@ -13,7 +13,7 @@ class YOLODetector:
         self.model = YOLO(model_path)
 
     def detect(self, img_path, conf):
-        results = self.model.predict(source=img_path, conf=conf, device='cpu')
+        results = self.model.predict(source=img_path, conf=conf, device=settings.device)
         return results[0]
 
 
@@ -86,7 +86,7 @@ class Detector:
 
     class GarbageProcessor:
         def __init__(self, model_path):
-            self.device = torch.device('cpu')
+            self.device = torch.device(settings.device)
             self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')
             self.class_names = self.model.names
 
@@ -112,7 +112,7 @@ class Detector:
     class ModelscopeDetector:
         def __init__(self, model_path):
             self.model_id = model_path
-            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device='cpu')
+            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device=settings.device)
 
         def process(self, input_path, output_path, conf):
             result = self.detector(input_path)
