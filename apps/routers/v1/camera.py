@@ -339,7 +339,7 @@ async def get_camera_algorithm(
         "algorithmName": algorithm.name,
         "cameraId": camera_info.camera_id,
         "cameraName": camera_info.name,
-        "status": camera_info.status,
+        "status": association.status,
         "frameFrequency": association.frameFrequency,
         "alamInterval": association.alamInterval,
         "conf": association.conf,
