@@ -111,7 +111,7 @@ class Detector:
 
     class ModelscopeDetector:
         def __init__(self, model_path):
-            self.model_id = model_path
+            self.model_id = model_path.replace("apps/detection/", "", 1)
             self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device=settings.device)
 
         def process(self, input_path, output_path, conf):
@@ -141,5 +141,5 @@ class Detector:
 
 
 if __name__ == '__main__':
-    model_wrapper = Detector('weights/fire.pt', 'yolov8')
+    model_wrapper = Detector('weights/damo/safety-helmet', 'modelscope')
     model_wrapper.process('input/fire3.jpg', 'output/fire.jpg', 0.4)
