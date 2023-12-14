@@ -229,7 +229,8 @@ async def get_camera_algorithms(
         algorithm_data = []
         for algorithm in algorithms:
             association = session.query(CameraAlgorithmAssociation).filter(
-                CameraAlgorithmAssociation.algorithm_id == algorithm.id).first()
+                CameraAlgorithmAssociation.algorithm_id == algorithm.id,
+                CameraAlgorithmAssociation.camera_id == cameraId).first()
             algorithm_data.append({
                 "algorithmId": algorithm.id,
                 "algorithmName": algorithm.name,
