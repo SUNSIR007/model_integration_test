@@ -35,14 +35,14 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     status, frequency, interval, conf = algorithm.status, algorithm.frameFrequency, algorithm.alamInterval, algorithm.conf
     if not algorithm.status:
         logger.info("算法未启用----------------------------")
-        return False, None, None, None
+        return False, frequency, interval, conf
     res = is_within_time_range(int(algorithm.startHour),
                                int(algorithm.startMinute),
                                int(algorithm.endHour),
                                int(algorithm.endMinute))
     if not res:
         logger.info("当前时间不在分析时段----------------------------")
-        return False, None, None, None
+        return False, frequency, interval, conf
     session.close()
     return status, frequency, interval, conf
 
