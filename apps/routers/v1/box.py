@@ -197,26 +197,6 @@ async def reboot_system(
     )
 
 
-@router.delete(
-    '/box',
-    response_model=None,
-    status_code=status.HTTP_200_OK,
-    description="清空数据",
-)
-async def delete_data(
-        db_session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-) -> None:
-    if current_user.role != '管理员':
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-    # 删除所有服务器实例
-    db_session.query(Box).delete()
-    db_session.commit()
-
-
 @router.get(
     '/box/time',
     response_model=dict,

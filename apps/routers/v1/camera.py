@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, status, HTTPException, Body
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 
 from apps.database import get_db_session
 from apps.models import Account, Algorithm, Box
@@ -214,10 +214,13 @@ async def get_camera_algorithms(
     camera = session.query(Camera).options(joinedload(Camera.algorithms)).get(cameraId)
 
     if camera:
-        algorithms = camera.algorithms
+        algorithms_query = session.query(Algorithm).filter(
+            Algorithm.id.in_([algorithm.id for algorithm in camera.algorithms]))
 
         if algorithmName:
-            algorithms = [algorithm for algorithm in algorithms if algorithm.name == algorithmName]
+            algorithms_query = algorithms_query.filter(func.lower(Algorithm.name).ilike(f'%{algorithmName.lower()}%'))
+
+        algorithms = algorithms_query.all()
 
         algorithm_data = []
         for algorithm in algorithms:
@@ -293,14 +296,15 @@ async def get_camera_page(
 
 
 @router.get(
-    '/camera/{cameraId}/algorithm/{cameraAlgorithmId}',
+    '/camera/{cameraId}/algorithm',
     response_model=GeneralResponse,
     status_code=status.HTTP_200_OK,
     description="获取摄像头算法"
 )
 async def get_camera_algorithm(
         cameraId: int,
-        cameraAlgorithmId: int,
+        cameraAlgorithmId: Optional[int] = None,
+        algorithm_name: Optional[str] = None,
         session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
@@ -310,12 +314,15 @@ async def get_camera_algorithm(
             detail="Access denied",
         )
 
-    algorithm = (
-        session.query(Algorithm)
-        .options(joinedload(Algorithm.cameras))
-        .filter(Algorithm.id == cameraAlgorithmId)
-        .first()
-    )
+    algorithm_query = session.query(Algorithm).options(joinedload(Algorithm.cameras))
+
+    if cameraAlgorithmId:
+        algorithm_query = algorithm_query.filter(Algorithm.id == cameraAlgorithmId)
+
+    if algorithm_name:
+        algorithm_query = algorithm_query.filter(Algorithm.name.ilike(f'%{algorithm_name}%'))
+
+    algorithm = algorithm_query.first()
 
     if not algorithm:
         raise HTTPException(status_code=404, detail="Camera algorithm not found")
@@ -330,7 +337,7 @@ async def get_camera_algorithm(
         raise HTTPException(status_code=404, detail="Camera not found")
 
     association = session.query(CameraAlgorithmAssociation).filter(
-        CameraAlgorithmAssociation.algorithm_id == cameraAlgorithmId,
+        CameraAlgorithmAssociation.algorithm_id == algorithm.id,
         CameraAlgorithmAssociation.camera_id == cameraId
     ).first()
 
