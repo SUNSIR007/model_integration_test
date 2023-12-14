@@ -201,6 +201,7 @@ async def delete_camera(
 )
 async def get_camera_algorithms(
         cameraId: int,
+        cameraAlgorithmId: Optional[str] = None,
         algorithmName: Optional[str] = None,
         session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
@@ -216,6 +217,9 @@ async def get_camera_algorithms(
     if camera:
         algorithms_query = session.query(Algorithm).filter(
             Algorithm.id.in_([algorithm.id for algorithm in camera.algorithms]))
+
+        if cameraAlgorithmId:
+            algorithms_query = algorithms_query.filter(Algorithm.id == cameraAlgorithmId)
 
         if algorithmName:
             algorithms_query = algorithms_query.filter(func.lower(Algorithm.name).ilike(f'%{algorithmName.lower()}%'))
@@ -293,70 +297,6 @@ async def get_camera_page(
             "total": len(camera_infos)
         }
     }
-
-
-@router.get(
-    '/camera/{cameraId}/algorithm',
-    response_model=GeneralResponse,
-    status_code=status.HTTP_200_OK,
-    description="获取摄像头算法"
-)
-async def get_camera_algorithm(
-        cameraId: int,
-        cameraAlgorithmId: Optional[int] = None,
-        algorithm_name: Optional[str] = None,
-        session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-) -> GeneralResponse:
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-
-    algorithm_query = session.query(Algorithm).options(joinedload(Algorithm.cameras))
-
-    if cameraAlgorithmId:
-        algorithm_query = algorithm_query.filter(Algorithm.id == cameraAlgorithmId)
-
-    if algorithm_name:
-        algorithm_query = algorithm_query.filter(Algorithm.name.ilike(f'%{algorithm_name}%'))
-
-    algorithm = algorithm_query.first()
-
-    if not algorithm:
-        raise HTTPException(status_code=404, detail="Camera algorithm not found")
-
-    camera_info = None
-    for camera in algorithm.cameras:
-        if camera.camera_id == cameraId:
-            camera_info = CameraInfo.from_orm(camera)
-            break
-
-    if not camera_info:
-        raise HTTPException(status_code=404, detail="Camera not found")
-
-    association = session.query(CameraAlgorithmAssociation).filter(
-        CameraAlgorithmAssociation.algorithm_id == algorithm.id,
-        CameraAlgorithmAssociation.camera_id == cameraId
-    ).first()
-
-    algorithm_data = {
-        "algorithmId": algorithm.id,
-        "algorithmName": algorithm.name,
-        "cameraId": camera_info.camera_id,
-        "cameraName": camera_info.name,
-        "status": association.status,
-        "frameFrequency": association.frameFrequency,
-        "alamInterval": association.alamInterval,
-        "conf": association.conf,
-        "startHour": association.startHour,
-        "startMinute": association.startMinute,
-        "endHour": association.endHour,
-        "endMinute": association.endMinute
-    }
-
-    return GeneralResponse(code=0, data=algorithm_data, msg="")
 
 
 @router.post(
