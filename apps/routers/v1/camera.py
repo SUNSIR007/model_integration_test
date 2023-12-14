@@ -368,6 +368,7 @@ async def save_camera_algorithm_config(
 )
 async def save_camera_return_url(
         return_url: str,
+        access_token: Optional[str],
         session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
@@ -380,6 +381,7 @@ async def save_camera_return_url(
     if not box:
         raise HTTPException(status_code=404, detail="Device not found")
     box.return_url = return_url
+    box.return_token = access_token
     session.commit()
     return GeneralResponse(
         code=200,

@@ -47,12 +47,12 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     return status, frequency, interval, conf
 
 
-def get_return_url(session: Session):
-    """获取告警结果回传地址"""
+def get_return(session: Session):
+    """获取告警结果回传地址,token"""
     box = session.query(Box).first()
-    url = box.return_url
+    url, token = box.return_url, box.return_token
     session.close()
-    return url
+    return url, token
 
 
 def screenshot(url):
@@ -94,29 +94,54 @@ def delete_folder(folder_path, folder_type):
         logger.info(f"{folder_type}文件夹不存在: {folder_path}")
 
 
+def authentication_required(func):
+    def wrapper(*args, **kwargs):
+        access_token = kwargs.get('access_token', '')
+
+        # 如果提供了 access_token，则加入参数中
+        if access_token:
+            # 在头部包含鉴权信息
+            headers = {
+                'Authorization': f'Bearer {access_token}',
+                'Content-Type': 'application/json',
+            }
+
+            # 将头部添加到 kwargs 中
+            kwargs['headers'] = headers
+
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+@authentication_required
 def upload_analyse_result(**kwargs):
     """上传视频流分析结果"""
-    url = kwargs['return_url']
-    output_file = kwargs['output_file']
+    output_file = kwargs.get('output_file', '')
     process_image_data = None
+
     if output_file:
-        with open(kwargs['output_file'], 'rb') as osd_fr:
+        with open(output_file, 'rb') as osd_fr:
             process_image_data = str(base64.b64encode(osd_fr.read()), encoding='utf-8')
 
     _json = {
-        "alarmName": kwargs['name'],
+        "alarmName": kwargs.get('alarmName', ''),
         "analyseTime": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "filename": kwargs['filename'],
-        "ImageData": process_image_data,
+        "ImageData": process_image_data
     }
+
     try:
         logger.info("开始上传分析结果！")
+
         httpx.post(
-            url=url,
+            url=kwargs.get('return_url', ''),
             json=_json,
-            timeout=10
+            timeout=10,
+            headers=kwargs.get('headers', {})
         )
+
         logger.info("分析结果上传完成！")
+
     except httpx.HTTPError as exc:
         logger.error(exc)
 
@@ -141,7 +166,7 @@ def start_video_task(kwg):
     last_upload_time = None
 
     while True:
-        return_url = get_return_url(session)
+        return_url, access_token = get_return(session)
         status, frequency, interval, conf = get_algo_info(session, algorithm_id, camera_id)
         if status:
             frame = screenshot(video_url)
@@ -164,9 +189,9 @@ def start_video_task(kwg):
                                 upload_analyse_result(
                                     **{
                                         'alarmName': name,
-                                        'modelName': model_name,
                                         'output_file': output_file,
-                                        'return_url': return_url
+                                        'return_url': return_url,
+                                        'access_token': access_token
                                     }
                                 )
                                 logger.info("分析结果回传成功-------------------")

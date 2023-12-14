@@ -13,6 +13,7 @@ class Box(Base):
     ip_address = Column(String(32), nullable=False, doc='IP地址')
     port = Column(Integer, doc='设备端口')
     return_url = Column(String(255), doc='结果回传地址')
+    return_token = Column(String(255), doc='回传地址bear token')
     device_name = Column(String(32), nullable=False, doc='设备名称')
     device_number = Column(String(32), nullable=False, doc='设备编号')
     hardware_version = Column(String(32), nullable=False, doc='硬件版本')
