@@ -111,8 +111,9 @@ class Detector:
 
     class ModelscopeDetector:
         def __init__(self, model_path):
-            self.model_id = model_path.replace("apps/detection/", "", 1)
-            self.detector = pipeline(Tasks.domain_specific_object_detection, model=self.model_id, device=settings.device)
+            self.model_id = model_path
+            self.detector = pipeline(Tasks.domain_specific_object_detection,
+                                     model=model_path.replace("apps/detection/", "", 1), device=settings.device)
 
         def process(self, input_path, output_path, conf):
             result = self.detector(input_path)
