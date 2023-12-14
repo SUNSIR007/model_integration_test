@@ -259,7 +259,7 @@ async def get_system_info() -> GeneralResponse:
     memory_usage = get_memory_usage()
     disk_total = get_disk_total()
     disk_usage = get_disk_usage()
-    temperature = get_temperature()
+    # temperature = get_temperature()
     cpu_usage = get_cpu_usage()
 
     # 构造返回数据字典
@@ -268,7 +268,7 @@ async def get_system_info() -> GeneralResponse:
         "memoryUsage": memory_usage,
         "diskTotal": disk_total,
         "diskUsage": disk_usage,
-        "temperature": temperature,
+        "temperature": 0,
         "cpuusage": cpu_usage
     }
 
