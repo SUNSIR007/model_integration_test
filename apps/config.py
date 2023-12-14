@@ -47,7 +47,7 @@ class ProdSettings(ServiceBaseSettings):
     db_url: str = "sqlite:///model_integration.db"
 
     # celery config
-    celery_broker_url: str = "redis://127.0.0.1/1"
+    celery_broker_url: str = "redis://:byjs666@127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-prod"
     celery_worker_max_tasks_per_child: int = 2
     celery_worker_concurrency: int = 3

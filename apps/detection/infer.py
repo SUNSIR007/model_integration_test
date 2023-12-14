@@ -112,7 +112,7 @@ class Detector:
     class ModelscopeDetector:
         def __init__(self, model_path):
             self.model_id = model_path
-            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device=settings.device)
+            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device='gpu')
 
         def process(self, input_path, output_path, conf):
             result = self.detector(input_path)
