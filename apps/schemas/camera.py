@@ -13,16 +13,16 @@ class AlgorithmInstance(BaseModel):
 
 class CameraCreate(BaseModel):
     name: str
-    address: str = None
+    address: Optional[str]
     status: str
-    channelNum: int
-    protocol: str = None
-    url: str = None
-    ip: str = None
-    port: str = None
-    username: str = None
-    password: str = None
-    video_url: str = None
+    channelNum: Optional[str]
+    protocol: str
+    url: str
+    ip: str
+    port: str
+    username: Optional[str]
+    password: Optional[str]
+    video_url: str
 
     class Config:
         orm_mode = True
@@ -37,8 +37,18 @@ class CameraInfo(CameraCreate):
         orm_mode = True
 
 
-class CameraUpdateReq(CameraCreate):
-    camera_id: int
+class CameraUpdateReq(BaseModel):
+    name: Optional[str]
+    address: Optional[str]
+    status: Optional[str]
+    channelNum: Optional[str]
+    protocol: Optional[str]
+    url: Optional[str]
+    ip: Optional[str]
+    port: Optional[str]
+    username: Optional[str]
+    password: Optional[str]
+    video_url: Optional[str]
 
     class Config:
         orm_mode = True
