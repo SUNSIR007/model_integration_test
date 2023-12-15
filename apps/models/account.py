@@ -14,7 +14,7 @@ tz = pytz.timezone('Asia/Shanghai')
 class Account(Base):
     __tablename__ = "accounts"
     id = Column(Integer, primary_key=True, autoincrement=True, doc='用户编号')
-    username = Column(String(32), doc='用户名')
+    username = Column(String(32), nullable=False, doc='用户名')
     encrypted_password = Column(String(64), nullable=False, doc='密码')
     email = Column(String(32), index=True, nullable=False, doc='邮箱')
     phone = Column(String(32), index=True, nullable=False, doc='电话')

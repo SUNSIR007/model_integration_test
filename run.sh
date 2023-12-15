@@ -11,4 +11,4 @@ celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule -
 # 进程池
 # celery -A apps.worker.celery_app worker -l INFO  -P solo
 # 启用监控
-#celery -A apps.worker.celery_app flower
+# celery -A apps.worker.celery_app flower

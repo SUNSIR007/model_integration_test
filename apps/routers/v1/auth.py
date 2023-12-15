@@ -3,7 +3,7 @@ from typing import Union
 
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Header
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
+from jose import jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 

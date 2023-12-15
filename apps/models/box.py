@@ -1,5 +1,4 @@
-from datetime import datetime
-from sqlalchemy import Column, String, Integer, DateTime, Float
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import Session
 
 from apps.database import Base
@@ -19,6 +18,9 @@ class Box(Base):
     hardware_version = Column(String(32), nullable=False, doc='硬件版本')
     web_version = Column(String(32), nullable=False, doc='Web版本')
     software_version = Column(String(32), nullable=False, doc='软件版本')
+    data_folder = Column(String(32), nullable=False, doc='数据目录')
+    storage_period = Column(Integer, doc='磁盘清理日期')
+    storage_threshold = Column(Integer, doc='磁盘清理阈值百分比')
 
     @classmethod
     def query(cls, session: Session):

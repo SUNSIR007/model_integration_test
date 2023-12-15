@@ -22,6 +22,7 @@ class CameraCreate(BaseModel):
     port: str = None
     username: str = None
     password: str = None
+    video_url: str = None
 
     class Config:
         orm_mode = True
@@ -45,7 +46,7 @@ class CameraUpdateReq(CameraCreate):
 
 class AlgorithmConfig(BaseModel):
     algorithmId: int
-    status: Optional[int] = 0
+    status: Optional[bool] = 0
     startHour: Optional[int]
     startMinute: Optional[int]
     endHour: Optional[int]

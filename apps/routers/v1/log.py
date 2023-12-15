@@ -1,12 +1,10 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
-from typing import List
-
 from sqlalchemy.orm import Session
 
 from apps.database import get_db_session
 from apps.models import OperateLog, Account
 from apps.routers.v1.auth import get_current_user
-from apps.schemas.log import OperateLogPageResponse, OperateLogResp
+from apps.schemas.log import OperateLogPageResponse
 
 router = APIRouter(tags=["操作日志"])
 

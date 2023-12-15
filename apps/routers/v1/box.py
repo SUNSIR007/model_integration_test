@@ -1,11 +1,11 @@
-from datetime import datetime, timedelta
+import os
+from datetime import datetime
 from subprocess import run
 import re
 import pytz
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
-from apps.config import settings
 from apps.database import get_db_session
 from apps.models import Account
 from apps.models.box import Box
@@ -13,10 +13,10 @@ from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
 from apps.schemas.box import UpdateSystemNameRequest, UpdateTimeRequest, UpdateConfig, CleanSpace
 from apps.utils.box import get_memory_total, get_memory_usage, get_disk_total, get_disk_usage, get_temperature, \
-    get_cpu_usage, delete_folders_before_date
+    get_cpu_usage
 
 router = APIRouter(tags=["盒子管理"])
-fronted_path = 'webconfig.js'
+fronted_path = '../dist/webconfig.js'
 run_path = 'run.sh'
 
 
@@ -168,6 +168,12 @@ async def reset_system(
             status_code=403,
             detail="Access denied",
         )
+
+    if os.path.exists('./model_integration.db'):
+        os.remove('./model_integration.db')
+    if os.path.exists('static/data'):
+        os.remove('static/data')
+
     return GeneralResponse(
         code=200,
         data=True
@@ -243,7 +249,9 @@ async def get_device_info(
             "firmwareVersion": box.hardware_version,
             "webVersion": box.web_version,
             "softwareVersion": box.software_version,
-            "ip": box.ip_address
+            "ip": box.ip_address,
+            "storage_period": box.storage_period,
+            "storage_threshold": box.storage_threshold
         }
     )
 
@@ -286,7 +294,7 @@ async def get_system_info() -> GeneralResponse:
 async def clean_space(
         cleanConfig: CleanSpace,
         current_user: Account = Depends(get_current_user),
-
+        db_session: Session = Depends(get_db_session)
 ) -> GeneralResponse:
     if current_user.role != '管理员':
         raise HTTPException(
@@ -294,10 +302,12 @@ async def clean_space(
             detail="Access denied",
         )
 
-    usage_percentage = get_disk_usage() / get_disk_total() * 100
-    if usage_percentage > cleanConfig.storageThreshold:
-        target_date = datetime.now() - timedelta(days=cleanConfig.storagePeriod)
-        delete_folders_before_date(base_folder=settings.data_dir, target_date=target_date)
+    box = db_session.query(Box).first()
+    if not box:
+        raise HTTPException(status_code=404, detail="Server not found")
+    box.storage_period, box.storage_threshold = cleanConfig.storagePeriod, cleanConfig.storageThreshold
+    db_session.commit()
+
     return GeneralResponse(
         code=200,
         msg="配置保存成功"

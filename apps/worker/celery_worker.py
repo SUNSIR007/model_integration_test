@@ -7,14 +7,15 @@ import cv2
 import httpx
 from sqlalchemy.orm import Session
 
-from apps.config import logger
-from apps.config import settings
+from apps.config import logger, settings
 from apps.database import get_db_session
 from apps.detection.infer import Detector
 from apps.models import Box
 from apps.models.camera import CameraAlgorithmAssociation
+from apps.utils.box import delete_folders_before_date, get_disk_usage, get_disk_total
 from apps.utils.save_alarm import save_alarm
 from apps.worker.celery_app import celery_app
+from apps.database import get_db_session
 
 
 def is_within_time_range(start_hour: int, start_minute: int, end_hour: int, end_minute: int):
@@ -28,23 +29,19 @@ def is_within_time_range(start_hour: int, start_minute: int, end_hour: int, end_
 
 
 def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
-    """判断算法是否可以执行"""
     algorithm = session.query(CameraAlgorithmAssociation).filter_by(algorithm_id=algorithm_id,
                                                                     camera_id=camera_id).first()
 
-    status, frequency, interval, conf = algorithm.status, algorithm.frameFrequency, algorithm.alamInterval, algorithm.conf
-    if not algorithm.status:
-        logger.info("算法未启用----------------------------")
-        return False, frequency, interval, conf
+    status = algorithm.status
+    frequency = algorithm.frameFrequency
+    interval = algorithm.alamInterval
+    conf = algorithm.conf
     res = is_within_time_range(int(algorithm.startHour),
                                int(algorithm.startMinute),
                                int(algorithm.endHour),
                                int(algorithm.endMinute))
-    if not res:
-        logger.info("当前时间不在分析时段----------------------------")
-        return False, frequency, interval, conf
     session.close()
-    return status, frequency, interval, conf
+    return status, frequency, interval, conf, res
 
 
 def get_return(session: Session):
@@ -131,7 +128,7 @@ def upload_analyse_result(**kwargs):
     }
 
     try:
-        logger.info("开始上传分析结果！")
+        logger.info("开始上传分析结果-------------------------")
 
         httpx.post(
             url=kwargs.get('return_url', ''),
@@ -140,7 +137,7 @@ def upload_analyse_result(**kwargs):
             headers=kwargs.get('headers', {})
         )
 
-        logger.info("分析结果上传完成！")
+        logger.info("分析结果上传完成--------------------------")
 
     except httpx.HTTPError as exc:
         logger.error(exc)
@@ -155,7 +152,7 @@ def start_video_task(kwg):
     name = kwg["alarm_name"]
     model_name = kwg["model_name"]
     session = next(get_db_session())
-    logger.info(f"当前处理视频流地址：{video_url}")
+    logger.info(f"视频流地址：{video_url}")
 
     # 获取当前日期，并创建文件夹路径
     current_date = datetime.datetime.now().strftime('%Y-%m-%d')
@@ -164,11 +161,18 @@ def start_video_task(kwg):
     create_directory(input_dir)
     create_directory(output_dir)
     last_upload_time = None
+    model_type = kwg['model_type']
+    yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
 
     while True:
         return_url, access_token = get_return(session)
-        status, frequency, interval, conf = get_algo_info(session, algorithm_id, camera_id)
-        if status:
+        status, frequency, interval, conf, res = get_algo_info(session, algorithm_id, camera_id)
+        if not status:
+            logger.warn("算法未启用-----------------------------------")
+            break
+        if not res:
+            logger.warn("当前时间不在分析时段----------------------------")
+        else:
             frame = screenshot(video_url)
             if frame is not None:
                 current_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
@@ -178,8 +182,6 @@ def start_video_task(kwg):
                 cv2.imwrite(input_file, frame)
                 try:
                     # 算法调用
-                    model_type = kwg['model_type']
-                    yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
                     classnames = yolo_processor.process(input_file, output_file, conf)
                     if classnames:
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
@@ -194,26 +196,24 @@ def start_video_task(kwg):
                                         'access_token': access_token
                                     }
                                 )
-                                logger.info("分析结果回传成功-------------------")
                                 last_upload_time = time.time()
 
                 except Exception as e:
                     logger.error(f"Error in model predict: {e}")
             else:
-                logger.info("未截取到相关图片----------------------")
+                logger.info("未截取到相关图片----------------------------")
 
         # 抽帧间隔
         time.sleep(frequency)
 
-# @celery_app.task
-# def delete_tmp_folder():
-#     base_path = "static/data/"
-#
-#     previous_day = datetime.now() - timedelta(days=7)
-#     previous_day_str = previous_day.strftime("%Y-%m-%d")
-#
-#     input_folder_to_delete = os.path.join(base_path, "input", previous_day_str)
-#     output_folder_to_delete = os.path.join(base_path, "output", previous_day_str)
-#
-#     delete_folder(input_folder_to_delete, "输入")
-#     delete_folder(output_folder_to_delete, "输出")
+
+@celery_app.task
+def clean_folders_task():
+    session = next(get_db_session())
+    box = session.query(Box).first()
+    usage_percentage = get_disk_usage() / get_disk_total() * 100
+    if usage_percentage > box.storage_threshold:
+        target_date = datetime.datetime.now() - datetime.timedelta(days=box.storagePeriod)
+        delete_folders_before_date(base_folder=box.data_folder, target_date=target_date)
+
+

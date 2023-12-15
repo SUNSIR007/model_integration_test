@@ -49,8 +49,8 @@ class ProdSettings(ServiceBaseSettings):
     # celery config
     celery_broker_url: str = "redis://:byjs666@127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-prod"
-    celery_worker_max_tasks_per_child: int = 2
-    celery_worker_concurrency: int = 3
+    celery_worker_max_tasks_per_child: int = 1
+    celery_worker_concurrency: int = 2
 
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
@@ -81,7 +81,7 @@ class LocalSettings(ServiceBaseSettings):
     # celery config
     celery_broker_url: str = "redis://127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-local"
-    celery_worker_max_tasks_per_child: int = 2
+    celery_worker_max_tasks_per_child: int = 1
     celery_worker_concurrency: int = 3
 
     proj_dir: str = PROJ_DIR
@@ -129,9 +129,9 @@ celery_config = {
     'task_default_queue': settings.celery_quene_name,
     # 消息代理的登录认证方法
     'broker_login_method': 'PLAIN',
-    # celery worker并发数
+    # 单个 worker 进程的负载，减少系统资源的使用
     'worker_concurrency': settings.celery_worker_concurrency,
-    # 每个工作进程执行的最大任务数，用于解决内存泄漏问题
+    # 每个工作进程最多执行多少个任务后会被重启，用于解决内存泄漏问题
     'worker_max_tasks_per_child': settings.celery_worker_max_tasks_per_child,
     # 连接丢失时取消长时间运行的任务
     "worker_cancel_long_running_tasks_on_connection_loss": True,
