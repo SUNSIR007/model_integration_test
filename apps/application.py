@@ -4,6 +4,7 @@ from starlette.staticfiles import StaticFiles
 
 from apps.routers import setup_routers
 from .database import Base, engine
+from .initializers import setup_initializers
 
 tags_metadata = [
     {
@@ -30,5 +31,6 @@ def create_application():
     setup_routers(app)
     app.mount("/static", StaticFiles(directory="static"), name="static")
     Base.metadata.create_all(bind=engine)
+    setup_initializers(app)
 
     return app

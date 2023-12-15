@@ -125,6 +125,7 @@ celery_config = {
     'timezone': 'Asia/Shanghai',
     # 在分布式系统中启用协调UTC
     'enable_utc': 'True',
+    'broker_connection_retry_on_startup': True,
     'include': ['apps.worker.celery_worker'],
     'task_default_queue': settings.celery_quene_name,
     # 消息代理的登录认证方法

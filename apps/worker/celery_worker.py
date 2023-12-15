@@ -8,7 +8,6 @@ import httpx
 from sqlalchemy.orm import Session
 
 from apps.config import logger, settings
-from apps.database import get_db_session
 from apps.detection.infer import Detector
 from apps.models import Box
 from apps.models.camera import CameraAlgorithmAssociation

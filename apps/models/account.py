@@ -19,7 +19,7 @@ class Account(Base):
     email = Column(String(32), index=True, nullable=False, doc='邮箱')
     phone = Column(String(32), index=True, nullable=False, doc='电话')
     role = Column(String(32), nullable=False, default='普通用户', doc='用户角色')
-    is_active = Column(Boolean, nullable=False, doc='账户启用状态')
+    is_active = Column(Boolean, nullable=False, default=1, doc='账户启用状态')
     token = Column(String(255), nullable=True, doc='用户令牌')
     refresh_token = Column(String(255), nullable=True, doc='刷新令牌')
     created_at = Column(DateTime, nullable=False, default=datetime.now(tz), doc='创建时间')
