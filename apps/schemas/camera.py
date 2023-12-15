@@ -22,7 +22,7 @@ class CameraCreate(BaseModel):
     port: str
     username: Optional[str]
     password: Optional[str]
-    video_url: str
+    video_url: Optional[str]
 
     class Config:
         orm_mode = True
