@@ -1,0 +1,11 @@
+[Unit]
+Description=edge computing service
+After=network.target
+
+[Service]
+ExecStart=/data/model-integration/backup.sh
+Restart=always
+User=dlinano
+
+[Install]
+WantedBy=multi-user.target

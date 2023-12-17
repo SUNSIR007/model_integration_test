@@ -17,7 +17,7 @@ from apps.utils.box import get_memory_total, get_memory_usage, get_disk_total, g
 
 router = APIRouter(tags=["盒子管理"])
 fronted_path = '../dist/webconfig.js'
-run_path = 'run.sh'
+run_path = 'backup.sh'
 
 
 def read_config(path):

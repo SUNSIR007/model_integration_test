@@ -14,7 +14,7 @@ class AlgorithmInstance(BaseModel):
 class CameraCreate(BaseModel):
     name: str
     address: Optional[str]
-    status: str
+    status: bool
     channelNum: Optional[str]
     protocol: str
     url: str
@@ -40,7 +40,7 @@ class CameraInfo(CameraCreate):
 class CameraUpdateReq(BaseModel):
     name: Optional[str]
     address: Optional[str]
-    status: Optional[str]
+    status: Optional[bool]
     channelNum: Optional[str]
     protocol: Optional[str]
     url: Optional[str]

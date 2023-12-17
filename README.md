@@ -50,7 +50,7 @@
 pip install -r requirements.txt
 
 # 运行 run.sh 脚本：
-./run.sh
+./backup.sh
 
 ```
 

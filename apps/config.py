@@ -2,7 +2,7 @@ import logging
 import os
 from os import environ
 
-from pydantic import RedisDsn, AnyHttpUrl, BaseSettings
+from pydantic import BaseSettings
 
 logger = logging.getLogger(__name__)
 # 日志级别设置为 INFO
@@ -15,10 +15,10 @@ PROJ_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 class ServiceBaseSettings(BaseSettings):
+    # user initial password
     password: str
-    # redis config
-    redis_url: RedisDsn
-    # mysql config
+
+    # database config
     db_url: str
 
     # celery config
@@ -27,45 +27,50 @@ class ServiceBaseSettings(BaseSettings):
     celery_worker_concurrency: int
     celery_worker_max_tasks_per_child: int
 
-    # 回传结果地址
-    return_result_url: AnyHttpUrl
-
-    # 项目路径
+    # project path
     proj_dir: str
-    # 静态文件路径
+    # static file path
     data_dir: str
 
-    # 运行设备
+    # GPU device config
     device: str
+
+    # jwt config
+    # jwt_secret_key default from `openssl rand -hex 32`
+    jwt_secret_key: str
+    jwt_algorithm: str
+    jwt_access_token_expire_seconds: int
+    jwt_refresh_token_expire_days: int
+
+    # EasyCVR config
+    easycvr_url: str
+    easycvr_username: str
+    easycvr_password: str
 
 
 class ProdSettings(ServiceBaseSettings):
     password: str = "1234"
-    # redis config
-    redis_url: RedisDsn = "redis://127.0.0.1/0"
-    # database config
+
     db_url: str = "sqlite:///model_integration.db"
 
-    # celery config
     celery_broker_url: str = "redis://:byjs666@127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-prod"
-    celery_worker_max_tasks_per_child: int = 1
-    celery_worker_concurrency: int = 2
+    celery_worker_max_tasks_per_child: int = 32
+    celery_worker_concurrency: int = 16
 
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
 
     device: str = '0'
 
-    # 回传结果地址
-    return_result_url: AnyHttpUrl = 'http://192.168.3.114:8000'
-
-    # jwt config
-    # jwt_secret_key default from `openssl rand -hex 32`
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_seconds: int = 30
     jwt_refresh_token_expire_days: int = 30
+
+    easycvr_url: str = "http://222.88.186.81:23843"
+    easycvr_username: str = "easycvr"
+    easycvr_password: str = "byjs@2023"
 
     class Config:
         env_file = ".env.prod"
@@ -73,31 +78,27 @@ class ProdSettings(ServiceBaseSettings):
 
 class LocalSettings(ServiceBaseSettings):
     password: str = "1234"
-    # redis config
-    redis_url: RedisDsn = "redis://127.0.0.1/0"
-    # database config
+
     db_url: str = "sqlite:///model_integration.db"
 
-    # celery config
     celery_broker_url: str = "redis://127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-local"
-    celery_worker_max_tasks_per_child: int = 1
-    celery_worker_concurrency: int = 3
+    celery_worker_max_tasks_per_child: int = 32
+    celery_worker_concurrency: int = 2
 
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
 
     device: str = 'cpu'
 
-    # 回传结果地址
-    return_result_url: AnyHttpUrl = 'http://192.168.3.114:8000'
-
-    # jwt config
-    # jwt_secret_key default from `openssl rand -hex 32`
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_seconds: int = 30
     jwt_refresh_token_expire_days: int = 30
+
+    easycvr_url: str = "http://222.88.186.81:23843"
+    easycvr_username: str = "easycvr"
+    easycvr_password: str = "byjs@2023"
 
     class Config:
         env_file = ".env.local"
