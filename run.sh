@@ -14,23 +14,49 @@ newPort=${userInputPort:-$defaultPort}
 
 # 文件路径
 configFile="../dist/webconfig.js"
-runScript="backup.sh"
+runScript="./backup.sh"
 
 # 更新前端服务的ip地址
 sed -i "s/\"webApiBaseUrl\": \".*\"/\"webApiBaseUrl\": \"http:\/\/$inputIpAddress:$newPort\"/" $configFile
 
 # 更新后端服务ip地址
-sed -i "s/--host 0.0.0.0 --port [0-9]*/--host $inputIpAddress --port $newPort/" $runScript
+sed -i "s/--host [0-9.]\+ --port [0-9]*/--host $inputIpAddress --port $newPort/" $runScript
 
 # 检查Nginx是否已经启动
 if pgrep -x "nginx" > /dev/null
 then
-    /etc/nginx/sbin/nginx -s reload
+    sudo /etc/nginx/sbin/nginx -s reload
 else
-    /etc/nginx/sbin/nginx
+    sudo /etc/nginx/sbin/nginx
 fi
 
+# 获取脚本所在目录
+scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# 生成时间戳
+timestamp=$(date +"%Y%m%d%H%M%S")
+
+# 日志文件路径，包含时间戳字段
+logFilePath="$scriptDir/log/script_output_$timestamp.log"
+
+# 创建日志文件所在的目录（如果不存在）
+mkdir -p "$scriptDir/log
+
+# 杀死已存在的 Python 进程
+sudo pkill -f "python"
+
+# 获取已存在的 Celery 进程号列表
+celeryPids=$(pgrep -f "celery")
+
+# 循环杀死每个 Celery 进程
+for pid in $celeryPids; do
+    sudo kill -9 "$pid"
+done
+
+# 等待一段时间，确保进程被终止
+sleep 2
+
 # 执行后端服务启动脚本
-bash $runScript
+bash $runScript > "$logFilePath" 2>&1 &
 
 echo "访问地址: http://$inputIpAddress"
