@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional, List, Union
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, desc
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -95,7 +95,7 @@ def get_alarm_record(
     if end_time:
         query = query.filter(Alarm.alarmTime <= end_time)
 
-    alarm = query.all()
+    alarm = query.order_by(desc(Alarm.alarmTime)).all()
 
     if not alarm:
         raise HTTPException(status_code=404, detail="Alarm record not found")
@@ -163,7 +163,7 @@ def get_alarm_records_page(
 
     query = db_session.query(Alarm).filter(or_(*conditions))
     total_count = query.count()
-    alarm_records = query.offset((page_no - 1) * page_size).limit(page_size).all()
+    alarm_records = query.order_by(desc(Alarm.alarmTime)).offset((page_no - 1) * page_size).limit(page_size).all()
 
     return {
         "code": 200,
