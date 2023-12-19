@@ -75,6 +75,8 @@ def get_alarm_record(
         alarm_type: Optional[str] = None,
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None,
+        page_no: int = Query(..., gt=0),
+        page_size: int = Query(..., gt=0, le=100),
         current_user: Account = Depends(get_current_user),
         db_session: Session = Depends(get_db_session),
 ):
@@ -95,7 +97,7 @@ def get_alarm_record(
     if end_time:
         query = query.filter(Alarm.alarmTime <= end_time)
 
-    alarm = query.order_by(desc(Alarm.alarmTime)).all()
+    alarm = query.order_by(desc(Alarm.alarmTime)).offset((page_no - 1) * page_size).limit(page_size).all()
 
     if not alarm:
         raise HTTPException(status_code=404, detail="Alarm record not found")
