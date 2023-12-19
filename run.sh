@@ -40,7 +40,7 @@ timestamp=$(date +"%Y%m%d%H%M%S")
 logFilePath="$scriptDir/log/script_output_$timestamp.log"
 
 # 创建日志文件所在的目录（如果不存在）
-mkdir -p "$scriptDir/log
+mkdir -p "$scriptDir/log"
 
 # 杀死已存在的 Python 进程
 sudo pkill -f "python"
