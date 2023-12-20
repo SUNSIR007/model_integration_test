@@ -250,6 +250,7 @@ async def get_device_info(
             "webVersion": box.web_version,
             "softwareVersion": box.software_version,
             "ip": box.ip_address,
+            "port": box.port,
             "storage_period": box.storage_period,
             "storage_threshold": box.storage_threshold
         }

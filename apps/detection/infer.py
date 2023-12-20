@@ -37,7 +37,6 @@ def is_bbox_partially_inside_region(bbox, selected_region, intersection_ratio_th
         return intersection_ratio > intersection_ratio_threshold
 
 
-
 class YOLODetector:
     def __init__(self, model_path):
         self.model = YOLO(model_path)
