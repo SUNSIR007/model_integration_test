@@ -64,3 +64,5 @@ class AlgorithmConfig(BaseModel):
     frameFrequency: Optional[int]
     alamInterval: Optional[int]
     conf: Optional[float]
+    selected_region: Optional[str]
+    intersection_ratio_threshold: Optional[float]

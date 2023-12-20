@@ -5,6 +5,7 @@ import datetime
 
 import cv2
 import httpx
+import numpy as np
 from sqlalchemy.orm import Session
 
 from apps.config import logger, settings
@@ -35,12 +36,14 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     frequency = algorithm.frameFrequency
     interval = algorithm.alamInterval
     conf = algorithm.conf
+    selected_region = np.array(list(map(int, algorithm.selected_region.split(','))))
+    intersection_ratio_threshold = algorithm.intersection_ratio_threshold
     res = is_within_time_range(int(algorithm.startHour),
                                int(algorithm.startMinute),
                                int(algorithm.endHour),
                                int(algorithm.endMinute))
     session.close()
-    return status, frequency, interval, conf, res
+    return status, frequency, interval, conf, selected_region, intersection_ratio_threshold, res
 
 
 def get_return(session: Session):
@@ -165,7 +168,8 @@ def start_video_task(kwg):
 
     while True:
         return_url, access_token = get_return(session)
-        status, frequency, interval, conf, res = get_algo_info(session, algorithm_id, camera_id)
+        status, frequency, interval, conf, selected_region, intersection_ratio_threshold, res = get_algo_info(
+            session, algorithm_id, camera_id)
         if not status:
             logger.warn("算法未启用-----------------------------------")
             break
@@ -181,7 +185,8 @@ def start_video_task(kwg):
                 cv2.imwrite(input_file, frame)
                 try:
                     # 算法调用
-                    classnames = yolo_processor.process(input_file, output_file, conf)
+                    classnames = yolo_processor.process(input_file, output_file, conf, selected_region,
+                                                        intersection_ratio_threshold)
                     if classnames:
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
@@ -214,5 +219,3 @@ def clean_folders_task():
     if usage_percentage > box.storage_threshold:
         target_date = datetime.datetime.now() - datetime.timedelta(days=box.storagePeriod)
         delete_folders_before_date(base_folder=box.data_folder, target_date=target_date)
-
-

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytz
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean, Float
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean, Float, Text
 from sqlalchemy.orm import Session, relationship
 from typing import List
 
@@ -82,6 +82,8 @@ class CameraAlgorithmAssociation(Base):
     frameFrequency = Column(Integer, default=30, nullable=False, doc="抽帧频率(秒)")
     alamInterval = Column(Integer, default=30, nullable=False, doc="报警间隔时间(秒)")
     conf = Column(Float, doc="置信度")
+    selected_region = Column(String(255), doc="选择区域")
+    intersection_ratio_threshold = Column(Float, default=0, doc="检测对象与选择区域交叉比阈值")
     startHour = Column(Integer, default=8, nullable=False, doc="开始时间(小时)")
     startMinute = Column(Integer, default=0, nullable=False, doc="开始时间(分钟)")
     endHour = Column(Integer, default=20, nullable=False, doc="结束时间(小时)")

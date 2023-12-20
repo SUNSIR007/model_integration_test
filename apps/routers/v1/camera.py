@@ -39,8 +39,8 @@ async def get_all_cameras(
 
     camera_infos = [CameraInfo.from_orm(camera) for camera in cameras]
     total_cameras = query.count()
-    online_count = query.filter(Camera.status == "在线").count()
-    offline_count = query.filter(Camera.status == "离线").count()
+    online_count = query.filter(Camera.status == 1).count()
+    offline_count = query.filter(Camera.status == 0).count()
 
     return GeneralResponse(
         code=200,
@@ -368,7 +368,7 @@ async def save_camera_algorithm_config(
 )
 async def save_camera_return_url(
         return_url: str,
-        access_token: Optional[str],
+        access_token: Optional[str] = None,
         session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ) -> GeneralResponse:
