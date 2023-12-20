@@ -156,7 +156,6 @@ def start_video_task(kwg):
     session = next(get_db_session())
     logger.info(f"视频流地址：{video_url}")
 
-    # 获取当前日期，并创建文件夹路径
     current_date = datetime.datetime.now().strftime('%Y-%m-%d')
     input_dir = os.path.join(settings.data_dir, "input", current_date)
     output_dir = os.path.join(settings.data_dir, "output", current_date)

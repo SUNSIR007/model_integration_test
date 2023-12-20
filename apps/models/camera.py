@@ -15,8 +15,8 @@ class Camera(Base):
 
     camera_id = Column(Integer, primary_key=True, autoincrement=True, doc="主键")
     name = Column(String(255), nullable=False, doc="摄像头名称")
-    address = Column(String(255), nullable=False, doc="摄像头地址")
-    status = Column(Boolean, nullable=False, default=1, doc="摄像头状态")
+    address = Column(String(255), nullable=False, doc="摄像头物理地址")
+    status = Column(Boolean, nullable=False, default=1, doc="摄像头启用状态")
     channelNum = Column(Integer, nullable=False, doc="通道数量")
     protocol = Column(String(255), nullable=False, doc="协议")
     url = Column(String(255), nullable=False, doc="URL")

@@ -31,7 +31,6 @@ class CameraCreate(BaseModel):
 class CameraInfo(CameraCreate):
     camera_id: int
     createTime: datetime
-    relatedAlgorithmInstances: Optional[List[AlgorithmInstance]] = []
 
     class Config:
         orm_mode = True

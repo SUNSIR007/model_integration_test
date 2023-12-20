@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, status, HTTPException, Body
+from fastapi import APIRouter, Depends, status, HTTPException, Body, Query
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import or_, func
 
@@ -9,7 +9,7 @@ from apps.models import Account, Algorithm, Box
 from apps.models.camera import Camera, CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.camera import AlgorithmInstance, CameraInfo, CameraCreate, CameraUpdateReq, AlgorithmConfig
+from apps.schemas.camera import CameraInfo, CameraCreate, CameraUpdateReq, AlgorithmConfig
 from apps.schemas.video_task import VideoTaskConfig
 from apps.services.camera import VideoTaskServer
 
@@ -17,11 +17,15 @@ router = APIRouter(tags=["摄像头管理"])
 
 
 @router.get(
-    '/cameras',
+    '/camera',
     status_code=status.HTTP_200_OK,
-    description="获取所有摄像头设备信息",
+    description="获取摄像头设备信息",
 )
-async def get_all_cameras(
+async def get_camera(
+        camera_id: Optional[int] = None,
+        camera_name: Optional[str] = None,
+        page_no: int = Query(1, gt=0),
+        page_size: int = Query(10, gt=0, le=100),
         db_session: Session = Depends(get_db_session),
         current_user: Account = Depends(get_current_user),
 ):
@@ -32,13 +36,22 @@ async def get_all_cameras(
         )
 
     query = db_session.query(Camera)
-    cameras = query.all()
+
+    if camera_name:
+        query = query.filter(or_(Camera.name.ilike(f'%{camera_name}%')))
+
+    if camera_id:
+        query = query.filter(Camera.camera_id == camera_id)
+
+    total_cameras = query.count()
+
+    cameras = query.offset((page_no - 1) * page_size).limit(page_size).all()
 
     if not cameras:
         raise HTTPException(status_code=404, detail="No cameras found")
 
     camera_infos = [CameraInfo.from_orm(camera) for camera in cameras]
-    total_cameras = query.count()
+
     online_count = query.filter(Camera.status == 1).count()
     offline_count = query.filter(Camera.status == 0).count()
 
@@ -51,62 +64,6 @@ async def get_all_cameras(
             "offline_count": offline_count
         }
     )
-
-
-@router.get(
-    '/camera',
-    response_model=GeneralResponse,
-    status_code=status.HTTP_200_OK,
-    description="获取摄像头设备",
-)
-async def get_camera_info(
-        camera_id: Optional[int] = None,
-        camera_name: Optional[str] = None,
-        db_session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-) -> GeneralResponse:
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="拒绝访问",
-        )
-
-    query = db_session.query(Camera)
-
-    if camera_name:
-        # 使用 like 操作符进行模糊搜索
-        query = query.filter(or_(Camera.name.ilike(f'%{camera_name}%')))
-
-    if camera_id:
-        query = query.filter(Camera.camera_id == camera_id)
-
-    cameras = query.options(joinedload(Camera.algorithms)).all()
-
-    if not cameras:
-        raise HTTPException(status_code=404, detail="摄像头未找到")
-
-    result = []
-    for camera in cameras:
-        related_algorithm_instances = []
-        for algorithm in camera.algorithms:
-            if algorithm:
-                association = db_session.query(CameraAlgorithmAssociation).filter(
-                    CameraAlgorithmAssociation.algorithm_id == algorithm.id).first()
-
-                algorithm_instance = AlgorithmInstance(
-                    algorithmId=algorithm.id,
-                    algorithmName=algorithm.name,
-                    algorithmStatus=association.status,
-                    algorithmInterval=association.frameFrequency,
-                    algorithmIntro=algorithm.algorithmIntro,
-                )
-                related_algorithm_instances.append(algorithm_instance)
-
-        camera_info = CameraInfo.from_orm(camera)
-        camera_info.relatedAlgorithmInstances = related_algorithm_instances
-        result.append(camera_info)
-
-    return GeneralResponse(code=200, data=result, msg="摄像头信息获取成功")
 
 
 @router.post(
@@ -197,7 +154,7 @@ async def delete_camera(
     '/camera/{cameraId}/algorithm',
     response_model=GeneralResponse,
     status_code=status.HTTP_200_OK,
-    description="获取摄像头算法列表",
+    description="获取摄像头算法",
 )
 async def get_camera_algorithms(
         cameraId: int,
@@ -251,53 +208,6 @@ async def get_camera_algorithms(
         )
     else:
         raise HTTPException(status_code=404, detail="Camera not found")
-
-
-@router.get(
-    '/camera/page',
-    status_code=status.HTTP_200_OK,
-    description="获取摄像头设备分页"
-)
-async def get_camera_page(
-        page: int = 1,
-        limit: int = 10,
-        db_session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-):
-    if not current_user.is_active:
-        raise HTTPException(status_code=403, detail="Access denied")
-
-    cameras = db_session.query(Camera).limit(limit).offset((page - 1) * limit).all()
-
-    camera_infos = []
-
-    for camera in cameras:
-        related_algorithm_instances = []
-        for algorithm in camera.algorithms:
-            association = db_session.query(CameraAlgorithmAssociation).filter(
-                CameraAlgorithmAssociation.algorithm_id == algorithm.id,
-                CameraAlgorithmAssociation.camera_id == camera.camera_id).first()
-            algorithm_instance = AlgorithmInstance(
-                algorithmId=algorithm.id,
-                algorithmName=algorithm.name,
-                algorithmStatus=association.status,
-                algorithmInterval=association.frameFrequency,
-                algorithmIntro=algorithm.algorithmIntro
-            )
-            related_algorithm_instances.append(algorithm_instance)
-
-        camera_info = CameraInfo.from_orm(camera)
-        camera_info.relatedAlgorithmInstances = related_algorithm_instances
-
-        camera_infos.append(camera_info)
-
-    return {
-        "code": 200,
-        "data": {
-            "list": camera_infos,
-            "total": len(camera_infos)
-        }
-    }
 
 
 @router.post(
