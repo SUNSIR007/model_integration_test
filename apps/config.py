@@ -105,7 +105,7 @@ class LocalSettings(ServiceBaseSettings):
 
 
 def get_settings() -> ServiceBaseSettings:
-    env_name = environ.get("ENV_NAME", "local")
+    env_name = environ.get("ENV_NAME", "prod")
     settings = {
         "prod": ProdSettings(),
         "local": LocalSettings()

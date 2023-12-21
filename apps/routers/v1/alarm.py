@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import or_, func, desc
+from sqlalchemy import func, desc
 from sqlalchemy.orm import Session
 from starlette import status
 
@@ -145,7 +145,7 @@ def get_alarm_record(
     )
 
 
-@router.get(
+@router.post(
     "/alarms/statistics",
     description="告警统计",
 )
