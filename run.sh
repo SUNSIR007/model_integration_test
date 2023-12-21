@@ -40,8 +40,5 @@ for pid in $celeryPids; do
 done
 
 bash $runScript > "$logFilePath" 2>&1 &
-backgroundPid=$
-
-wait $backgroundPid
 
 echo "页面访问地址: http://$inputIpAddress"
