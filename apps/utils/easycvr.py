@@ -1,3 +1,5 @@
+import time
+
 import httpx
 import hashlib
 from fastapi import HTTPException
@@ -104,11 +106,22 @@ def get_channel_stream(device_id: int, channel_id: int, protocol: str, access_to
         "protocol": protocol,
         "token": access_token,
     }
-    response = make_request(EASYCVR_SERVER_URL + CHANNEL_STREAM_URL, "GET", headers=headers, params=params)
-    if response.status_code == 200:
-        return EASYCVR_SERVER_URL + response.json()["EasyDarwin"]["Body"]["URL"]
-    else:
-        raise HTTPException(status_code=401, detail="无效的设备或通道")
+    max_retries = 30  # 设置最大轮询次数
+    retries = 0
+
+    while retries < max_retries:
+        response = make_request(EASYCVR_SERVER_URL + CHANNEL_STREAM_URL, "GET", headers=headers, params=params)
+
+        if response.status_code == 200:
+            status = response.json()["EasyDarwin"]["Header"]["ErrorNum"]
+            if status == "200":
+                return EASYCVR_SERVER_URL + response.json()["EasyDarwin"]["Body"]["URL"]
+
+        time.sleep(1)
+        retries += 1
+
+    # 如果在最大轮询次数内通道仍然离线，则抛出异常
+    raise HTTPException(status_code=401, detail=f"通道[{device_id}][{channel_id}]未能在线")
 
 
 def convert_rtsp_to_http(device_name: str, device_type: str, transport: str, channel_name: str, protocol: str,
@@ -118,11 +131,3 @@ def convert_rtsp_to_http(device_name: str, device_type: str, transport: str, cha
     channel_id = add_channel(channel_name, protocol, device_id, rtsp_url, token)
     stream_url = get_channel_stream(device_id, channel_id, target_protocol, token)
     return stream_url
-
-
-if __name__ == '__main__':
-    token = get_access_token()
-    # device_id = add_device('test', 'ipc', 'TCP', token)
-    # channel_id = add_channel('6号', "RTSP", 1,
-    #                          "rtsp://admin:ctkj0392@222.88.182.162:15546/h264/ch1/main/av_stream", token)
-    # get_channel_stream(1, 43, 'flv', token)

@@ -7,6 +7,7 @@ from apps.routers.v1.algorithm import router as algo_router
 from apps.routers.v1.log import router as log_router
 from apps.routers.v1.camera import router as camera_router
 from apps.routers.v1.alarm import router as alarm_router
+from apps.routers.v1.easycvr import router as easycvr_router
 
 
 router = APIRouter()
@@ -18,3 +19,4 @@ router.include_router(algo_router)
 router.include_router(log_router)
 router.include_router(camera_router)
 router.include_router(alarm_router)
+router.include_router(easycvr_router)
