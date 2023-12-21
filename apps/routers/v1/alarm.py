@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List, Union
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import or_, func, desc
@@ -10,7 +10,7 @@ from apps.database import get_db_session
 from apps.models import Account, Alarm, Camera
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.alarm import AlarmRecordCreateReq, UpdateAlarmRecordRequest, AlarmFilterParams
+from apps.schemas.alarm import AlarmRecordCreateReq, UpdateAlarmRecordRequest, StatisticsInfo
 
 router = APIRouter(tags=["告警管理"])
 
@@ -147,12 +147,12 @@ def get_alarm_record(
 
 @router.get(
     "/alarms/statistics",
-    description="按告警统计",
+    description="告警统计",
 )
 def get_alarm_stats(
+        statistics_info: StatisticsInfo,
         current_user: Account = Depends(get_current_user),
         db_session: Session = Depends(get_db_session),
-        statistic_types: Union[List[str], None] = Query(default=None),
 ):
     if not current_user.is_active:
         raise HTTPException(
@@ -160,7 +160,25 @@ def get_alarm_stats(
             detail="Access denied",
         )
 
+    filter_time = statistics_info.filterTime
+    statistic_types = statistics_info.statisticTypes
+    start_time = statistics_info.startTime
+    end_time = statistics_info.endTime
     query = db_session.query(Alarm)
+
+    if filter_time == "day":
+        query = query.filter(func.date(Alarm.alarmTime) == func.current_date())
+
+    if filter_time == "week":
+        query = query.filter(func.strftime("%W", Alarm.alarmTime) == func.strftime("%W", func.current_date()))
+
+    if filter_time == "month":
+        query = query.filter(func.strftime("%m", Alarm.alarmTime) == func.strftime("%m", func.current_date()))
+
+    if start_time:
+        query = query.filter(Alarm.alarmTime >= start_time)
+    if end_time:
+        query = query.filter(Alarm.alarmTime <= end_time)
 
     if statistic_types is None:
         raise HTTPException(

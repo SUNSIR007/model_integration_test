@@ -39,8 +39,9 @@ for pid in $celeryPids; do
     sudo kill -9 "$pid"
 done
 
-sleep 2
-
 bash $runScript > "$logFilePath" 2>&1 &
+backgroundPid=$
 
-echo "访问地址: http://$inputIpAddress"
+wait $backgroundPid
+
+echo "页面访问地址: http://$inputIpAddress"

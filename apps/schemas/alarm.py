@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+from enum import Enum
 
 from pydantic import BaseModel
 
@@ -49,5 +50,20 @@ class AlarmFilterParams(BaseModel):
     createTime: str = None
 
 
-def get_alarm_records(filter_params: AlarmFilterParams):
-    query_params = filter_params.dict(exclude_unset=True)
+class FilterTime(str, Enum):
+    DAY = "day"
+    WEEK = "week"
+    MONTH = "month"
+
+
+class StatisticsType(str, Enum):
+    ALARMTYPE = "alarmType"
+    TIME = "time"
+    PLACE = "place"
+
+
+class StatisticsInfo(BaseModel):
+    filterTime: FilterTime
+    statisticTypes: list[StatisticsType]
+    startTime: Optional[datetime] = None
+    endTime: Optional[datetime] = None
