@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from enum import Enum
 
 from pydantic import BaseModel
@@ -64,6 +64,6 @@ class StatisticsType(str, Enum):
 
 class StatisticsInfo(BaseModel):
     filterTime: FilterTime
-    statisticTypes: list[StatisticsType]
+    statisticTypes: List[StatisticsType]
     startTime: Optional[datetime] = None
     endTime: Optional[datetime] = None
