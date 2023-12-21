@@ -1,9 +1,8 @@
-
 from typing import Any, List, Optional, Union, TypeVar, Dict
 
 from pydantic import validator
-from pydantic.main import BaseModel
 from pydantic.generics import Generic, GenericModel
+from pydantic.main import BaseModel
 
 from .errors import errors
 

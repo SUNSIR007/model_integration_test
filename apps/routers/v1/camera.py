@@ -1,19 +1,101 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, status, HTTPException, Body, Query
-from sqlalchemy.orm import Session, joinedload
+from fastapi import APIRouter, Depends, status, HTTPException, Query
 from sqlalchemy import or_, func
+from sqlalchemy.orm import Session, joinedload
 
 from apps.database import get_db_session
 from apps.models import Account, Algorithm, Box
 from apps.models.camera import Camera, CameraAlgorithmAssociation
 from apps.routers.v1.auth import get_current_user
 from apps.schemas import GeneralResponse
-from apps.schemas.camera import CameraInfo, CameraCreate, CameraUpdateReq, AlgorithmConfig
+from apps.schemas.camera import CameraInfo, CameraCreate, AlgorithmConfig
 from apps.schemas.video_task import VideoTaskConfig
 from apps.services.camera import VideoTaskServer
 
 router = APIRouter(tags=["摄像头管理"])
+
+
+@router.post(
+    '/camera',
+    description="创建摄像头",
+)
+async def create_camera(
+        camera_create: CameraCreate,
+        db_session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    camera = Camera(**camera_create.dict())
+
+    db_session.add(camera)
+    db_session.commit()
+    db_session.refresh(camera)
+
+    return GeneralResponse(code=200, msg="Camera created successfully.")
+
+
+@router.delete(
+    '/camera',
+    response_model=GeneralResponse,
+    status_code=status.HTTP_200_OK,
+    description="删除摄像头设备",
+)
+async def delete_camera(
+        camera_id: int,
+        session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+):
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    camera = session.query(Camera).get(camera_id)
+    if camera:
+        camera.delete(session)
+        return GeneralResponse(
+            code=200,
+            data=True,
+            msg=f"Camera deleted successfully."
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Camera not found.")
+
+
+@router.put(
+    '/camera/{camera_id}',
+    response_model=GeneralResponse,
+    status_code=status.HTTP_200_OK,
+    description="更新摄像头设备信息",
+)
+async def update_camera(
+        camera_id: int,
+        camera_update: CameraInfo,
+        db_session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    camera = db_session.query(Camera).get(camera_id)
+    if not camera:
+        raise HTTPException(status_code=404, detail="Camera not found.")
+
+    camera.update(db_session, camera_update.dict())
+    db_session.commit()
+    camera_info = CameraInfo.from_orm(camera)
+
+    return GeneralResponse(code=200, data=camera_info)
 
 
 @router.get(
@@ -48,7 +130,7 @@ async def get_camera(
     cameras = query.offset((page_no - 1) * page_size).limit(page_size).all()
 
     if not cameras:
-        raise HTTPException(status_code=404, detail="No cameras found")
+        raise HTTPException(status_code=404, detail="Camera not found")
 
     camera_infos = [CameraInfo.from_orm(camera) for camera in cameras]
 
@@ -64,90 +146,6 @@ async def get_camera(
             "offline_count": offline_count
         }
     )
-
-
-@router.post(
-    '/camera',
-    response_model=GeneralResponse,
-    status_code=status.HTTP_201_CREATED,
-    description="创建摄像头",
-)
-async def create_camera(
-        camera_create: CameraCreate,
-        db_session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-) -> GeneralResponse:
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-
-    camera = Camera(**camera_create.dict())
-
-    db_session.add(camera)
-    db_session.commit()
-    db_session.refresh(camera)
-
-    return GeneralResponse(code=0, data=camera)
-
-
-@router.put(
-    '/camera/{camera_id}',
-    response_model=GeneralResponse,
-    status_code=status.HTTP_200_OK,
-    description="更新摄像头设备信息",
-)
-async def update_camera(
-        camera_id: int,
-        camera_update: CameraUpdateReq,
-        db_session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-) -> GeneralResponse:
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-
-    camera = db_session.query(Camera).get(camera_id)
-    if not camera:
-        raise HTTPException(status_code=404, detail="Camera not found")
-
-    camera.update(db_session, camera_update.dict())
-    db_session.commit()
-    camera_info = CameraUpdateReq.from_orm(camera)
-
-    return GeneralResponse(code=200, data=camera_info)
-
-
-@router.delete(
-    '/camera',
-    response_model=GeneralResponse,
-    status_code=status.HTTP_200_OK,
-    description="删除摄像头设备",
-)
-async def delete_camera(
-        camera_id: int,
-        session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user),
-):
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
-
-    camera = session.query(Camera).get(camera_id)
-    if camera:
-        camera.delete(session)
-        return GeneralResponse(
-            code=200,
-            data=True,
-            msg=f"成功删除ID为 {camera_id} 的摄像头"
-        )
-    else:
-        raise HTTPException(status_code=404, detail="未找到该摄像头设备")
 
 
 @router.get(
@@ -232,7 +230,7 @@ async def save_camera_algorithm_config(
     camera = session.query(Camera).filter_by(camera_id=cameraId).first()
 
     if not algorithm:
-        raise HTTPException(status_code=404, detail="算法未找到")
+        raise HTTPException(status_code=404, detail="Algorithm not found.")
 
     association_exists = (
         session.query(CameraAlgorithmAssociation)
@@ -268,7 +266,7 @@ async def save_camera_algorithm_config(
     return GeneralResponse(
         code=200,
         data=None,
-        msg="摄像头算法配置已保存"
+        msg="Camera algorithm configuration saved."
     )
 
 
@@ -295,5 +293,5 @@ async def save_camera_return_url(
     session.commit()
     return GeneralResponse(
         code=200,
-        msg="保存成功！"
+        msg="Alarm return address saved successfully."
     )

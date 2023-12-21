@@ -1,9 +1,9 @@
 from datetime import datetime
+from typing import List
 
 import pytz
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean, Float, Text
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean, Float
 from sqlalchemy.orm import Session, relationship
-from typing import List
 
 from apps.database import Base
 
@@ -16,6 +16,8 @@ class Camera(Base):
     camera_id = Column(Integer, primary_key=True, autoincrement=True, doc="主键")
     name = Column(String(255), nullable=False, doc="摄像头名称")
     address = Column(String(255), nullable=False, doc="摄像头物理地址")
+    latitude = Column(String(255), doc="经度")
+    longitude = Column(String(255), doc="纬度")
     status = Column(Boolean, nullable=False, default=1, doc="摄像头启用状态")
     channelNum = Column(Integer, nullable=False, doc="通道数量")
     protocol = Column(String(255), nullable=False, doc="协议")

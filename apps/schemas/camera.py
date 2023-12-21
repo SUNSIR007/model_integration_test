@@ -1,44 +1,14 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
+
 from pydantic import BaseModel
 
 
-class AlgorithmInstance(BaseModel):
-    algorithmId: int
-    algorithmName: str
-    algorithmStatus: int
-    algorithmInterval: int
-    algorithmIntro: str
-
-
-class CameraCreate(BaseModel):
-    name: str
-    address: Optional[str]
-    status: bool
-    channelNum: Optional[str]
-    protocol: str
-    url: str
-    ip: str
-    port: str
-    username: Optional[str]
-    password: Optional[str]
-    video_url: Optional[str]
-
-    class Config:
-        orm_mode = True
-
-
-class CameraInfo(CameraCreate):
-    camera_id: int
-    createTime: datetime
-
-    class Config:
-        orm_mode = True
-
-
-class CameraUpdateReq(BaseModel):
+class CameraBase(BaseModel):
     name: Optional[str]
     address: Optional[str]
+    latitude: Optional[str]
+    longitude: Optional[str]
     status: Optional[bool]
     channelNum: Optional[str]
     protocol: Optional[str]
@@ -51,6 +21,20 @@ class CameraUpdateReq(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CameraCreate(CameraBase):
+    name: str
+    status: bool
+    protocol: str
+    url: str
+    ip: str
+    port: str
+
+
+class CameraInfo(CameraBase):
+    camera_id: Optional[int]
+    createTime: Optional[datetime]
 
 
 class AlgorithmConfig(BaseModel):
