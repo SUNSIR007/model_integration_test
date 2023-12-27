@@ -6,6 +6,7 @@ from ultralytics import YOLO
 
 from apps.database import get_db_session
 from apps.models import Algorithm, Camera
+from apps.config import settings
 
 
 router = APIRouter(tags=["流媒体推理"])
@@ -17,7 +18,7 @@ def generate_frames(video_url, model):
         success, frame = cap.read()
 
         if success:
-            results = model(frame)
+            results = model(frame, device=settings.device)
             annotated_frame = results[0].plot()
             _, buffer = cv2.imencode('.jpg', annotated_frame)
             frame_bytes = buffer.tobytes()
