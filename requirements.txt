@@ -23,3 +23,9 @@ modelscope==1.9.5
 httpx==0.25.1
 timm==0.9.12
 easydict==1.11
+mmcls==0.25.0
+mmcv-full==1.6.0
+httptools=0.6.1
+python-dotenv=1.0.0
+watchfiles=0.21.0
+websockets=12.0

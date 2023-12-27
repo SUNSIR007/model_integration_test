@@ -13,7 +13,7 @@ from apps.services.account import (
     create,
     update,
     entry,
-    delete
+    delete, get_account_by_name
 )
 
 router = APIRouter(tags=["用户管理"])
@@ -101,3 +101,15 @@ async def update_account(
 ):
     account_id = current_user.id
     return await update(account_id, payload, db_session)
+
+
+@router.get(
+    "/system/currentUserInfo",
+    description="获取用户信息"
+)
+async def get_user_info(
+        current_user: Account = Depends(get_current_user),
+        db_session: Session = Depends(get_db_session),
+):
+    if current_user:
+        return get_account_by_name(current_user.username, db_session)

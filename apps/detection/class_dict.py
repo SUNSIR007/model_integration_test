@@ -266,3 +266,7 @@ yolov8_dict = {
     78: '吹风机',
     79: '牙刷'
 }
+
+hat_dict = {0: 'hat', 1: 'person'}
+
+vest_dict = {0: 'others', 1: 'work vest'}

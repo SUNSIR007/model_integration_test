@@ -1,10 +1,10 @@
 import cv2
+import numpy as np
 import torch
 from PIL import Image, ImageDraw, ImageFont
 from ultralytics import YOLO
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
-
 
 from apps.config import settings
 
@@ -27,7 +27,7 @@ def calculate_intersection_ratio(bbox, region):
 
 
 def is_bbox_partially_inside_region(bbox, selected_region, intersection_ratio_threshold=0.5):
-    if not selected_region.any():
+    if selected_region is None:
         return True
 
     intersection_ratio = calculate_intersection_ratio(bbox, selected_region)
@@ -43,12 +43,12 @@ class YOLODetector:
 
     def detect(self, img_path, conf):
         results = self.model.predict(source=img_path, conf=conf, device=settings.device)
-        return results[0]
+        return results
 
 
 class ResultProcessor:
     def __init__(self, result):
-        self.result = result
+        self.result = result[0]
 
     def save_image(self, output_path, selected_region, intersection_ratio_threshold):
         if len(self.result.boxes) == 0:
@@ -107,7 +107,7 @@ class Detector:
         if self.model_type == 'yolov8':
             self.processor = self.YOLOProcessor(model_path)
         elif self.model_type == 'yolov5':
-            self.processor = self.GarbageProcessor(model_path)
+            self.processor = self.Yolov5Processor(model_path)
         elif self.model_type == 'modelscope':
             self.processor = self.ModelscopeDetector(model_path)
         else:
@@ -127,7 +127,7 @@ class Detector:
             json_result = processor.save_json(selected_region, intersection_ratio_threshold)
             return [res['class'] for res in json_result]
 
-    class GarbageProcessor:
+    class Yolov5Processor:
         def __init__(self, model_path):
             self.device = torch.device(settings.device)
             self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')
@@ -176,38 +176,36 @@ class Detector:
     class ModelscopeDetector:
         def __init__(self, model_path):
             self.model_id = model_path
-            self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device='gpu')
+            self.detector = pipeline(Tasks.image_classification, model=model_path, device='gpu')
 
         def process(self, input_path, output_path, conf, selected_region, intersection_ratio_threshold):
             result = self.detector(input_path)
-
-            confidences = result['scores']
-
+            confidences = np.array(result['scores'])
             mask = confidences >= conf
-            filtered_boxes = [box for i, box in enumerate(result['boxes']) if
-                              mask[i] and is_bbox_partially_inside_region(box, selected_region,
-                                                                          intersection_ratio_threshold)]
-            filtered_labels = [label for i, label in enumerate(result['labels']) if
-                               mask[i] and is_bbox_partially_inside_region(result['boxes'][i], selected_region,
-                                                                           intersection_ratio_threshold)]
+            if 'boxes' not in result:
+                filter_labels = [label for i, label in enumerate(result['labels']) if mask[i]]
+                return filter_labels
+            else:
+                filtered_labels = [label for i, label in enumerate(result['labels']) if
+                                   mask[i] and is_bbox_partially_inside_region(result['boxes'][i], selected_region,
+                                                                               intersection_ratio_threshold)]
 
-            if not filtered_boxes:
-                return None
+                filtered_boxes = [box for i, box in enumerate(result['boxes']) if
+                                  mask[i] and is_bbox_partially_inside_region(box, selected_region,
+                                                                              intersection_ratio_threshold)]
 
-            image = Image.open(input_path)
-            draw = ImageDraw.Draw(image)
+                image = Image.open(input_path)
+                draw = ImageDraw.Draw(image)
 
-            for box, label in zip(filtered_boxes, filtered_labels):
-                x_min, y_min, x_max, y_max = box
-                draw.rectangle([x_min, y_min, x_max, y_max], outline="red", width=3)
+                for box, label in zip(filtered_boxes, filtered_labels):
+                    x_min, y_min, x_max, y_max = box
+                    draw.rectangle([x_min, y_min, x_max, y_max], outline="red", width=3)
 
-            image.save(output_path)
+                image.save(output_path)
 
-            return filtered_labels
+                return filtered_labels
 
 
 if __name__ == '__main__':
-    model_wrapper = Detector('weights/fire.pt', 'yolov8')
-    model_wrapper.process(
-        'input/fire.jpg', 'output/fire.jpg', 0.2, [0, 0, 1700, 900], 0.6
-    )
+    model_wrapper = Detector('weights/phone.pt', 'yolov8')
+    model_wrapper.process('input/smoke.jpg', 'output/smoke.jpg', 0.2)
