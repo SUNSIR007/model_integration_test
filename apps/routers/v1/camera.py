@@ -351,9 +351,14 @@ async def get_current_frame(
     if frame is not None:
         cv2.imwrite(f'{filepath}{camera_id}.jpg', frame)
 
-    return GeneralResponse(
-        code=200,
-        data={
-            "snapshot_path": f'{filepath}{camera_id}.jpg'
-        }
-    )
+        return GeneralResponse(
+            code=200,
+            data={
+                "snapshot_path": f'{filepath}{camera_id}.jpg'
+            }
+        )
+    else:
+        return GeneralResponse(
+            code=200,
+            msg="Please check the video stream address."
+        )
