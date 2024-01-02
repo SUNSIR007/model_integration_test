@@ -216,5 +216,5 @@ def clean_folders_task():
     box = session.query(Box).first()
     usage_percentage = get_disk_usage() / get_disk_total() * 100
     if usage_percentage > box.storage_threshold:
-        target_date = datetime.datetime.now() - datetime.timedelta(days=box.storagePeriod)
+        target_date = datetime.datetime.now() - datetime.timedelta(days=box.storage_period)
         delete_folders_before_date(base_folder=box.data_folder, target_date=target_date)
