@@ -7,7 +7,7 @@ class AlgorithmInfoResp(BaseModel):
     modelName: str
     version: str = None
     repoSource: str
-    coverPath: str
+    coverPath: str = None
     id: int
     createTime: str
 
