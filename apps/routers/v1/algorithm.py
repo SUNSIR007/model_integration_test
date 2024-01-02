@@ -18,7 +18,6 @@ router = APIRouter(tags=["算法管理"])
 
 @router.post(
     "/algorithm",
-    status_code=status.HTTP_201_CREATED,
     description="创建算法"
 )
 async def create_algorithm(

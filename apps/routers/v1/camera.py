@@ -1,5 +1,6 @@
 from typing import Optional
 
+import cv2
 from fastapi import APIRouter, Depends, status, HTTPException, Query
 from sqlalchemy import or_, func
 from sqlalchemy.orm import Session, joinedload
@@ -12,6 +13,7 @@ from apps.schemas import GeneralResponse
 from apps.schemas.camera import CameraInfo, CameraCreate, AlgorithmConfig
 from apps.schemas.video_task import VideoTaskConfig
 from apps.services.camera import VideoTaskServer
+from apps.worker.celery_worker import screenshot
 
 router = APIRouter(tags=["摄像头管理"])
 
@@ -62,7 +64,6 @@ async def delete_camera(
         camera.delete(session)
         return GeneralResponse(
             code=200,
-            data=True,
             msg=f"Camera deleted successfully."
         )
     else:
@@ -265,9 +266,41 @@ async def save_camera_algorithm_config(
 
     return GeneralResponse(
         code=200,
-        data=None,
         msg="Camera algorithm configuration saved."
     )
+
+
+@router.delete(
+    "/camera/{cameraId}/algorithm/{algorithm_id}",
+    response_model=GeneralResponse,
+    status_code=status.HTTP_200_OK,
+    description="删除摄像头算法"
+)
+async def delete_camera_algorithm_config(
+        cameraId: int,
+        algorithm_id: int,
+        session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+    association_exists = (
+        session.query(CameraAlgorithmAssociation)
+        .filter_by(camera_id=cameraId, algorithm_id=algorithm_id)
+        .first()
+    )
+    if association_exists:
+        session.delete(association_exists)
+        session.commit()
+        return GeneralResponse(
+            code=200,
+            msg=f"Camera Algorithm config deleted successfully."
+        )
+    else:
+        raise HTTPException(status_code=404, detail="Camera Algorithm config not found.")
 
 
 @router.post(
@@ -294,4 +327,33 @@ async def save_camera_return_url(
     return GeneralResponse(
         code=200,
         msg="Alarm return address saved successfully."
+    )
+
+
+@router.post(
+    "/camera/snapshot",
+    description="获取摄像头当前帧"
+)
+async def get_current_frame(
+        camera_id: int,
+        session: Session = Depends(get_db_session),
+        current_user: Account = Depends(get_current_user),
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+    camera = session.query(Camera).filter(Camera.camera_id == camera_id).first()
+    video_url = camera.get_video_stream_url()
+    frame = screenshot(video_url)
+    filepath = 'static/snapshot/'
+    if frame is not None:
+        cv2.imwrite(f'{filepath}{camera_id}.jpg', frame)
+
+    return GeneralResponse(
+        code=200,
+        data={
+            "snapshot_path": f'{filepath}{camera_id}.jpg'
+        }
     )
