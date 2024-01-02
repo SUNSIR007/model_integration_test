@@ -32,8 +32,8 @@ def get_disk_usage() -> int:
 def get_temperature() -> float:
     # 获取温度（例如 CPU 温度）
     temperature = psutil.sensors_temperatures()
-    if 'cpu-thermal' in temperature:
-        return temperature['cpu-thermal'][0].current
+    if 'thermal_fan_est' in temperature:
+        return temperature['thermal_fan_est'][0].current
     return 0.0
 
 
