@@ -84,6 +84,7 @@ async def get_paged_algorithm_info(
             name=algo.name,
             modelName=algo.modelName,
             repoSource=algo.repoSource,
+            coverPath=algo.coverPath,
             id=algo.id,
             createTime=str(algo.createTime)
         )
@@ -117,6 +118,7 @@ async def get_algorithm_list(
             name=algo.name,
             modelName=algo.modelName,
             repoSource=algo.repoSource,
+            coverPath=algo.coverPath,
             id=algo.id,
             createTime=str(algo.createTime)
         )
@@ -128,7 +130,6 @@ async def get_algorithm_list(
 
 @router.delete(
     "/algorithm",
-    response_model=GeneralResponse,
     description="删除算法模型文件"
 )
 async def delete_algorithm_file(

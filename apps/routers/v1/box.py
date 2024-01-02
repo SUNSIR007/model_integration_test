@@ -56,8 +56,6 @@ def update_js_config(ip, port):
 
 @router.put(
     '/box/systemName',
-    response_model=None,
-    status_code=status.HTTP_200_OK,
     description="更新系统名称",
 )
 async def update_system_name(
@@ -110,8 +108,7 @@ async def update_system_time(
     db_session.commit()
 
     return GeneralResponse(
-        code=200,
-        data=True
+        code=200
     )
 
 
