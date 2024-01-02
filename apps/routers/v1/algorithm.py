@@ -204,3 +204,48 @@ def get_algorithm_stats(
         "code": 200,
         "data": [{"status": status, "count": count} for status, count in stats]
     }
+
+
+@router.post(
+    "/algorithm/cover",
+    description="上传算法封面"
+)
+async def upload_algorithm_cover(
+    file: UploadFile = File(...),
+    algorithm_id: int = Form(...),
+    db: Session = Depends(get_db_session),
+    current_user: Account = Depends(get_current_user)
+) -> GeneralResponse:
+    if not current_user.is_active:
+        raise HTTPException(
+            status_code=403,
+            detail="Access denied",
+        )
+
+    # 获取算法
+    algorithm = db.query(Algorithm).filter(Algorithm.id == algorithm_id).first()
+    if not algorithm:
+        raise HTTPException(
+            status_code=404,
+            detail="Algorithm not found",
+        )
+
+    # 上传封面文件
+    contents = file.file.read()
+    cover_path = f"static/covers/{algorithm_id}_{file.filename}"
+
+    # 将文件保存到指定路径
+    with open(cover_path, "wb") as f:
+        f.write(contents)
+
+    # 更新算法的封面路径
+    algorithm.coverPath = cover_path
+    db.commit()
+
+    return GeneralResponse(
+        code=200,
+        data={
+            "cover_path": cover_path
+        },
+        msg="Cover uploaded successfully."
+    )

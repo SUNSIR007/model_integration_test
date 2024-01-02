@@ -17,6 +17,7 @@ class Algorithm(Base):
     name = Column(String(64), nullable=False, doc="算法名称")
     modelName = Column(String(64), nullable=False, doc="模型名称")
     repoSource = Column(String(255), nullable=False, doc="模型文件路径")
+    coverPath = Column(String(255), nullable=False, doc="封面图片路径")
     algorithmIntro = Column(String(255), doc="算法描述")
     modelType = Column(String(255), nullable=False, default="yolov8", doc="算法类型")
     createTime = Column(DateTime, nullable=False, default=datetime.now(tz), doc="创建时间")
