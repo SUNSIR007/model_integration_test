@@ -44,12 +44,6 @@ def get_cpu_usage() -> float:
 
 
 def delete_folders_before_date(base_folder, target_date):
-    try:
-        target_date = target_date.strptime("%Y-%m-%d")
-    except ValueError:
-        print("Invalid date format. Please use 'YYYY-MM-DD'.")
-        return
-
     for folder_name in os.listdir(base_folder):
         folder_path = os.path.join(base_folder, folder_name)
         try:
