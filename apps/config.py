@@ -65,7 +65,7 @@ class ProdSettings(ServiceBaseSettings):
 
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
     jwt_algorithm: str = "HS256"
-    jwt_access_token_expire_seconds: int = 15
+    jwt_access_token_expire_seconds: int = 300
     jwt_refresh_token_expire_days: int = 30
 
     easycvr_url: str = "http://222.88.186.81:23843"
@@ -93,7 +93,7 @@ class LocalSettings(ServiceBaseSettings):
 
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
     jwt_algorithm: str = "HS256"
-    jwt_access_token_expire_seconds: int = 30
+    jwt_access_token_expire_seconds: int = 300
     jwt_refresh_token_expire_days: int = 30
 
     easycvr_url: str = "http://222.88.186.81:23843"

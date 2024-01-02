@@ -19,13 +19,13 @@ def get_memory_usage() -> int:
 
 def get_disk_total() -> int:
     # 获取磁盘总量（单位：字节）
-    disk = psutil.disk_usage('/')
+    disk = psutil.disk_usage('/data')
     return disk.total
 
 
 def get_disk_usage() -> int:
     # 获取磁盘使用量（单位：字节）
-    disk = psutil.disk_usage('/')
+    disk = psutil.disk_usage('/data')
     return disk.used
 
 

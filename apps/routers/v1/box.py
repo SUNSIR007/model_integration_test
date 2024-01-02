@@ -245,8 +245,9 @@ async def get_device_info(
         data={
             "name": box.system_name,
             "id": box.id,
+            "device_name": box.device_name,
+            "device_number": box.device_number,
             "hardwareVersion": box.hardware_version,
-            "firmwareVersion": box.hardware_version,
             "webVersion": box.web_version,
             "softwareVersion": box.software_version,
             "ip": box.ip_address,
