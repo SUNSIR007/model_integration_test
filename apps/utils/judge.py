@@ -1,5 +1,5 @@
 def has_fire(classnames):
-    return "fire" in classnames
+    return "Fire" in classnames
 
 
 def has_smoke(classnames):
@@ -24,16 +24,16 @@ def has_vest(classnames):
 
 def judge_by_classnames(model_name, classnames):
     if model_name == 'fire.pt':
-        has_fire(classnames)
+        return has_fire(classnames)
     elif model_name == 'smoking.pt':
-        has_smoke(classnames)
+        return has_smoke(classnames)
     elif model_name == 'mask.pt':
-        has_mask(classnames)
+        return has_mask(classnames)
     elif model_name == 'fall.pt':
-        has_fall(classnames)
+        return has_fall(classnames)
     elif model_name == 'helmet.pt':
-        has_safety_hat(classnames)
+        return has_safety_hat(classnames)
     elif model_name == 'vest.pt':
-        has_vest(classnames)
+        return has_vest(classnames)
     elif classnames is not None:
         return True

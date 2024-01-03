@@ -208,4 +208,4 @@ class Detector:
 
 if __name__ == '__main__':
     model_wrapper = Detector('weights/smoking.pt', 'YOLOv8')
-    model_wrapper.process('input/smoke.jpg', 'output/smoke.jpg', 0.2)
+    model_wrapper.process('input/smoking.jpg', 'output/smoking.jpg', 0.2)
