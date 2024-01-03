@@ -37,7 +37,10 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     frequency = algorithm.frameFrequency
     interval = algorithm.alamInterval
     conf = algorithm.conf
-    selected_region = np.array(list(map(int, algorithm.selected_region.split(','))))
+    if algorithm.selected_region is not None:
+        selected_region = np.array(list(map(int, algorithm.selected_region.split(','))))
+    else:
+        selected_region = None
     intersection_ratio_threshold = algorithm.intersection_ratio_threshold
     res = is_within_time_range(int(algorithm.startHour),
                                int(algorithm.startMinute),
