@@ -158,7 +158,7 @@ def start_video_task(kwg):
     name = kwg["alarm_name"]
     model_name = kwg["model_name"]
     session = next(get_db_session())
-    logger.info(f"视频流地址：{video_url}")
+    # logger.info(f"视频流地址：{video_url}")
 
     current_date = datetime.datetime.now().strftime('%Y-%m-%d')
     input_dir = os.path.join(settings.data_dir, "input", current_date)
@@ -190,6 +190,7 @@ def start_video_task(kwg):
                     # 算法调用
                     classnames = yolo_processor.process(input_file, output_file, conf, selected_region,
                                                         intersection_ratio_threshold)
+
                     if judge_by_classnames(model_name, classnames):
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 

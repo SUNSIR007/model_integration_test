@@ -35,5 +35,5 @@ def judge_by_classnames(model_name, classnames):
         return has_safety_hat(classnames)
     elif model_name == 'vest.pt':
         return has_vest(classnames)
-    elif classnames is not None:
+    elif len(classnames) != 0:
         return True
