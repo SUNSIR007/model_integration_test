@@ -104,9 +104,9 @@ class ResultProcessor:
 class Detector:
     def __init__(self, model_path, model_type):
         self.model_type = model_type
-        if self.model_type == 'yolov8':
+        if self.model_type == 'YOLOv8':
             self.processor = self.YOLOProcessor(model_path)
-        elif self.model_type == 'yolov5':
+        elif self.model_type == 'YOLOv5':
             self.processor = self.Yolov5Processor(model_path)
         elif self.model_type == 'modelscope':
             self.processor = self.ModelscopeDetector(model_path)
@@ -207,5 +207,5 @@ class Detector:
 
 
 if __name__ == '__main__':
-    model_wrapper = Detector('weights/phone.pt', 'yolov8')
+    model_wrapper = Detector('weights/smoking.pt', 'YOLOv8')
     model_wrapper.process('input/smoke.jpg', 'output/smoke.jpg', 0.2)

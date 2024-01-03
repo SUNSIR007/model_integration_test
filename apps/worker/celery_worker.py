@@ -16,6 +16,7 @@ from apps.utils.box import delete_folders_before_date, get_disk_usage, get_disk_
 from apps.utils.save_alarm import save_alarm
 from apps.worker.celery_app import celery_app
 from apps.database import get_db_session
+from apps.utils.judge import judge_by_classnames
 
 
 def is_within_time_range(start_hour: int, start_minute: int, end_hour: int, end_minute: int):
@@ -186,7 +187,7 @@ def start_video_task(kwg):
                     # 算法调用
                     classnames = yolo_processor.process(input_file, output_file, conf, selected_region,
                                                         intersection_ratio_threshold)
-                    if classnames:
+                    if judge_by_classnames(model_name, classnames):
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
 
                         if return_url:
