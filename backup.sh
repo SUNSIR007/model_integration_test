@@ -5,7 +5,7 @@
 uvicorn apps:app --host 0.0.0.0 --port 3000 &
 
 # 启动Celery
-celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule --autoscale=2,16 -P threads
+celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule -P threads
 
 # 线程池
 # celery -A apps.worker.celery_app worker -l INFO -P threads

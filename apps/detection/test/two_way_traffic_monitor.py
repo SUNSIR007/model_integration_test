@@ -5,7 +5,7 @@ import cvzone
 from deep_sort_realtime.deepsort_tracker import DeepSort
 from ultralytics import YOLO
 
-from ..utils import get_class_color, estimated_speed
+from ..myutils import get_class_color, estimated_speed
 
 cap = cv2.VideoCapture("../input/video.mp4")
 cap.set(cv2.CAP_PROP_FPS, 30)

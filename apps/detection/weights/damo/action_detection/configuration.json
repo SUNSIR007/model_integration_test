@@ -1,0 +1,57 @@
+{
+    "MODEL":{
+        "input_frame": 4,
+        "input_type": "float32",
+        "step":2,
+        "video_length_limit": 10,
+        "size_divisibility": 128,
+        "fpn_strides": [8, 16, 32, 64, 128],
+        "nms_thresh" : 0.3,
+        "pre_nms_top_n" : 100,
+        "fpn_post_nms_top_n" : 10,
+        "pre_nms_thresh" : [0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45, 0.45],
+        "action_names": ["举手", "吃喝", "吸烟", "打电话", "玩手机", "趴桌睡觉", "跌倒", "洗手", "拍照"],
+        "tmp_dir": "/tmp/action/"
+    },
+    "train":
+    {
+        "work_dir": "/tmp/action/train_output",
+        "num_gpus": 1,
+        "max_iter": 50000,
+        "dataloader": {
+            "batch_size_per_gpu": 3,
+            "workers_per_gpu": 0
+        },
+        "optimizer": {
+            "lr": 1e-4,
+            "weight_decay": 0.1
+        },
+        "lr_scheduler": {
+            "warmup_step": 1000
+        },
+        "checkpoint_interval": 10000,
+        "classes_id_map": {
+            "举手": 0,
+            "吃喝": 1,
+            "吸烟": 2,
+            "打电话":3,
+            "玩手机":4,
+            "趴桌睡觉":5,
+            "跌倒":6,
+            "洗手":7,
+            "拍照":8
+        }
+    },
+    "evaluation": {
+        "dataloader": {
+            "batch_size_per_gpu": 16,
+            "workers_per_gpu": 0
+        },
+        "interval": 10000
+    },
+    "framework": "ONNX",
+    "task": "action-detection",
+    "pipeline": {
+        "type": "ResNetC3D-action-detection"
+    }
+}

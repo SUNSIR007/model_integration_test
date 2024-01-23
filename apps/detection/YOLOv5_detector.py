@@ -1,12 +1,13 @@
-import yolov5
+import torch
+
 from PIL import Image, ImageDraw, ImageFont
 
-from apps.detection.utils import is_bbox_partially_inside_region
+from myutils import is_bbox_partially_inside_region
 
 
 class YOLOv5Detector:
     def __init__(self, model_path):
-        self.model = yolov5.load(model_path, 'cpu')
+        self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')
         self.class_names = self.model.names
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5):
@@ -59,4 +60,5 @@ class YOLOv5Detector:
 
 if __name__ == '__main__':
     model = YOLOv5Detector('weights/garbage.pt')
-    model.predict('input/111.jpg', 'output/1.png', 0.5)
+    res = model.predict('input/garbage.jpg', 'output/1.png', 0.2)
+    print(res)

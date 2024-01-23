@@ -3,7 +3,7 @@ from modelscope.utils.constant import Tasks
 from PIL import Image, ImageDraw
 import numpy as np
 
-from apps.detection.utils import is_bbox_partially_inside_region
+from apps.detection.myutils import is_bbox_partially_inside_region
 
 
 class ModelscopeDetector:

@@ -2,7 +2,7 @@ import cv2
 from PIL import Image
 from ultralytics import YOLO
 
-from apps.detection.utils import is_bbox_partially_inside_region
+from apps.detection.myutils import is_bbox_partially_inside_region
 
 
 class YOLOv8Detector:

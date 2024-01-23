@@ -8,7 +8,7 @@ from PIL import Image
 from ultralytics import YOLO
 
 from apps.config import settings
-from apps.detection.utils import is_bbox_partially_inside_region, estimated_speed, get_class_color
+from apps.detection.myutils import is_bbox_partially_inside_region, estimated_speed, get_class_color
 
 
 class TrafficCongestionDetector:
