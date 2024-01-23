@@ -1,6 +1,6 @@
 import math
 
-# from apps.config import settings
+from apps.config import settings
 
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 

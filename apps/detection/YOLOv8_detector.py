@@ -3,6 +3,7 @@ from PIL import Image
 from ultralytics import YOLO
 
 from apps.detection.myutils import is_bbox_partially_inside_region
+from apps.config import settings
 
 
 class YOLOv8Detector:
@@ -10,7 +11,7 @@ class YOLOv8Detector:
         self.model = YOLO(model_path)
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5):
-        result = self.model.predict(source=input_path, conf=conf, device='cpu')
+        result = self.model.predict(source=input_path, conf=conf, device=settings.device)
         processor = ResultProcessor(result)
         processor.save_image(output_path, selected_region, intersection_ratio_threshold)
         json_result = processor.save_json(selected_region, intersection_ratio_threshold)

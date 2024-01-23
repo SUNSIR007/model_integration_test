@@ -25,7 +25,7 @@ class TrafficCongestionDetector:
                 congestion_threshold=settings.congestion_threshold, time_window=settings.time_window, interval=30):
 
         # 追踪模式预测结果
-        results = self.model.track(source=input_path, conf=conf, device='cpu', persist=True)
+        results = self.model.track(source=input_path, conf=conf, device=settings.device, persist=True)
         img = Image.open(input_path)
         img = np.array(img)
 

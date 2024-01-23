@@ -1,6 +1,8 @@
 import cv2
 import torch
 from ultralytics import YOLO
+
+from apps.config import settings
 from apps.detection.myutils import is_bbox_partially_inside_region
 
 
@@ -21,7 +23,7 @@ class SleepDetector:
         return distance_left_ear_to_left_wrist < distance_threshold or distance_right_ear_to_right_wrist < distance_threshold
 
     def predict(self, input_image_path, output_image_path, confidence_threshold=0.5, selected_region=None):
-        results = self.model.predict(source=input_image_path, conf=confidence_threshold)
+        results = self.model.predict(source=input_image_path, conf=confidence_threshold, device=settings.device)
         im = cv2.imread(input_image_path)
         image_height, image_width = im.shape[0], im.shape[1]
 

@@ -4,12 +4,13 @@ from PIL import Image, ImageDraw
 import numpy as np
 
 from apps.detection.myutils import is_bbox_partially_inside_region
+from apps.config import settings
 
 
 class ModelscopeDetector:
     def __init__(self, model_path):
         self.model_id = model_path
-        self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device='cpu')
+        self.detector = pipeline(Tasks.domain_specific_object_detection, model=model_path, device=settings.device)
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5):
         result = self.detector(input_path)

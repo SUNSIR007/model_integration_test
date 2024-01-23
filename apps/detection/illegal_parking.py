@@ -7,6 +7,7 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
+from apps.config import settings
 from apps.detection.myutils import is_bbox_partially_inside_region
 
 
@@ -18,7 +19,7 @@ class IllegalParkingDetector:
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5,
                 min_stay_time=3):
-        results = self.model.track(input_path, persist=True)
+        results = self.model.track(input_path, persist=True, device=settings.device)
         image = Image.open(input_path)
         image = np.array(image)
 

@@ -2,12 +2,13 @@ import torch
 
 from PIL import Image, ImageDraw, ImageFont
 
-from myutils import is_bbox_partially_inside_region
+from apps.detection.myutils import is_bbox_partially_inside_region
+from apps.config import settings
 
 
 class YOLOv5Detector:
     def __init__(self, model_path):
-        self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')
+        self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local', device=settings.device)
         self.class_names = self.model.names
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5):
