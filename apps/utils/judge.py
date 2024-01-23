@@ -23,17 +23,17 @@ def has_vest(classnames):
 
 
 def judge_by_classnames(name, classnames):
-    if name == 'fire.pt':
+    if name == '火焰检测':
         return has_fire(classnames)
-    elif name == 'smoking.pt':
+    elif name == '烟雾检测':
         return has_smoke(classnames)
-    elif name == 'mask.pt':
+    elif name == '佩戴口罩检测':
         return has_mask(classnames)
-    elif name == 'fall.pt':
+    elif name == '跌倒检测':
         return has_fall(classnames)
-    elif name == 'helmet.pt':
+    elif name == '安全帽检测':
         return has_safety_hat(classnames)
-    elif name == 'vest.pt':
+    elif name == '反光衣检测':
         return has_vest(classnames)
     elif classnames is not None:
         return True

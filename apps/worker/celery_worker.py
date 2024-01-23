@@ -219,7 +219,6 @@ def start_video_task(kwg):
 
                     if judge_by_classnames(name, classnames):
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
-                        print("告警保存成功------------------")
 
                         if return_url:
                             if last_upload_time is None or (time.time() - last_upload_time) >= alarm_interval:

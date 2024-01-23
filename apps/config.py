@@ -26,6 +26,7 @@ class ServiceBaseSettings(BaseSettings):
     celery_quene_name: str
     celery_worker_concurrency: int
     celery_worker_max_tasks_per_child: int
+    celery_max_memory_per_child: int
 
     # project path
     proj_dir: str
@@ -56,8 +57,9 @@ class ProdSettings(ServiceBaseSettings):
     # celery config
     celery_broker_url: str = "redis://:byjs666@127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-prod"
-    celery_worker_max_tasks_per_child: int = 32
+    celery_worker_max_tasks_per_child: int = 2
     celery_worker_concurrency: int = 16
+    celery_max_memory_per_child: int = 2048
 
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
@@ -94,8 +96,9 @@ class LocalSettings(ServiceBaseSettings):
 
     celery_broker_url: str = "redis://127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-local"
-    celery_worker_max_tasks_per_child: int = 32
+    celery_worker_max_tasks_per_child: int = 5
     celery_worker_concurrency: int = 2
+    celery_max_memory_per_child: int = 2048
 
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
@@ -123,7 +126,7 @@ class LocalSettings(ServiceBaseSettings):
 
 
 def get_settings() -> ServiceBaseSettings:
-    env_name = environ.get("ENV_NAME", "local")
+    env_name = environ.get("ENV_NAME", "prod")
     settings = {
         "prod": ProdSettings(),
         "local": LocalSettings()
@@ -155,4 +158,6 @@ celery_config = {
     'worker_max_tasks_per_child': settings.celery_worker_max_tasks_per_child,
     # 连接丢失时取消长时间运行的任务
     "worker_cancel_long_running_tasks_on_connection_loss": True,
+    # 最大常驻内存量
+    "max_memory_per_child": settings.celery_max_memory_per_child,
 }

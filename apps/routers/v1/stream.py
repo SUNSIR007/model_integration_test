@@ -1,4 +1,6 @@
 import cv2
+import gc 
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
@@ -27,6 +29,7 @@ def generate_frames(video_url, model):
 
         else:
             break
+        gc.collect()
     cap.release()
 
 
@@ -34,19 +37,20 @@ def generate_frames(video_url, model):
     '/video_feed',
     description="流媒体推理",
 )
-def video_feed(
+async def video_feed(
         camera_id: int,
         algorithm_id: int,
         session: Session = Depends(get_db_session),
-        current_user: Account = Depends(get_current_user)
+        # current_user: Account = Depends(get_current_user)
 ):
-    if not current_user.is_active:
-        raise HTTPException(
-            status_code=403,
-            detail="Access denied",
-        )
+    # if not current_user.is_active:
+    #     raise HTTPException(
+    #         status_code=403,
+    #         detail="Access denied",
+    #     )
 
     model_name = session.query(Algorithm).filter(Algorithm.id == algorithm_id).first().modelName
     video_url = session.query(Camera).filter(Camera.camera_id == camera_id).first().video_url
     model = YOLO(f'apps/detection/weights/{model_name}')
     return StreamingResponse(generate_frames(video_url, model), media_type='multipart/x-mixed-replace; boundary=frame')
+

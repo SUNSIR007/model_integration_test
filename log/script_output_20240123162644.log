@@ -1,0 +1,1545 @@
+2024-01-23 16:27:13,037 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-01-23 16:27:13,037 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-01-23 16:27:13,048 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-01-23 16:27:13,048 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-01-23 16:27:13,655 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+2024-01-23 16:27:13,655 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+INFO:     Started server process [176209]
+INFO:     Waiting for application startup.
+table already exists. Skipping initialization.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://192.168.3.225:3000 (Press CTRL+C to quit)
+ 
+ -------------- celery@dlinano-desktop v5.3.5 (emerald-rush)
+--- ***** ----- 
+-- ******* ---- Linux-5.10.104-tegra-aarch64-with-glibc2.29 2024-01-23 16:27:19
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         __main__:0xffff1a57fee0
+- ** ---------- .> transport:   redis://:**@127.0.0.1:6379/1
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 16 (thread)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> model-integration-tasks-prod exchange=model-integration-tasks-prod(direct) key=model-integration-tasks-prod
+                
+
+[tasks]
+  . apps.worker.celery_worker.clean_folders_task
+  . apps.worker.celery_worker.start_video_task
+
+[2024-01-23 16:27:19,285: INFO/MainProcess] Connected to redis://:**@127.0.0.1:6379/1
+[2024-01-23 16:27:19,296: INFO/Beat] beat: Starting...
+[2024-01-23 16:27:19,316: INFO/MainProcess] mingle: searching for neighbors
+INFO:     192.168.3.91:6569 - "OPTIONS /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6569 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+[2024-01-23 16:27:20,355: INFO/MainProcess] mingle: all alone
+[2024-01-23 16:27:20,566: INFO/MainProcess] celery@dlinano-desktop ready.
+INFO:     192.168.3.91:6569 - "OPTIONS /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6569 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6569 - "OPTIONS /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:24,652: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[bdc572b8-665c-43c2-a855-725cc4b61ad1] received
+[2024-01-23 16:27:24,663: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:25,699: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[87ff93b0-c5fa-46f6-aece-f00f2ece99ea] received
+[2024-01-23 16:27:25,703: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:26,771: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[e0d415cb-3063-47f8-a5eb-b3afa4837f53] received
+[2024-01-23 16:27:26,775: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:27,668: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[b519546c-66b8-444e-89fc-24340df5407c] received
+[2024-01-23 16:27:27,679: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:28,686: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[3fffdd75-9d6b-49e6-95ef-c40c3487193e] received
+[2024-01-23 16:27:28,697: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6570 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:27:29,961: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[0a261656-b3c4-45d0-a62c-fce746a72a38] received
+[2024-01-23 16:27:29,973: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6570 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+WARNING ⚠️ apps/detection/weights/smoking.pt appears to require 'ultralytics.yolo', which is not in ultralytics requirements.
+AutoInstall will run now for 'ultralytics.yolo' but this feature will be removed in the future.
+Recommend fixes are to train a new model using the latest 'ultralytics' package or to run a command with an official YOLOv8 model, i.e. 'yolo predict model=yolov8n.pt'
+[2024-01-23 16:27:32,396: ERROR/MainProcess] Task apps.worker.celery_worker.start_video_task[0a261656-b3c4-45d0-a62c-fce746a72a38] raised unexpected: ModuleNotFoundError("No module named 'ultralytics.yolo'")
+Traceback (most recent call last):
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 634, in torch_safe_load
+    return torch.load(file, map_location="cpu"), file  # load
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 804, in load
+    return _load(opened_zipfile, map_location, pickle_module, **pickle_load_args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 1151, in _load
+    result = unpickler.load()
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 1144, in find_class
+    return super().find_class(mod_name, name)
+ModuleNotFoundError: No module named 'ultralytics.yolo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/celery/app/trace.py", line 477, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/celery/app/trace.py", line 760, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/data/model_integration/apps/worker/celery_worker.py", line 184, in start_video_task
+    detector = YOLOv8Detector(base_dir + str(model_name))
+  File "/data/model_integration/apps/detection/YOLOv8_detector.py", line 11, in __init__
+    self.model = YOLO(model_path)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/engine/model.py", line 96, in __init__
+    self._load(model, task=task)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/engine/model.py", line 162, in _load
+    self.model, self.ckpt = attempt_load_one_weight(weights)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 700, in attempt_load_one_weight
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 655, in torch_safe_load
+    return torch.load(file, map_location="cpu"), file  # load
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 804, in load
+    return _load(opened_zipfile, map_location, pickle_module, **pickle_load_args)
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 1151, in _load
+    result = unpickler.load()
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 1144, in find_class
+    return super().find_class(mod_name, name)
+ModuleNotFoundError: No module named 'ultralytics.yolo'
+INFO:     192.168.3.91:6577 - "OPTIONS /camera HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6578 - "OPTIONS /algorithms/stats HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6579 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6580 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6581 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6582 - "OPTIONS /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6577 - "GET /camera HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6578 - "GET /algorithms/stats HTTP/1.1" 200 OK
+[31m[1mrequirements:[0m Ultralytics requirements ['gitpython>=3.1.30', 'Pillow>=10.0.1', 'setuptools>=65.5.1'] not found, attempting AutoUpdate...
+INFO:     192.168.3.91:6582 - "GET /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6580 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6583 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-54.jpg HTTP/1.1" 404 Not Found
+INFO:     192.168.3.91:6581 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6584 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-53.jpg HTTP/1.1" 404 Not Found
+INFO:     192.168.3.91:6579 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6587 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-47.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6586 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-49.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6585 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-52.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6588 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-50.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6589 - "GET /data/output/2024-01-23/4-2024-01-23_14-27-46.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6590 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-46.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6586 - "GET /data/output/2024-01-23/4-2024-01-23_14-27-45.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6587 - "GET /data/output/2024-01-23/5-2024-01-23_14-27-45.jpg HTTP/1.1" 200 OK
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-31.jpg: 384x640 (no detections), 111.2ms
+Speed: 24.5ms preprocess, 111.2ms inference, 9.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-25.jpg: 384x640 1 Fire, 144.3ms
+Speed: 12.9ms preprocess, 144.3ms inference, 43.3ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-27-28.jpg: 384x640 1 Fall-Detected, 147.6ms
+Speed: 7.2ms preprocess, 147.6ms inference, 38.2ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-31.jpg'
+[2024-01-23 16:27:40,014: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-31.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-26.jpg: 384x640 (no detections), 390.0ms
+Speed: 7.5ms preprocess, 390.0ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:27:40,102: WARNING/MainProcess] 开始上传分析结果-------------------------
+[2024-01-23 16:27:40,125: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:27:40,136: ERROR/MainProcess] [Errno 113] No route to host
+[Errno 113] No route to host
+[2024-01-23 16:27:40,158: ERROR/MainProcess] [Errno 113] No route to host
+[31m[1mrequirements:[0m ❌ AutoUpdate skipped (offline)
+[2024-01-23 16:27:42,451: WARNING/MainProcess] YOLOv5 🚀 2024-1-23 Python-3.8.10 torch-1.14.0a0+44dac51c.nv23.01 CUDA:0 (Xavier, 31011MiB)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:42,835: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-42.jpg: 384x640 1 Fire, 97.4ms
+Speed: 9.5ms preprocess, 97.4ms inference, 9.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-42.jpg: 384x640 (no detections), 76.7ms
+Speed: 19.7ms preprocess, 76.7ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:27:43,236: WARNING/MainProcess] Fusing layers... 
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-42.jpg'
+[2024-01-23 16:27:43,240: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-42.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-43.jpg: 384x640 (no detections), 64.5ms
+Speed: 6.7ms preprocess, 64.5ms inference, 8.3ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-45.jpg: 384x640 1 Fire, 48.9ms
+Speed: 5.9ms preprocess, 48.9ms inference, 9.3ms postprocess per image at shape (1, 3, 384, 640)
+
+[2024-01-23 16:27:45,945: WARNING/MainProcess] YOLOv5s-Garbage summary: 232 layers, 7359792 parameters, 0 gradients
+[2024-01-23 16:27:45,958: WARNING/MainProcess] Adding AutoShape... 
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-45.jpg: 384x640 (no detections), 116.0ms
+Speed: 6.8ms preprocess, 116.0ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-45.jpg'
+[2024-01-23 16:27:46,075: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-45.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-45.jpg: 384x640 (no detections), 92.5ms
+Speed: 27.3ms preprocess, 92.5ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:46,157: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+[2024-01-23 16:27:46,329: ERROR/MainProcess] Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-47.jpg: 384x640 (no detections), 33.4ms
+Speed: 5.8ms preprocess, 33.4ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-47.jpg'
+[2024-01-23 16:27:47,740: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-47.jpg'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:47,880: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-47.jpg: 384x640 1 Fire, 30.1ms
+Speed: 6.9ms preprocess, 30.1ms inference, 5.0ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-47.jpg: 384x640 (no detections), 65.7ms
+Speed: 5.8ms preprocess, 65.7ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-50.jpg: 384x640 (no detections), 211.6ms
+Speed: 90.9ms preprocess, 211.6ms inference, 17.2ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-50.jpg'
+[2024-01-23 16:27:51,165: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-50.jpg'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:51,302: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-50.jpg: 384x640 1 Fire, 179.7ms
+Speed: 9.9ms preprocess, 179.7ms inference, 26.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-51.jpg: 384x640 (no detections), 159.1ms
+Speed: 21.0ms preprocess, 159.1ms inference, 133.4ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-53.jpg: 384x640 (no detections), 100.0ms
+Speed: 45.3ms preprocess, 100.0ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-53.jpg'
+[2024-01-23 16:27:54,099: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-27-53.jpg'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:54,146: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-54.jpg: 384x640 1 Fire, 44.6ms
+Speed: 5.7ms preprocess, 44.6ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-54.jpg: 384x640 (no detections), 191.3ms
+Speed: 9.0ms preprocess, 191.3ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:27:57,304: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-27-57.jpg: 384x640 1 without safety-helmet, 55.5ms
+Speed: 15.6ms preprocess, 55.5ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+
+[2024-01-23 16:27:57,691: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:27:57,725: ERROR/MainProcess] [Errno 113] No route to host
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-27-57.jpg: 384x640 (no detections), 156.5ms
+Speed: 7.4ms preprocess, 156.5ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-27-57.jpg: 384x640 1 Fire, 96.0ms
+Speed: 12.1ms preprocess, 96.0ms inference, 5.0ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:00,198: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-00.jpg: 384x640 (no detections), 150.2ms
+Speed: 6.1ms preprocess, 150.2ms inference, 6.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-00.jpg: 384x640 1 without safety-helmet, 97.5ms
+Speed: 6.5ms preprocess, 97.5ms inference, 14.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-00.jpg: 384x640 1 Fire, 127.9ms
+Speed: 7.3ms preprocess, 127.9ms inference, 10.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:03,052: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-02.jpg: 384x640 1 Fire, 54.0ms
+Speed: 7.8ms preprocess, 54.0ms inference, 12.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-03.jpg: 384x640 1 without safety-helmet, 108.2ms
+Speed: 19.6ms preprocess, 108.2ms inference, 9.3ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-03.jpg: 384x640 (no detections), 201.7ms
+Speed: 10.0ms preprocess, 201.7ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-05.jpg: 384x640 (no detections), 59.8ms
+Speed: 5.5ms preprocess, 59.8ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-05.jpg: 384x640 1 Fire, 38.1ms
+Speed: 5.8ms preprocess, 38.1ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:06,182: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-06.jpg: 384x640 (no detections), 31.2ms
+Speed: 4.9ms preprocess, 31.2ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-08.jpg: 384x640 1 Fire, 141.4ms
+Speed: 153.0ms preprocess, 141.4ms inference, 27.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-08.jpg: 384x640 (no detections), 234.0ms
+Speed: 108.2ms preprocess, 234.0ms inference, 13.4ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:09,263: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-08.jpg: 384x640 (no detections), 130.7ms
+Speed: 10.7ms preprocess, 130.7ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-12.jpg: 384x640 1 Fire, 180.2ms
+Speed: 272.5ms preprocess, 180.2ms inference, 17.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-12.jpg: 384x640 (no detections), 237.7ms
+Speed: 30.8ms preprocess, 237.7ms inference, 7.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-12.jpg: 384x640 (no detections), 286.5ms
+Speed: 111.0ms preprocess, 286.5ms inference, 7.3ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:13,212: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-16.jpg: 384x640 1 Fire, 651.7ms
+Speed: 40.4ms preprocess, 651.7ms inference, 7.4ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-16.jpg: 384x640 (no detections), 160.1ms
+Speed: 21.0ms preprocess, 160.1ms inference, 18.6ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:17,413: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-17.jpg: 384x640 (no detections), 130.0ms
+Speed: 23.5ms preprocess, 130.0ms inference, 6.4ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+[2024-01-23 16:28:17,432: ERROR/MainProcess] Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-19.jpg: 384x640 1 Fire, 103.6ms
+Speed: 37.5ms preprocess, 103.6ms inference, 11.3ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:20,325: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-20.jpg: 384x640 (no detections), 45.5ms
+Speed: 6.5ms preprocess, 45.5ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-20.jpg: 384x640 (no detections), 90.2ms
+Speed: 7.3ms preprocess, 90.2ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-22.jpg: 384x640 1 Fire, 99.3ms
+Speed: 42.0ms preprocess, 99.3ms inference, 11.9ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:23,359: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-23.jpg: 384x640 (no detections), 89.2ms
+Speed: 6.3ms preprocess, 89.2ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-23.jpg: 384x640 (no detections), 28.6ms
+Speed: 5.1ms preprocess, 28.6ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:26,762: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-26.jpg: 384x640 1 Fire, 192.9ms
+Speed: 181.5ms preprocess, 192.9ms inference, 13.3ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-26.jpg: 384x640 (no detections), 209.3ms
+Speed: 10.2ms preprocess, 209.3ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-26.jpg: 384x640 (no detections), 93.0ms
+Speed: 91.4ms preprocess, 93.0ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-29.jpg: 384x640 (no detections), 107.6ms
+Speed: 40.6ms preprocess, 107.6ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-29.jpg: 384x640 1 Fire, 59.1ms
+Speed: 8.7ms preprocess, 59.1ms inference, 8.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-30.jpg: 384x640 (no detections), 110.1ms
+Speed: 8.3ms preprocess, 110.1ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:30,450: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:32,842: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-32.jpg: 384x640 (no detections), 40.3ms
+Speed: 5.1ms preprocess, 40.3ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-32.jpg: 384x640 1 Fire, 34.9ms
+Speed: 5.4ms preprocess, 34.9ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-33.jpg: 384x640 (no detections), 61.8ms
+Speed: 5.6ms preprocess, 61.8ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6665 - "OPTIONS /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6665 - "GET /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6666 - "GET /data/output/2024-01-23/1-2024-01-23_16-28-32.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6668 - "GET /data/output/2024-01-23/1-2024-01-23_16-28-29.jpg HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6667 - "GET /data/output/2024-01-23/5-2024-01-23_16-28-32.jpg HTTP/1.1" 404 Not Found
+INFO:     192.168.3.91:6669 - "GET /data/output/2024-01-23/5-2024-01-23_16-28-29.jpg HTTP/1.1" 404 Not Found
+INFO:     192.168.3.91:6670 - "GET /data/output/2024-01-23/5-2024-01-23_16-28-26.jpg HTTP/1.1" 404 Not Found
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:36,039: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-35.jpg: 384x640 (no detections), 90.2ms
+Speed: 13.1ms preprocess, 90.2ms inference, 5.8ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-35.jpg: 384x640 (no detections), 102.1ms
+Speed: 8.3ms preprocess, 102.1ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-36.jpg: 384x640 1 Fire, 36.2ms
+Speed: 6.5ms preprocess, 36.2ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6665 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-38.jpg: 384x640 1 Fire, 101.4ms
+Speed: 37.2ms preprocess, 101.4ms inference, 13.6ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:39,451: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-39.jpg: 384x640 1 smoke, 112.2ms
+Speed: 6.3ms preprocess, 112.2ms inference, 11.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-39.jpg: 384x640 1 without safety-helmet, 145.2ms
+Speed: 9.0ms preprocess, 145.2ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6665 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:42,631: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-42.jpg: 384x640 1 without safety-helmet, 54.0ms
+Speed: 6.9ms preprocess, 54.0ms inference, 19.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-42.jpg: 384x640 1 smoke, 120.1ms
+Speed: 8.9ms preprocess, 120.1ms inference, 7.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-42.jpg: 384x640 1 Fire, 154.3ms
+Speed: 13.8ms preprocess, 154.3ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:28:43,183: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:28:43,215: ERROR/MainProcess] [Errno 113] No route to host
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6665 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6665 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:28:45,089: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[0a9aa369-aea6-495f-b1fb-6df73db403fd] received
+[2024-01-23 16:28:45,099: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-45.jpg: 384x640 1 smoke, 251.7ms
+Speed: 61.8ms preprocess, 251.7ms inference, 10.7ms postprocess per image at shape (1, 3, 384, 640)
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6665 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+INFO:     192.168.3.91:6665 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:28:45,802: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[23af6ce9-1052-4e3e-a1fc-e076adcb2a31] received
+[2024-01-23 16:28:45,815: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-45.jpg: 384x640 1 without safety-helmet, 276.8ms
+Speed: 12.9ms preprocess, 276.8ms inference, 45.0ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:46,058: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-45.jpg: 384x640 (no detections), 255.9ms
+Speed: 7.3ms preprocess, 255.9ms inference, 16.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-28-45.jpg: 384x640 1 others, 1 work vest, 50.9ms
+Speed: 5.1ms preprocess, 50.9ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6665 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6665 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:28:48,749: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[702c8310-6abe-42fd-91d4-238fd264eaad] received
+[2024-01-23 16:28:48,752: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+
+算法识别任务开始----------------------------
+[2024-01-23 16:28:48,867: WARNING/MainProcess] 开始上传分析结果-------------------------
+[2024-01-23 16:28:48,874: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[d87a4f93-fea0-4f68-84ce-0f9fb586700d] received
+INFO:     192.168.3.91:6665 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:28:48,876: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+[Errno 113] No route to host
+[2024-01-23 16:28:48,900: ERROR/MainProcess] [Errno 113] No route to host
+INFO:     192.168.3.91:6665 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-28-46.jpg: 384x640 (no detections), 359.6ms
+Speed: 18.2ms preprocess, 359.6ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-49.jpg: 384x640 (no detections), 232.7ms
+Speed: 72.6ms preprocess, 232.7ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+[2024-01-23 16:28:50,412: ERROR/MainProcess] Task apps.worker.celery_worker.start_video_task[702c8310-6abe-42fd-91d4-238fd264eaad] raised unexpected: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/celery/app/trace.py", line 477, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/celery/app/trace.py", line 760, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "/data/model_integration/apps/worker/celery_worker.py", line 184, in start_video_task
+    detector = YOLOv8Detector(base_dir + str(model_name))
+  File "/data/model_integration/apps/detection/YOLOv8_detector.py", line 11, in __init__
+    self.model = YOLO(model_path)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/engine/model.py", line 96, in __init__
+    self._load(model, task=task)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/engine/model.py", line 162, in _load
+    self.model, self.ckpt = attempt_load_one_weight(weights)
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 700, in attempt_load_one_weight
+    ckpt, weight = torch_safe_load(weight)  # load ckpt
+  File "/home/dlinano/.local/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 634, in torch_safe_load
+    return torch.load(file, map_location="cpu"), file  # load
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 786, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 270, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/usr/local/lib/python3.8/dist-packages/torch/serialization.py", line 251, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'apps/detection/weights/forklite.pt'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-49.jpg: 384x640 (no detections), 613.6ms
+Speed: 15.6ms preprocess, 613.6ms inference, 20.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-49.jpg: 384x640 (no detections), 699.3ms
+Speed: 24.1ms preprocess, 699.3ms inference, 31.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:51,452: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+[2024-01-23 16:28:51,902: ERROR/MainProcess] Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:52,109: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-52.jpg: 384x640 (no detections), 79.4ms
+Speed: 5.4ms preprocess, 79.4ms inference, 12.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-52.jpg: 384x640 (no detections), 92.1ms
+Speed: 9.4ms preprocess, 92.1ms inference, 10.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:52,277: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-54.jpg: 384x640 (no detections), 40.2ms
+Speed: 7.3ms preprocess, 40.2ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:55,085: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-28-50.jpg: 384x640 1 pothole, 135.3ms
+Speed: 6.6ms preprocess, 135.3ms inference, 31.1ms postprocess per image at shape (1, 3, 384, 640)
+
+算法识别任务开始----------------------------
+INFO:     192.168.3.91:6711 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+[2024-01-23 16:28:55,363: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[a10c83a1-5ab6-447a-9b46-b9f8c086a599] received
+[2024-01-23 16:28:55,368: WARNING/MainProcess] 视频流地址：http://192.168.3.91:18000/flv/live/stream_2.flv
+INFO:     192.168.3.91:6711 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:55,879: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:56,777: WARNING/MainProcess] 开始上传分析结果-------------------------
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-28-55.jpg: 384x640 1 Fire, 1546.1ms
+Speed: 7.6ms preprocess, 1546.1ms inference, 58.5ms postprocess per image at shape (1, 3, 384, 640)
+[Errno 113] No route to host
+[2024-01-23 16:28:56,943: ERROR/MainProcess] [Errno 113] No route to host
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:57,016: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-28-55.jpg: 384x640 (no detections), 1680.5ms
+Speed: 112.0ms preprocess, 1680.5ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:28:57,136: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-28-56.jpg: 384x640 (no detections), 65.4ms
+Speed: 7.7ms preprocess, 65.4ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:01,143: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-00.jpg: 384x640 1 Fire, 108.8ms
+Speed: 7.9ms preprocess, 108.8ms inference, 10.0ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:01,419: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:01,537: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-01.jpg: 384x640 (no detections), 162.0ms
+Speed: 9.4ms preprocess, 162.0ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:01,822: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-01.jpg: 384x640 (no detections), 54.3ms
+Speed: 5.4ms preprocess, 54.3ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-29-01.jpg'
+[2024-01-23 16:29:01,993: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-29-01.jpg'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-28-57.jpg: 256x416 3 Metals, 1 Paper, 128.9ms
+Speed: 5.5ms preprocess, 128.9ms inference, 9.0ms postprocess per image at shape (1, 3, 256, 416)
+
+
+
+
+
+
+[2024-01-23 16:29:07,025: WARNING/MainProcess] 开始上传分析结果-------------------------
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:07,048: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[Errno 113] No route to host
+[2024-01-23 16:29:07,076: ERROR/MainProcess] [Errno 113] No route to host
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:07,274: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:07,275: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-05.jpg: 384x640 (no detections), 1486.8ms
+Speed: 28.4ms preprocess, 1486.8ms inference, 22.2ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-05.jpg: 384x640 1 safety-helmet, 832.1ms
+Speed: 5.5ms preprocess, 832.1ms inference, 43.6ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:07,300: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-06.jpg: 384x640 2 Fires, 257.9ms
+Speed: 340.6ms preprocess, 257.9ms inference, 109.6ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:29:07,502: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:29:07,533: ERROR/MainProcess] [Errno 113] No route to host
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:12,213: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:12,305: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-12.jpg: 384x640 (no detections), 80.9ms
+Speed: 8.1ms preprocess, 80.9ms inference, 3.5ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:12,495: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-12.jpg: 384x640 (no detections), 106.4ms
+Speed: 6.4ms preprocess, 106.4ms inference, 13.1ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:12,726: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:12,756: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-12.jpg: 384x640 (no detections), 36.5ms
+Speed: 5.7ms preprocess, 36.5ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:17,406: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-17.jpg: 384x640 (no detections), 132.0ms
+Speed: 15.9ms preprocess, 132.0ms inference, 14.4ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:17,670: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-17.jpg: 384x640 (no detections), 99.3ms
+Speed: 7.0ms preprocess, 99.3ms inference, 6.0ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:17,842: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-17.jpg: 384x640 (no detections), 71.7ms
+Speed: 6.7ms preprocess, 71.7ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:18,065: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:18,118: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+[2024-01-23 16:29:23,491: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-23.jpg: 384x640 1 Fire, 69.5ms
+Speed: 5.9ms preprocess, 69.5ms inference, 10.3ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-23.jpg: 384x640 (no detections), 219.2ms
+Speed: 14.6ms preprocess, 219.2ms inference, 19.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-23.jpg: 384x640 (no detections), 190.3ms
+Speed: 11.7ms preprocess, 190.3ms inference, 18.6ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:24,132: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:24,209: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:24,337: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:24,352: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+[2024-01-23 16:29:24,398: ERROR/MainProcess] Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+INFO:     192.168.3.91:6760 - "OPTIONS /camera/1/algorithm?algorithmName=%E5%9E%83%E5%9C%BE%E5%88%86%E5%89%B2&cameraAlgorithmld?=11 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6760 - "GET /camera/1/algorithm?algorithmName=%E5%9E%83%E5%9C%BE%E5%88%86%E5%89%B2&cameraAlgorithmld?=11 HTTP/1.1" 200 OK
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:28,328: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-28.jpg: 384x640 (no detections), 113.2ms
+Speed: 12.8ms preprocess, 113.2ms inference, 20.5ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-28.jpg: 384x640 (no detections), 40.7ms
+Speed: 14.3ms preprocess, 40.7ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:28,736: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-28.jpg: 384x640 2 Fires, 99.3ms
+Speed: 7.3ms preprocess, 99.3ms inference, 8.2ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:29,008: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:29,040: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:29,132: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:33,845: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-33.jpg: 384x640 (no detections), 337.8ms
+Speed: 9.4ms preprocess, 337.8ms inference, 18.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:33,998: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:34,136: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:34,242: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-34.jpg: 384x640 (no detections), 92.6ms
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Speed: 9.7ms preprocess, 92.6ms inference, 3.6ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:29:34,304: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-34.jpg: 384x640 2 Fires, 36.5ms
+Speed: 5.9ms preprocess, 36.5ms inference, 5.7ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E8%B7%AF%E9%9D%A2%E5%9D%91%E6%B4%BC%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=10 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E8%B7%AF%E9%9D%A2%E5%9D%91%E6%B4%BC%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=10 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:39,154: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:39,225: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:39,326: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-39.jpg: 384x640 (no detections), 86.9ms
+Speed: 7.0ms preprocess, 86.9ms inference, 3.4ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-39.jpg: 384x640 1 Fire, 47.6ms
+Speed: 11.0ms preprocess, 47.6ms inference, 9.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:39,882: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-39.jpg: 384x640 (no detections), 229.7ms
+Speed: 7.1ms preprocess, 229.7ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-29-39.jpg: 256x416 (no detections), 53.9ms
+Speed: 3.5ms preprocess, 53.9ms inference, 5.6ms postprocess per image at shape (1, 3, 256, 416)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/11-2024-01-23_16-29-39.jpg'
+[2024-01-23 16:29:40,088: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/11-2024-01-23_16-29-39.jpg'
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E5%8F%89%E8%BD%A6%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=9 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E5%8F%89%E8%BD%A6%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=9 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:44,261: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+[2024-01-23 16:29:44,527: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-29-44.jpg: 256x416 1 Metal, 65.1ms
+Speed: 4.0ms preprocess, 65.1ms inference, 10.1ms postprocess per image at shape (1, 3, 256, 416)
+
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E4%BD%A9%E6%88%B4%E5%8F%A3%E7%BD%A9%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=8 HTTP/1.1" 200 OK
+
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E4%BD%A9%E6%88%B4%E5%8F%A3%E7%BD%A9%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=8 HTTP/1.1" 200 OK
+
+
+[2024-01-23 16:29:46,292: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:29:46,389: ERROR/MainProcess] [Errno 113] No route to host
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-44.jpg: 384x640 (no detections), 1636.9ms
+Speed: 9.6ms preprocess, 1636.9ms inference, 37.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:46,493: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-45.jpg: 384x640 (no detections), 286.0ms
+Speed: 48.0ms preprocess, 286.0ms inference, 14.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-45.jpg: 384x640 (no detections), 264.8ms
+Speed: 23.7ms preprocess, 264.8ms inference, 12.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-29-45.jpg: 384x640 (no detections), 261.3ms
+Speed: 47.1ms preprocess, 261.3ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-45.jpg'
+[2024-01-23 16:29:46,700: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-45.jpg'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:46,715: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:46,749: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E5%8F%8D%E5%85%89%E8%A1%A3%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=7 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E5%8F%8D%E5%85%89%E8%A1%A3%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=7 HTTP/1.1" 200 OK
+
+
+
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:52,319: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-51.jpg: 384x640 2 Fires, 382.1ms
+Speed: 47.9ms preprocess, 382.1ms inference, 28.4ms postprocess per image at shape (1, 3, 384, 640)
+
+[2024-01-23 16:29:52,641: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:29:52,678: ERROR/MainProcess] [Errno 113] No route to host
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-51.jpg: 384x640 (no detections), 624.3ms
+Speed: 21.6ms preprocess, 624.3ms inference, 22.3ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-29-52.jpg: 384x640 (no detections), 559.5ms
+Speed: 26.8ms preprocess, 559.5ms inference, 13.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-52.jpg'
+[2024-01-23 16:29:52,787: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-52.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-29-52.jpg: 384x640 (no detections), 411.1ms
+Speed: 17.5ms preprocess, 411.1ms inference, 9.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-52.jpg: 384x640 (no detections), 497.3ms
+Speed: 50.0ms preprocess, 497.3ms inference, 8.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:29:52,861: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-29-52.jpg: 256x416 1 Paper, 617.7ms
+Speed: 15.3ms preprocess, 617.7ms inference, 6.6ms postprocess per image at shape (1, 3, 256, 416)
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E6%8A%BD%E7%83%9F%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=6 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E6%8A%BD%E7%83%9F%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=6 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-29-58.jpg: 384x640 2 Fires, 106.9ms
+Speed: 37.2ms preprocess, 106.9ms inference, 6.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-29-58.jpg: 384x640 (no detections), 256.2ms
+Speed: 8.0ms preprocess, 256.2ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-58.jpg'
+[2024-01-23 16:29:58,612: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-29-58.jpg'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-29-58.jpg: 256x416 1 Paper, 76.9ms
+Speed: 4.3ms preprocess, 76.9ms inference, 16.1ms postprocess per image at shape (1, 3, 256, 416)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-29-58.jpg: 384x640 (no detections), 468.8ms
+Speed: 8.8ms preprocess, 468.8ms inference, 105.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-29-58.jpg: 384x640 (no detections), 634.0ms
+Speed: 6.0ms preprocess, 634.0ms inference, 24.2ms postprocess per image at shape (1, 3, 384, 640)
+
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E5%AE%89%E5%85%A8%E5%B8%BD%E8%AF%86%E5%88%AB&cameraAlgorithmld?=5 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E5%AE%89%E5%85%A8%E5%B8%BD%E8%AF%86%E5%88%AB&cameraAlgorithmld?=5 HTTP/1.1" 200 OK
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-29-58.jpg: 384x640 (no detections), 2342.2ms
+Speed: 32.9ms preprocess, 2342.2ms inference, 11.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:30:01,717: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-29-59.jpg: 384x640 (no detections), 2294.8ms
+Speed: 9.3ms preprocess, 2294.8ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+[2024-01-23 16:30:01,751: ERROR/MainProcess] Error in model predict: '>=' not supported between instances of 'Tensor' and 'NoneType'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-01.jpg: 384x640 (no detections), 37.1ms
+Speed: 7.5ms preprocess, 37.1ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-01.jpg: 384x640 1 Fire, 45.9ms
+Speed: 7.3ms preprocess, 45.9ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-02.jpg: 384x640 (no detections), 75.9ms
+Speed: 20.6ms preprocess, 75.9ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-02.jpg'
+[2024-01-23 16:30:02,406: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-02.jpg'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-02.jpg: 256x416 1 Paper, 83.3ms
+Speed: 3.7ms preprocess, 83.3ms inference, 18.4ms postprocess per image at shape (1, 3, 256, 416)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-02.jpg: 384x640 (no detections), 178.5ms
+Speed: 5.8ms preprocess, 178.5ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E6%8A%BD%E7%83%9F%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=6 HTTP/1.1" 200 OK
+
+INFO:     192.168.3.91:6769 - "OPTIONS /camera/1/algorithm?algorithmName=%E8%B7%8C%E5%80%92%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=4 HTTP/1.1" 200 OK
+
+INFO:     192.168.3.91:6769 - "GET /camera/1/algorithm?algorithmName=%E8%B7%8C%E5%80%92%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=4 HTTP/1.1" 200 OK
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-06.jpg: 384x640 (no detections), 128.6ms
+Speed: 13.9ms preprocess, 128.6ms inference, 14.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-05.jpg: 384x640 (no detections), 248.6ms
+Speed: 15.5ms preprocess, 248.6ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-05.jpg'
+[2024-01-23 16:30:06,408: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-05.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-06.jpg: 384x640 (no detections), 198.9ms
+Speed: 7.1ms preprocess, 198.9ms inference, 7.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-06.jpg: 384x640 (no detections), 133.2ms
+Speed: 18.0ms preprocess, 133.2ms inference, 9.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-06.jpg: 384x640 1 Fire, 69.3ms
+Speed: 6.4ms preprocess, 69.3ms inference, 16.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:30:06,726: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-06.jpg: 384x640 (no detections), 144.9ms
+Speed: 5.8ms preprocess, 144.9ms inference, 3.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6769 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+
+Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+[2024-01-23 16:30:11,084: ERROR/MainProcess] Error in model predict: '<=' not supported between instances of 'int' and 'NoneType'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-10.jpg: 384x640 (no detections), 81.8ms
+Speed: 8.9ms preprocess, 81.8ms inference, 8.3ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-10.jpg'
+[2024-01-23 16:30:11,221: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-10.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-10.jpg: 256x416 2 Metals, 1 Paper, 112.6ms
+Speed: 5.8ms preprocess, 112.6ms inference, 13.1ms postprocess per image at shape (1, 3, 256, 416)
+INFO:     192.168.3.91:6815 - "OPTIONS /camera/1/algorithm?algorithmName=%E5%9E%83%E5%9C%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=3 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E5%9E%83%E5%9C%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=3 HTTP/1.1" 200 OK
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-11.jpg: 384x640 (no detections), 1715.5ms
+Speed: 5.8ms preprocess, 1715.5ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-12.jpg: 384x640 (no detections), 128.7ms
+Speed: 31.5ms preprocess, 128.7ms inference, 13.0ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-11.jpg: 384x640 1 Fire, 634.9ms
+Speed: 36.5ms preprocess, 634.9ms inference, 6.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-11.jpg: 384x640 (no detections), 775.5ms
+Speed: 859.8ms preprocess, 775.5ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-11.jpg'
+[2024-01-23 16:30:13,749: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-11.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-12.jpg: 384x640 (no detections), 243.4ms
+Speed: 7.7ms preprocess, 243.4ms inference, 18.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-13.jpg: 384x640 (no detections), 81.8ms
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-13.jpg: 384x640 (no detections), 75.7ms
+Speed: 12.1ms preprocess, 81.8ms inference, 3.7ms postprocess per image at shape (1, 3, 384, 640)
+Speed: 16.7ms preprocess, 75.7ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-13.jpg'
+[2024-01-23 16:30:13,831: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-13.jpg'
+INFO:     192.168.3.91:6815 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "OPTIONS /camera/1/algorithm?algorithmName=%E7%83%9F%E9%9B%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=2 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E7%83%9F%E9%9B%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=2 HTTP/1.1" 200 OK
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-18.jpg: 384x640 (no detections), 198.2ms
+Speed: 241.9ms preprocess, 198.2ms inference, 27.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-18.jpg: 384x640 1 Fire, 205.7ms
+Speed: 8.9ms preprocess, 205.7ms inference, 37.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-18.jpg: 384x640 (no detections), 324.3ms
+Speed: 108.7ms preprocess, 324.3ms inference, 11.8ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6815 - "OPTIONS /system/auth/permissions HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /system/auth/permissions HTTP/1.1" 200 OK
+
+
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-19.jpg: 384x640 (no detections), 345.5ms
+Speed: 15.3ms preprocess, 345.5ms inference, 15.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-19.jpg'
+[2024-01-23 16:30:19,752: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-19.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-19.jpg: 256x416 1 Paper, 414.3ms
+Speed: 8.3ms preprocess, 414.3ms inference, 29.6ms postprocess per image at shape (1, 3, 256, 416)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-19.jpg: 384x640 (no detections), 194.9ms
+Speed: 22.4ms preprocess, 194.9ms inference, 7.5ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-19.jpg: 384x640 (no detections), 166.3ms
+Speed: 7.1ms preprocess, 166.3ms inference, 13.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-19.jpg: 384x640 1 others, 198.6ms
+Speed: 14.0ms preprocess, 198.6ms inference, 27.0ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-19.jpg'
+[2024-01-23 16:30:19,931: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-19.jpg'
+INFO:     192.168.3.91:6815 - "OPTIONS /camera/1/algorithm?algorithmName=%E7%81%AB%E7%84%B0%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=1 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E7%81%AB%E7%84%B0%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=1 HTTP/1.1" 200 OK
+[2024-01-23 16:30:22,815: WARNING/MainProcess] 开始上传分析结果-------------------------
+[2024-01-23 16:30:22,852: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:30:22,854: ERROR/MainProcess] [Errno 113] No route to host
+[Errno 113] No route to host
+[2024-01-23 16:30:22,888: ERROR/MainProcess] [Errno 113] No route to host
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E7%83%9F%E9%9B%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=2 HTTP/1.1" 200 OK
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-22.jpg: 384x640 (no detections), 153.5ms
+Speed: 50.3ms preprocess, 153.5ms inference, 5.8ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-23.jpg: 384x640 (no detections), 57.1ms
+Speed: 6.4ms preprocess, 57.1ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-23.jpg'
+[2024-01-23 16:30:23,393: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-23.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-23.jpg: 384x640 (no detections), 89.4ms
+Speed: 11.3ms preprocess, 89.4ms inference, 19.2ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-23.jpg: 384x640 (no detections), 61.6ms
+Speed: 6.1ms preprocess, 61.6ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-23.jpg'
+[2024-01-23 16:30:23,730: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-23.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-23.jpg: 384x640 1 Fire, 42.4ms
+Speed: 12.1ms preprocess, 42.4ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E5%9E%83%E5%9C%BE%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=3 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E8%B7%8C%E5%80%92%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=4 HTTP/1.1" 200 OK
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-23.jpg: 384x640 (no detections), 2482.7ms
+Speed: 6.0ms preprocess, 2482.7ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-26.jpg: 384x640 (no detections), 59.6ms
+Speed: 8.3ms preprocess, 59.6ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-26.jpg'
+[2024-01-23 16:30:26,651: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-26.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-26.jpg: 384x640 (no detections), 78.1ms
+Speed: 5.6ms preprocess, 78.1ms inference, 2.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-26.jpg: 384x640 (no detections), 34.7ms
+Speed: 6.0ms preprocess, 34.7ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E5%AE%89%E5%85%A8%E5%B8%BD%E8%AF%86%E5%88%AB&cameraAlgorithmld?=5 HTTP/1.1" 200 OK
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-26.jpg: 384x640 (no detections), 43.5ms
+Speed: 6.1ms preprocess, 43.5ms inference, 2.0ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-26.jpg'
+[2024-01-23 16:30:26,906: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-26.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-26.jpg: 384x640 (no detections), 68.1ms
+Speed: 5.9ms preprocess, 68.1ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-26.jpg: 256x416 2 Papers, 41.4ms
+Speed: 3.8ms preprocess, 41.4ms inference, 5.5ms postprocess per image at shape (1, 3, 256, 416)
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E6%8A%BD%E7%83%9F%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=6 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E5%8F%8D%E5%85%89%E8%A1%A3%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=7 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E4%BD%A9%E6%88%B4%E5%8F%A3%E7%BD%A9%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=8 HTTP/1.1" 200 OK
+
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-30.jpg: 384x640 (no detections), 154.0ms
+Speed: 19.8ms preprocess, 154.0ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-30.jpg: 384x640 1 Fire, 193.2ms
+Speed: 6.4ms preprocess, 193.2ms inference, 30.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-30.jpg: 384x640 (no detections), 179.8ms
+Speed: 8.8ms preprocess, 179.8ms inference, 126.8ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-30.jpg: 384x640 (no detections), 276.3ms
+Speed: 8.8ms preprocess, 276.3ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-30.jpg'
+[2024-01-23 16:30:31,210: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-30.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-31.jpg: 384x640 (no detections), 71.9ms
+Speed: 8.0ms preprocess, 71.9ms inference, 2.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-30.jpg: 384x640 (no detections), 132.4ms
+Speed: 98.9ms preprocess, 132.4ms inference, 9.7ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-31.jpg: 384x640 (no detections), 33.4ms
+Speed: 6.4ms preprocess, 33.4ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-31.jpg'
+[2024-01-23 16:30:31,344: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-31.jpg'
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E5%8F%89%E8%BD%A6%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=9 HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6815 - "GET /camera/1/algorithm?algorithmName=%E8%B7%AF%E9%9D%A2%E5%9D%91%E6%B4%BC%E6%A3%80%E6%B5%8B&cameraAlgorithmld?=10 HTTP/1.1" 200 OK
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-36.jpg: 256x416 1 Paper, 201.4ms
+Speed: 36.0ms preprocess, 201.4ms inference, 8.2ms postprocess per image at shape (1, 3, 256, 416)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-36.jpg: 384x640 (no detections), 171.5ms
+Speed: 13.7ms preprocess, 171.5ms inference, 3.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-36.jpg: 384x640 (no detections), 208.0ms
+Speed: 23.3ms preprocess, 208.0ms inference, 25.2ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-36.jpg: 384x640 (no detections), 711.5ms
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-36.jpg'
+[2024-01-23 16:30:37,409: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-36.jpg'
+Speed: 9.8ms preprocess, 711.5ms inference, 36.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-36.jpg: 384x640 1 Fire, 293.7ms
+Speed: 33.6ms preprocess, 293.7ms inference, 34.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-37.jpg: 384x640 (no detections), 744.8ms
+Speed: 12.9ms preprocess, 744.8ms inference, 17.5ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-37.jpg: 384x640 (no detections), 750.2ms
+Speed: 33.5ms preprocess, 750.2ms inference, 22.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-37.jpg: 384x640 (no detections), 744.4ms
+Speed: 13.4ms preprocess, 744.4ms inference, 28.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-37.jpg'
+[2024-01-23 16:30:38,125: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-37.jpg'
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/3-2024-01-23_16-30-37.jpg'
+[2024-01-23 16:30:38,143: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/3-2024-01-23_16-30-37.jpg'
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-41.jpg: 384x640 (no detections), 132.6ms
+Speed: 339.2ms preprocess, 132.6ms inference, 12.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-41.jpg: 384x640 (no detections), 136.5ms
+Speed: 40.2ms preprocess, 136.5ms inference, 34.8ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-41.jpg'
+[2024-01-23 16:30:42,284: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-41.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-42.jpg: 384x640 (no detections), 109.3ms
+Speed: 6.8ms preprocess, 109.3ms inference, 39.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-41.jpg: 256x416 2 Papers, 321.3ms
+Speed: 6.1ms preprocess, 321.3ms inference, 69.4ms postprocess per image at shape (1, 3, 256, 416)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-42.jpg: 384x640 (no detections), 334.7ms
+Speed: 35.5ms preprocess, 334.7ms inference, 25.2ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-42.jpg: 384x640 (no detections), 2420.6ms
+Speed: 24.0ms preprocess, 2420.6ms inference, 18.3ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-42.jpg: 384x640 (no detections), 2234.4ms
+Speed: 8.8ms preprocess, 2234.4ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-42.jpg: 384x640 (no detections), 1987.7ms
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-42.jpg'
+Speed: 9.0ms preprocess, 1987.7ms inference, 3.2ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:30:44,948: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/5-2024-01-23_16-30-42.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-44.jpg: 384x640 (no detections), 55.3ms
+Speed: 6.7ms preprocess, 55.3ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-44.jpg'
+[2024-01-23 16:30:45,168: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-44.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-45.jpg: 384x640 (no detections), 35.3ms
+Speed: 6.1ms preprocess, 35.3ms inference, 3.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-45.jpg: 384x640 (no detections), 46.9ms
+Speed: 5.9ms preprocess, 46.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-45.jpg: 384x640 (no detections), 28.1ms
+Speed: 6.0ms preprocess, 28.1ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-49.jpg: 384x640 (no detections), 161.3ms
+Speed: 12.9ms preprocess, 161.3ms inference, 12.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-49.jpg: 384x640 1 others, 195.8ms
+Speed: 278.5ms preprocess, 195.8ms inference, 38.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-49.jpg: 256x416 1 Metal, 1 Paper, 493.8ms
+
+Speed: 11.7ms preprocess, 493.8ms inference, 8.5ms postprocess per image at shape (1, 3, 256, 416)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-50.jpg: 384x640 (no detections), 458.7ms
+Speed: 16.8ms preprocess, 458.7ms inference, 18.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-50.jpg: 384x640 (no detections), 353.5ms
+Speed: 13.7ms preprocess, 353.5ms inference, 256.8ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-50.jpg: 384x640 (no detections), 2136.1ms
+Speed: 9.0ms preprocess, 2136.1ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-50.jpg: 384x640 1 without safety-helmet, 2165.0ms
+Speed: 14.5ms preprocess, 2165.0ms inference, 14.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-50.jpg: 384x640 (no detections), 2135.9ms
+Speed: 8.0ms preprocess, 2135.9ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-50.jpg'
+[2024-01-23 16:30:52,922: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-50.jpg'
+[2024-01-23 16:30:52,947: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:30:52,983: ERROR/MainProcess] [Errno 113] No route to host
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-52.jpg: 384x640 (no detections), 78.0ms
+Speed: 8.2ms preprocess, 78.0ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-53.jpg: 384x640 1 others, 31.4ms
+Speed: 5.4ms preprocess, 31.4ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:30:53,343: WARNING/MainProcess] 开始上传分析结果-------------------------
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-53.jpg: 384x640 (no detections), 55.7ms
+Speed: 6.1ms preprocess, 55.7ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+[Errno 113] No route to host
+[2024-01-23 16:30:53,376: ERROR/MainProcess] [Errno 113] No route to host
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-30-57.jpg: 384x640 (no detections), 136.7ms
+Speed: 36.5ms preprocess, 136.7ms inference, 12.3ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-30-58.jpg: 384x640 (no detections), 156.4ms
+Speed: 10.8ms preprocess, 156.4ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-30-58.jpg: 384x640 (no detections), 197.4ms
+Speed: 9.2ms preprocess, 197.4ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-30-58.jpg: 384x640 1 Fire, 57.9ms
+Speed: 5.9ms preprocess, 57.9ms inference, 10.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-30-58.jpg: 384x640 (no detections), 70.0ms
+Speed: 7.0ms preprocess, 70.0ms inference, 87.6ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-58.jpg'
+[2024-01-23 16:30:58,792: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-30-58.jpg'
+[2024-01-23 16:30:58,846: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:30:58,882: ERROR/MainProcess] [Errno 113] No route to host
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-30-58.jpg: 256x416 1 Metal, 87.7ms
+Speed: 11.5ms preprocess, 87.7ms inference, 6.0ms postprocess per image at shape (1, 3, 256, 416)
+
+[2024-01-23 16:31:01,389: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:31:01,422: ERROR/MainProcess] [Errno 113] No route to host
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-30-58.jpg: 384x640 (no detections), 2368.1ms
+Speed: 5.2ms preprocess, 2368.1ms inference, 3.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-30-58.jpg: 384x640 (no detections), 2376.4ms
+Speed: 5.9ms preprocess, 2376.4ms inference, 21.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-01.jpg: 384x640 (no detections), 51.9ms
+
+Speed: 7.1ms preprocess, 51.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-31-01.jpg: 384x640 (no detections), 158.0ms
+Speed: 21.3ms preprocess, 158.0ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-01.jpg'
+[2024-01-23 16:31:02,048: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-01.jpg'
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-01.jpg: 384x640 1 Fire, 112.1ms
+Speed: 7.3ms preprocess, 112.1ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-01.jpg: 384x640 (no detections), 139.5ms
+Speed: 5.8ms preprocess, 139.5ms inference, 7.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-02.jpg: 384x640 (no detections), 64.7ms
+Speed: 5.4ms preprocess, 64.7ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-31-06.jpg: 384x640 (no detections), 100.3ms
+Speed: 40.3ms preprocess, 100.3ms inference, 4.0ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-06.jpg: 384x640 (no detections), 144.1ms
+Speed: 16.0ms preprocess, 144.1ms inference, 5.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-06.jpg: 384x640 (no detections), 92.1ms
+Speed: 6.6ms preprocess, 92.1ms inference, 2.8ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-31-06.jpg: 384x640 (no detections), 97.0ms
+Speed: 24.7ms preprocess, 97.0ms inference, 1.9ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-06.jpg'
+[2024-01-23 16:31:06,966: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-06.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-06.jpg: 384x640 (no detections), 115.6ms
+Speed: 7.3ms preprocess, 115.6ms inference, 15.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-31-06.jpg: 256x416 1 Paper, 86.7ms
+Speed: 29.2ms preprocess, 86.7ms inference, 8.3ms postprocess per image at shape (1, 3, 256, 416)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-31-07.jpg: 384x640 (no detections), 3023.1ms
+Speed: 88.4ms preprocess, 3023.1ms inference, 5.5ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-07.jpg: 384x640 1 Fire, 68.9ms
+Speed: 98.6ms preprocess, 68.9ms inference, 9.9ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-31-10.jpg: 384x640 (no detections), 49.9ms
+Speed: 11.4ms preprocess, 49.9ms inference, 4.8ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-10.jpg: 384x640 (no detections), 109.2ms
+Speed: 10.1ms preprocess, 109.2ms inference, 6.6ms postprocess per image at shape (1, 3, 384, 640)
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-10.jpg: 384x640 (no detections), 85.2ms
+Speed: 7.7ms preprocess, 85.2ms inference, 11.6ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: cannot open resource
+[2024-01-23 16:31:11,053: ERROR/MainProcess] Error in model predict: cannot open resource
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-10.jpg: 384x640 (no detections), 106.1ms
+Speed: 14.6ms preprocess, 106.1ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-31-10.jpg: 384x640 (no detections), 79.2ms
+Speed: 8.5ms preprocess, 79.2ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-10.jpg'
+[2024-01-23 16:31:11,160: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-10.jpg'
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/11-2024-01-23_16-31-15.jpg: 256x416 (no detections), 128.1ms
+Speed: 43.0ms preprocess, 128.1ms inference, 4.4ms postprocess per image at shape (1, 3, 256, 416)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-31-15.jpg: 384x640 (no detections), 76.5ms
+Speed: 8.8ms preprocess, 76.5ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-15.jpg: 384x640 1 Fire, 68.2ms
+Speed: 6.2ms preprocess, 68.2ms inference, 5.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-15.jpg: 384x640 (no detections), 256.9ms
+Speed: 11.2ms preprocess, 256.9ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/10-2024-01-23_16-31-15.jpg: 384x640 (no detections), 89.9ms
+Speed: 25.6ms preprocess, 89.9ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-15.jpg'
+[2024-01-23 16:31:16,117: ERROR/MainProcess] Error in model predict: [Errno 2] No such file or directory: 'static/data/output/2024-01-23/10-2024-01-23_16-31-15.jpg'
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-31-15.jpg: 384x640 (no detections), 77.0ms
+Speed: 9.3ms preprocess, 77.0ms inference, 6.6ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-15.jpg: 384x640 (no detections), 93.8ms
+Speed: 6.1ms preprocess, 93.8ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-16.jpg: 384x640 (no detections), 42.5ms
+Speed: 7.8ms preprocess, 42.5ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:31:20,504: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:20,511: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:20,513: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[a10c83a1-5ab6-447a-9b46-b9f8c086a599] succeeded in 145.1450839249992s: None
+[2024-01-23 16:31:20,571: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[d87a4f93-fea0-4f68-84ce-0f9fb586700d] succeeded in 151.6961350249985s: None
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-20.jpg: 384x640 (no detections), 183.2ms
+Speed: 223.2ms preprocess, 183.2ms inference, 3.0ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-31-20.jpg: 384x640 (no detections), 155.5ms
+Speed: 31.8ms preprocess, 155.5ms inference, 2.5ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-21.jpg: 384x640 (no detections), 123.6ms
+Speed: 21.5ms preprocess, 123.6ms inference, 11.1ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-21.jpg: 384x640 (no detections), 109.0ms
+Speed: 23.2ms preprocess, 109.0ms inference, 10.4ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/8-2024-01-23_16-31-21.jpg: 384x640 (no detections), 46.6ms
+Speed: 5.5ms preprocess, 46.6ms inference, 3.9ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-21.jpg: 384x640 1 Fire, 35.8ms
+Speed: 12.6ms preprocess, 35.8ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:31:22,587: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:22,680: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[23af6ce9-1052-4e3e-a1fc-e076adcb2a31] succeeded in 156.86495441399893s: None
+
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+image 1/1 /data/model_integration/static/data/input/2024-01-23/5-2024-01-23_16-31-22.jpg: 384x640 (no detections), 39.3ms
+Speed: 6.2ms preprocess, 39.3ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-22.jpg: 384x640 (no detections), 47.6ms
+Speed: 6.6ms preprocess, 47.6ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/7-2024-01-23_16-31-22.jpg: 384x640 (no detections), 38.4ms
+Speed: 5.5ms preprocess, 38.4ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-23.jpg: 384x640 (no detections), 59.8ms
+Speed: 5.1ms preprocess, 59.8ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-23.jpg: 384x640 2 Fires, 29.7ms
+Speed: 5.6ms preprocess, 29.7ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:31:24,240: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:24,242: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[0a9aa369-aea6-495f-b1fb-6df73db403fd] succeeded in 159.14290157899813s: None
+[2024-01-23 16:31:24,249: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:24,297: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[3fffdd75-9d6b-49e6-95ef-c40c3487193e] succeeded in 235.60168369700114s: None
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/4-2024-01-23_16-31-24.jpg: 384x640 (no detections), 38.5ms
+Speed: 6.2ms preprocess, 38.5ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/2-2024-01-23_16-31-24.jpg: 384x640 (no detections), 60.2ms
+Speed: 6.7ms preprocess, 60.2ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-24.jpg: 384x640 2 Fires, 27.9ms
+Speed: 5.4ms preprocess, 27.9ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:6941 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:31:26,979: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:26,992: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:27,137: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[87ff93b0-c5fa-46f6-aece-f00f2ece99ea] succeeded in 241.43426767599885s: None
+[2024-01-23 16:31:27,160: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[b519546c-66b8-444e-89fc-24340df5407c] succeeded in 239.48741258399969s: None
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-27.jpg: 384x640 2 Fires, 99.5ms
+Speed: 36.5ms preprocess, 99.5ms inference, 5.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-29.jpg: 384x640 2 Fires, 36.9ms
+Speed: 6.4ms preprocess, 36.9ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-30.jpg: 384x640 1 Fire, 32.8ms
+Speed: 6.3ms preprocess, 32.8ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-32.jpg: 384x640 1 Fire, 30.8ms
+Speed: 7.1ms preprocess, 30.8ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-34.jpg: 384x640 1 Fire, 29.8ms
+Speed: 5.7ms preprocess, 29.8ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-36.jpg: 384x640 1 Fire, 36.9ms
+Speed: 6.2ms preprocess, 36.9ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-38.jpg: 384x640 1 Fire, 37.1ms
+Speed: 5.9ms preprocess, 37.1ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-39.jpg: 384x640 1 Fire, 36.7ms
+Speed: 5.8ms preprocess, 36.7ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:31:41,852: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:31:41,911: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[e0d415cb-3063-47f8-a5eb-b3afa4837f53] succeeded in 255.13636488499833s: None
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-42.jpg: 384x640 1 Fire, 100.4ms
+Speed: 36.0ms preprocess, 100.4ms inference, 5.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-44.jpg: 384x640 1 Fire, 36.6ms
+Speed: 5.9ms preprocess, 36.6ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-45.jpg: 384x640 1 Fire, 37.0ms
+Speed: 5.7ms preprocess, 37.0ms inference, 5.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-47.jpg: 384x640 1 Fire, 37.1ms
+Speed: 5.7ms preprocess, 37.1ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-49.jpg: 384x640 1 Fire, 44.4ms
+Speed: 7.6ms preprocess, 44.4ms inference, 5.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-51.jpg: 384x640 1 Fire, 44.7ms
+Speed: 6.8ms preprocess, 44.7ms inference, 5.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-53.jpg: 384x640 1 Fire, 44.5ms
+Speed: 6.8ms preprocess, 44.5ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-55.jpg: 384x640 1 Fire, 44.5ms
+Speed: 6.6ms preprocess, 44.5ms inference, 5.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-57.jpg: 384x640 1 Fire, 42.7ms
+Speed: 6.5ms preprocess, 42.7ms inference, 7.8ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-31-59.jpg: 384x640 1 Fire, 36.7ms
+Speed: 6.0ms preprocess, 36.7ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+[2024-01-23 16:31:59,393: WARNING/MainProcess] 开始上传分析结果-------------------------
+[Errno 113] No route to host
+[2024-01-23 16:31:59,439: ERROR/MainProcess] [Errno 113] No route to host
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-01.jpg: 384x640 1 Fire, 39.5ms
+Speed: 8.2ms preprocess, 39.5ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-02.jpg: 384x640 1 Fire, 30.1ms
+Speed: 5.9ms preprocess, 30.1ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-04.jpg: 384x640 1 Fire, 31.4ms
+Speed: 6.1ms preprocess, 31.4ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-06.jpg: 384x640 1 Fire, 34.0ms
+Speed: 6.3ms preprocess, 34.0ms inference, 4.9ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-08.jpg: 384x640 1 Fire, 37.0ms
+Speed: 7.0ms preprocess, 37.0ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-10.jpg: 384x640 1 Fire, 36.9ms
+Speed: 6.0ms preprocess, 36.9ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-11.jpg: 384x640 1 Fire, 30.5ms
+Speed: 6.4ms preprocess, 30.5ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-13.jpg: 384x640 1 Fire, 28.1ms
+Speed: 5.4ms preprocess, 28.1ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-15.jpg: 384x640 1 Fire, 34.4ms
+Speed: 7.1ms preprocess, 34.4ms inference, 4.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-17.jpg: 384x640 1 Fire, 29.7ms
+Speed: 6.3ms preprocess, 29.7ms inference, 4.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-18.jpg: 384x640 1 Fire, 30.1ms
+Speed: 5.9ms preprocess, 30.1ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-20.jpg: 384x640 1 Fire, 29.6ms
+Speed: 5.7ms preprocess, 29.6ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-22.jpg: 384x640 (no detections), 37.0ms
+Speed: 6.5ms preprocess, 37.0ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-24.jpg: 384x640 (no detections), 36.6ms
+Speed: 6.2ms preprocess, 36.6ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-25.jpg: 384x640 (no detections), 42.6ms
+Speed: 6.4ms preprocess, 42.6ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-27.jpg: 384x640 (no detections), 36.7ms
+Speed: 5.8ms preprocess, 36.7ms inference, 2.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-29.jpg: 384x640 1 Fire, 36.6ms
+Speed: 6.1ms preprocess, 36.6ms inference, 5.0ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-30.jpg: 384x640 1 Fire, 31.5ms
+Speed: 6.1ms preprocess, 31.5ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-32.jpg: 384x640 1 Fire, 28.3ms
+Speed: 6.2ms preprocess, 28.3ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-34.jpg: 384x640 1 Fire, 30.2ms
+Speed: 5.4ms preprocess, 30.2ms inference, 4.3ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-36.jpg: 384x640 1 Fire, 36.6ms
+Speed: 5.8ms preprocess, 36.6ms inference, 6.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-38.jpg: 384x640 2 Fires, 30.4ms
+Speed: 6.6ms preprocess, 30.4ms inference, 4.1ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-39.jpg: 384x640 2 Fires, 29.3ms
+Speed: 5.9ms preprocess, 29.3ms inference, 4.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-41.jpg: 384x640 2 Fires, 36.6ms
+Speed: 6.6ms preprocess, 36.6ms inference, 4.5ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-43.jpg: 384x640 2 Fires, 36.6ms
+Speed: 6.4ms preprocess, 36.6ms inference, 4.7ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-45.jpg: 384x640 (no detections), 36.2ms
+Speed: 6.1ms preprocess, 36.2ms inference, 2.6ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-46.jpg: 384x640 (no detections), 30.2ms
+Speed: 5.5ms preprocess, 30.2ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-48.jpg: 384x640 (no detections), 33.5ms
+Speed: 6.1ms preprocess, 33.5ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-50.jpg: 384x640 (no detections), 33.4ms
+Speed: 6.1ms preprocess, 33.4ms inference, 2.4ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-51.jpg: 384x640 (no detections), 33.7ms
+Speed: 5.5ms preprocess, 33.7ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-53.jpg: 384x640 (no detections), 30.8ms
+Speed: 6.0ms preprocess, 30.8ms inference, 2.2ms postprocess per image at shape (1, 3, 384, 640)
+
+image 1/1 /data/model_integration/static/data/input/2024-01-23/1-2024-01-23_16-32-55.jpg: 384x640 (no detections), 28.6ms
+Speed: 5.9ms preprocess, 28.6ms inference, 2.1ms postprocess per image at shape (1, 3, 384, 640)
+INFO:     192.168.3.91:7032 - "POST /camera/1/algorithm HTTP/1.1" 200 OK
+INFO:     192.168.3.91:7032 - "GET /camera/1/algorithm HTTP/1.1" 200 OK
+[2024-01-23 16:32:56,604: WARNING/MainProcess] 算法未启用-----------------------------------
+[2024-01-23 16:32:57,104: INFO/MainProcess] Task apps.worker.celery_worker.start_video_task[bdc572b8-665c-43c2-a855-725cc4b61ad1] succeeded in 332.44778263899934s: None
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [176209]
+./backup.sh: line 8: 176210 Killed                  celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule -P threads
