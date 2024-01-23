@@ -53,6 +53,7 @@ class ProdSettings(ServiceBaseSettings):
 
     db_url: str = "sqlite:///model_integration.db"
 
+    # celery config
     celery_broker_url: str = "redis://:byjs666@127.0.0.1/1"
     celery_quene_name: str = "model-integration-tasks-prod"
     celery_worker_max_tasks_per_child: int = 32
@@ -63,14 +64,24 @@ class ProdSettings(ServiceBaseSettings):
 
     device: str = '0'
 
+    # jwt config
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
     jwt_algorithm: str = "HS256"
     jwt_access_token_expire_seconds: int = 300
     jwt_refresh_token_expire_days: int = 30
 
+    # EasyCVR config
     easycvr_url: str = "http://222.88.186.81:23843"
     easycvr_username: str = "easycvr"
     easycvr_password: str = "byjs@2023"
+
+    # 交通拥堵算法参数配置
+    base_ppm: float = 0.5  # 像素比
+    alpha: float = 0.6  # ppm随像素位置的增长率
+    video_fps: int = 30  # 视频帧率
+    congestion_threshold: int = 20  # 车流量阈值
+    time_window: int = 30  # 交通拥堵车流统计周期（秒）
+    average_speed: int = 15  # 车速阈值
 
     class Config:
         env_file = ".env.prod"
@@ -99,6 +110,13 @@ class LocalSettings(ServiceBaseSettings):
     easycvr_url: str = "http://222.88.186.81:23843"
     easycvr_username: str = "easycvr"
     easycvr_password: str = "byjs@2023"
+
+    base_ppm: float = 0.1
+    alpha: float = 0.5
+    video_fps: int = 30
+    congestion_threshold: int = 10
+    time_window: int = 20
+    average_speed: int = 50
 
     class Config:
         env_file = ".env.local"

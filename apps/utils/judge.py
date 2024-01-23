@@ -22,18 +22,20 @@ def has_vest(classnames):
     return "others" in classnames
 
 
-def judge_by_classnames(model_name, classnames):
-    if model_name == 'fire.pt':
+def judge_by_classnames(name, classnames):
+    if name == 'fire.pt':
         return has_fire(classnames)
-    elif model_name == 'smoking.pt':
+    elif name == 'smoking.pt':
         return has_smoke(classnames)
-    elif model_name == 'mask.pt':
+    elif name == 'mask.pt':
         return has_mask(classnames)
-    elif model_name == 'fall.pt':
+    elif name == 'fall.pt':
         return has_fall(classnames)
-    elif model_name == 'helmet.pt':
+    elif name == 'helmet.pt':
         return has_safety_hat(classnames)
-    elif model_name == 'vest.pt':
+    elif name == 'vest.pt':
         return has_vest(classnames)
-    elif len(classnames) != 0:
+    elif classnames is not None:
         return True
+    else:
+        return False

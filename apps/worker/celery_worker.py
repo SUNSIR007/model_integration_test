@@ -1,22 +1,26 @@
 import base64
+import datetime
+import json
 import os
 import time
-import datetime
 
 import cv2
 import httpx
-import numpy as np
 from sqlalchemy.orm import Session
 
 from apps.config import logger, settings
-from apps.detection.infer import Detector
-from apps.models import Box
-from apps.models.camera import CameraAlgorithmAssociation
+from apps.database import get_db_session
+from apps.detection.YOLOv5_detector import YOLOv5Detector
+from apps.detection.YOLOv8_detector import YOLOv8Detector
+from apps.detection.illegal_parking import IllegalParkingDetector
+from apps.detection.modelscope_detector import ModelscopeDetector
+from apps.detection.staff_sleep import SleepDetector
+from apps.detection.traffic_monitor import TrafficCongestionDetector
+from apps.models import Box, CameraAlgorithmAssociation
 from apps.utils.box import delete_folders_before_date, get_disk_usage, get_disk_total
+from apps.utils.judge import judge_by_classnames
 from apps.utils.save_alarm import save_alarm
 from apps.worker.celery_app import celery_app
-from apps.database import get_db_session
-from apps.utils.judge import judge_by_classnames
 
 
 def is_within_time_range(start_hour: int, start_minute: int, end_hour: int, end_minute: int):
@@ -37,8 +41,8 @@ def get_algo_info(session: Session, algorithm_id: int, camera_id: int):
     frequency = algorithm.frameFrequency
     interval = algorithm.alamInterval
     conf = algorithm.conf
-    if algorithm.selected_region is not None:
-        selected_region = np.array(list(map(int, algorithm.selected_region.split(','))))
+    if algorithm.selected_region:
+        selected_region = json.loads(algorithm.selected_region)
     else:
         selected_region = None
     intersection_ratio_threshold = algorithm.intersection_ratio_threshold
@@ -134,7 +138,7 @@ def upload_analyse_result(**kwargs):
     }
 
     try:
-        logger.info("开始上传分析结果-------------------------")
+        print("开始上传分析结果-------------------------")
 
         httpx.post(
             url=kwargs.get('return_url', ''),
@@ -143,7 +147,7 @@ def upload_analyse_result(**kwargs):
             headers=kwargs.get('headers', {})
         )
 
-        logger.info("分析结果上传完成--------------------------")
+        print("分析结果上传完成--------------------------")
 
     except httpx.HTTPError as exc:
         logger.error(exc)
@@ -158,7 +162,7 @@ def start_video_task(kwg):
     name = kwg["alarm_name"]
     model_name = kwg["model_name"]
     session = next(get_db_session())
-    # logger.info(f"视频流地址：{video_url}")
+    print(f"视频流地址：{video_url}")
 
     current_date = datetime.datetime.now().strftime('%Y-%m-%d')
     input_dir = os.path.join(settings.data_dir, "input", current_date)
@@ -167,17 +171,34 @@ def start_video_task(kwg):
     create_directory(output_dir)
     last_upload_time = None
     model_type = kwg['model_type']
-    yolo_processor = Detector('apps/detection/weights/' + str(model_name), model_type)
+    base_dir = 'apps/detection/weights/'
+    if model_type == 'YOLOv8':
+        if name == '人员睡岗':
+            detector = SleepDetector(base_dir + str(model_name))
+        elif name == '违章停车':
+            detector = IllegalParkingDetector(base_dir + str(model_name))
+        elif name == '交通拥堵':
+            detector = TrafficCongestionDetector(base_dir + str(model_name))
+        else:
+            detector = YOLOv8Detector(base_dir + str(model_name))
+    elif model_type == 'YOLOv5':
+        detector = YOLOv5Detector(base_dir + str(model_name))
+    elif model_type == 'modelscope':
+        detector = ModelscopeDetector(base_dir + str(model_name))
+    else:
+        raise ValueError(
+            f"Unsupported model_type: {model_type}. Supported types are 'YOLOv8', 'YOLOv5', and 'modelscope'.")
 
     while True:
         return_url, access_token = get_return(session)
-        status, frequency, interval, conf, selected_region, intersection_ratio_threshold, res = get_algo_info(
+        status, frequency, alarm_interval, conf, selected_region, intersection_ratio_threshold, res = get_algo_info(
             session, algorithm_id, camera_id)
+
         if not status:
-            logger.warn("算法未启用-----------------------------------")
+            print("算法未启用-----------------------------------")
             break
         if not res:
-            logger.warn("当前时间不在分析时段----------------------------")
+            print("当前时间不在分析时段----------------------------")
         else:
             frame = screenshot(video_url)
             if frame is not None:
@@ -186,16 +207,22 @@ def start_video_task(kwg):
                 input_file = os.path.join(input_dir, filename)
                 output_file = os.path.join(output_dir, filename)
                 cv2.imwrite(input_file, frame)
+
                 try:
                     # 算法调用
-                    classnames = yolo_processor.process(input_file, output_file, conf, selected_region,
-                                                        intersection_ratio_threshold)
+                    if name == '交通拥堵':
+                        classnames = detector.predict(input_file, output_file, conf, selected_region,
+                                                      intersection_ratio_threshold, interval=frequency)
+                    else:
+                        classnames = detector.predict(input_file, output_file, conf, selected_region,
+                                                      intersection_ratio_threshold)
 
-                    if judge_by_classnames(model_name, classnames):
+                    if judge_by_classnames(name, classnames):
                         save_alarm(name, model_name, algorithm_id, camera_id, input_file, output_file)
+                        print("告警保存成功------------------")
 
                         if return_url:
-                            if last_upload_time is None or (time.time() - last_upload_time) >= interval:
+                            if last_upload_time is None or (time.time() - last_upload_time) >= alarm_interval:
                                 upload_analyse_result(
                                     **{
                                         'alarmName': name,
@@ -205,6 +232,8 @@ def start_video_task(kwg):
                                     }
                                 )
                                 last_upload_time = time.time()
+                    else:
+                        delete_file(input_file)
 
                 except Exception as e:
                     logger.error(f"Error in model predict: {e}")
