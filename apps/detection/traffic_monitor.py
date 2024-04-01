@@ -98,4 +98,4 @@ class TrafficCongestionDetector:
 
 if __name__ == '__main__':
     model = TrafficCongestionDetector('weights/yolov8n.pt')
-    model.predict('input/parking.png', 'output/traffic_congestion.png', 0.5)
+    model.predict('input/parking.png', 'output/traffic_congestion.png', 0.2)

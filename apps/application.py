@@ -29,7 +29,7 @@ def create_application():
         allow_headers=['*']
     )
     setup_routers(app)
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+    app.mount("../static", StaticFiles(directory="static"), name="static")
     Base.metadata.create_all(bind=engine)
     setup_initializers(app)
 

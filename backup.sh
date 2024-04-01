@@ -2,7 +2,7 @@
 
 
 # 启动FastAPI
-uvicorn apps:app --host 192.168.3.225 --port 3000 &
+uvicorn apps:app --host 172.20.10.3 --port 3000 &
 
 # 启动Celery
 celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule -P threads

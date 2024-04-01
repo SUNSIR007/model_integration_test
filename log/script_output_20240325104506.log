@@ -1,0 +1,211 @@
+2024-03-25 10:45:25,089 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-03-25 10:45:25,089 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-03-25 10:45:25,099 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-03-25 10:45:25,099 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-03-25 10:45:25,329 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+2024-03-25 10:45:25,573 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+INFO:     Started server process [3811]
+INFO:     Waiting for application startup.
+table already exists. Skipping initialization.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://172.20.10.3:3000 (Press CTRL+C to quit)
+ 
+ -------------- celery@dlinano-desktop v5.3.5 (emerald-rush)
+--- ***** ----- 
+-- ******* ---- Linux-5.10.104-tegra-aarch64-with-glibc2.29 2024-03-25 10:45:29
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         __main__:0xffff3227dcd0
+- ** ---------- .> transport:   redis://:**@127.0.0.1:6379/1
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 16 (thread)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> model-integration-tasks-prod exchange=model-integration-tasks-prod(direct) key=model-integration-tasks-prod
+                
+
+[tasks]
+  . apps.worker.celery_worker.clean_folders_task
+  . apps.worker.celery_worker.start_video_task
+
+[2024-03-25 10:45:29,193: INFO/MainProcess] Connected to redis://:**@127.0.0.1:6379/1
+[2024-03-25 10:45:29,206: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-25 10:45:29,211: INFO/Beat] beat: Starting...
+[2024-03-25 10:45:30,240: INFO/MainProcess] mingle: all alone
+[2024-03-25 10:45:30,308: INFO/MainProcess] celery@dlinano-desktop ready.
+INFO:     172.20.10.2:63552 - "OPTIONS /system/auth/permissions HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63552 - "GET /system/auth/permissions HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63552 - "OPTIONS /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63556 - "OPTIONS /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63557 - "OPTIONS /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63557 - "GET /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63556 - "GET /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:63558 - "GET /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64544 - "OPTIONS /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64544 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64544 - "OPTIONS /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64544 - "GET /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64547 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:64549 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:64550 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:64548 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:64551 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:64544 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64723 - "OPTIONS /video/transport HTTP/1.1" 200 OK
+INFO:     172.20.10.2:64723 - "POST /video/transport HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_exceptions.py", line 10, in map_exceptions
+    yield
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_backends/sync.py", line 206, in connect_tcp
+    sock = socket.create_connection(
+  File "/usr/lib/python3.8/socket.py", line 808, in create_connection
+    raise err
+  File "/usr/lib/python3.8/socket.py", line 796, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_transports/default.py", line 66, in map_httpcore_exceptions
+    yield
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_transports/default.py", line 228, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_sync/connection_pool.py", line 268, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_sync/connection_pool.py", line 251, in handle_request
+    response = connection.handle_request(request)
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_sync/connection.py", line 99, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_sync/connection.py", line 76, in handle_request
+    stream = self._connect(request)
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_backends/sync.py", line 213, in connect_tcp
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+  File "/usr/lib/python3.8/contextlib.py", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/usr/local/lib/python3.8/dist-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/usr/local/lib/python3.8/dist-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/fastapi/applications.py", line 1106, in __call__
+    await super().__call__(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/applications.py", line 122, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/errors.py", line 184, in __call__
+    raise exc
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/errors.py", line 162, in __call__
+    await self.app(scope, receive, _send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/exceptions.py", line 79, in __call__
+    raise exc
+  File "/usr/local/lib/python3.8/dist-packages/starlette/middleware/exceptions.py", line 68, in __call__
+    await self.app(scope, receive, sender)
+  File "/usr/local/lib/python3.8/dist-packages/fastapi/middleware/asyncexitstack.py", line 20, in __call__
+    raise e
+  File "/usr/local/lib/python3.8/dist-packages/fastapi/middleware/asyncexitstack.py", line 17, in __call__
+    await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/routing.py", line 718, in __call__
+    await route.handle(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/usr/local/lib/python3.8/dist-packages/starlette/routing.py", line 66, in app
+    response = await func(request)
+  File "/usr/local/lib/python3.8/dist-packages/fastapi/routing.py", line 274, in app
+    raw_response = await run_endpoint_function(
+  File "/usr/local/lib/python3.8/dist-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/data/model_integration/apps/routers/v1/easycvr.py", line 27, in transport_video
+    http_url = convert_rtsp_to_http(**rtsp_info.dict())
+  File "/data/model_integration/apps/utils/easycvr.py", line 129, in convert_rtsp_to_http
+    token = get_access_token()
+  File "/data/model_integration/apps/utils/easycvr.py", line 37, in get_access_token
+    response = make_request(EASYCVR_SERVER_URL + LOGIN_URL, "GET", params=params)
+  File "/data/model_integration/apps/utils/easycvr.py", line 26, in make_request
+    response = client.request(
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_client.py", line 814, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_client.py", line 901, in send
+    response = self._send_handling_auth(
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_client.py", line 929, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_client.py", line 966, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_client.py", line 1002, in _send_single_request
+    response = transport.handle_request(request)
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_transports/default.py", line 228, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/usr/lib/python3.8/contextlib.py", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/usr/local/lib/python3.8/dist-packages/httpx/_transports/default.py", line 83, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 111] Connection refused
+
+Restarting celery worker (/usr/local/bin/celery -A apps.worker.celery_app worker -l INFO -B -s /tmp/celerybeat-schedule -P threads)
+
+worker: Warm shutdown (MainProcess)
+[2024-03-25 11:47:25,672: INFO/MainProcess] beat: Shutting down...
+2024-03-25 11:47:37,104 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-03-25 11:47:37,111 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-03-25 11:47:37,267 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+ 
+ -------------- celery@dlinano-desktop v5.3.5 (emerald-rush)
+--- ***** ----- 
+-- ******* ---- Linux-5.10.104-tegra-aarch64-with-glibc2.29 2024-03-25 11:47:39
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         __main__:0xffff09c8ed60
+- ** ---------- .> transport:   redis://:**@127.0.0.1:6379/1
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 16 (thread)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> model-integration-tasks-prod exchange=model-integration-tasks-prod(direct) key=model-integration-tasks-prod
+                
+
+[tasks]
+  . apps.worker.celery_worker.clean_folders_task
+  . apps.worker.celery_worker.start_video_task
+
+[2024-03-25 11:47:39,740: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2024-03-25 11:47:39,766: INFO/Beat] beat: Starting...
+[2024-03-25 11:47:41,748: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2024-03-25 11:47:45,756: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2024-03-25 11:47:51,766: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2024-03-25 11:47:59,779: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2024-03-25 11:48:09,794: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2024-03-25 11:48:21,811: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2024-03-25 11:48:35,830: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2024-03-25 11:48:51,852: ERROR/MainProcess] consumer: Cannot connect to redis://:**@127.0.0.1:6379/1: Error 111 connecting to 127.0.0.1:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+

@@ -1,0 +1,151 @@
+2024-03-19 11:50:43,342 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-03-19 11:50:43,342 - modelscope - INFO - PyTorch version 1.14.0a0+44dac51c.nv23.1 Found.
+2024-03-19 11:50:43,351 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-03-19 11:50:43,351 - modelscope - INFO - Loading ast index from /home/dlinano/.cache/modelscope/ast_indexer
+2024-03-19 11:50:43,633 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+2024-03-19 11:50:43,824 - modelscope - INFO - Loading done! Current index file version is 1.9.5, with md5 f6ef2b8c5a6004e5d093da50075962cb and a total number of 945 components indexed
+INFO:     Started server process [8223]
+INFO:     Waiting for application startup.
+table already exists. Skipping initialization.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://172.20.10.3:3000 (Press CTRL+C to quit)
+ 
+ -------------- celery@dlinano-desktop v5.3.5 (emerald-rush)
+--- ***** ----- 
+-- ******* ---- Linux-5.10.104-tegra-aarch64-with-glibc2.29 2024-03-19 11:50:47
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         __main__:0xffff3693dd60
+- ** ---------- .> transport:   redis://:**@127.0.0.1:6379/1
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 16 (thread)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> model-integration-tasks-prod exchange=model-integration-tasks-prod(direct) key=model-integration-tasks-prod
+                
+
+[tasks]
+  . apps.worker.celery_worker.clean_folders_task
+  . apps.worker.celery_worker.start_video_task
+
+[2024-03-19 11:50:47,954: INFO/MainProcess] Connected to redis://:**@127.0.0.1:6379/1
+[2024-03-19 11:50:47,964: INFO/MainProcess] mingle: searching for neighbors
+[2024-03-19 11:50:47,970: INFO/Beat] beat: Starting...
+[2024-03-19 11:50:49,004: INFO/MainProcess] mingle: all alone
+[2024-03-19 11:50:49,094: INFO/MainProcess] celery@dlinano-desktop ready.
+INFO:     172.20.10.2:59576 - "OPTIONS /system/auth/permissions HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59576 - "GET /system/auth/permissions HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59576 - "OPTIONS /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59579 - "OPTIONS /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59580 - "OPTIONS /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59580 - "GET /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59581 - "GET /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59579 - "GET /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59588 - "OPTIONS /camera HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59589 - "OPTIONS /algorithms/stats HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59590 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59591 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59592 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59593 - "OPTIONS /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59588 - "GET /camera HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59594 - "GET /algorithms/stats HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59598 - "GET /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59597 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59596 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59595 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59601 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59599 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59603 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59602 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59600 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59604 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59605 - "GET /data/output/2024-01-23/3-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59607 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59608 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59606 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59595 - "OPTIONS /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59595 - "GET /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59610 - "GET /covers/8_mask.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59613 - "GET /covers/3_garbage.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59612 - "GET /covers/2_smoke.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59614 - "GET /covers/4_fall.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59611 - "GET /covers/1_fire.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59609 - "GET /covers/7_1.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59609 - "GET /covers/5_1.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59614 - "GET /covers/6_smoking.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59615 - "OPTIONS /algorithm/page?page_no=2&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59615 - "GET /algorithm/page?page_no=2&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59615 - "GET /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59630 - "OPTIONS /camera?page_no=1&page_size=100&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59631 - "OPTIONS /camera?page_no=1&page_size=4&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59630 - "GET /camera?page_no=1&page_size=100&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59632 - "GET /camera?page_no=1&page_size=4&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59632 - "OPTIONS /camera?page=1&limit=10&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59632 - "GET /camera?page=1&limit=10&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59632 - "OPTIONS /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59681 - "GET /alarms?page_no=1&page_size=5&alarm_type= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59682 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59683 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59684 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59685 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59686 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59688 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59687 - "GET /data/input/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59703 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59702 - "GET /data/input/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59706 - "OPTIONS /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59706 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59732 - "GET /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59731 - "GET /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59733 - "GET /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59733 - "GET /camera HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59731 - "GET /algorithms/stats HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59732 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59744 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59745 - "GET /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59743 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59746 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59747 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59748 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59749 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59750 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59751 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59752 - "GET /data/output/2024-01-23/3-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59753 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59755 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59754 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:59743 - "GET /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59745 - "GET /camera?page_no=1&page_size=4&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59743 - "GET /camera?page_no=1&page_size=100&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59743 - "GET /camera?page=1&limit=10&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:59743 - "GET /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60035 - "GET /box/SystemInfo HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60036 - "GET /box/time HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60034 - "GET /box HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60310 - "OPTIONS /camera HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60311 - "OPTIONS /algorithms/stats HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60312 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60313 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60314 - "OPTIONS /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60315 - "OPTIONS /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60310 - "GET /camera HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60316 - "GET /algorithms/stats HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60313 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60317 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60314 - "POST /alarms/statistics HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60318 - "GET /alarms?page_no=1&page_size=10 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60321 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60324 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60319 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-52.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60320 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-50.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60322 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60323 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-49.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60325 - "GET /data/output/2024-01-23/3-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60326 - "GET /data/output/2024-01-23/12-2024-01-23_17-04-48.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60328 - "GET /data/output/2024-01-23/5-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60327 - "GET /data/output/2024-01-23/10-2024-01-23_17-04-47.jpg HTTP/1.1" 404 Not Found
+INFO:     172.20.10.2:60318 - "OPTIONS /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60318 - "GET /algorithm/page?page_no=1&page_size=8 HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60318 - "OPTIONS /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK
+INFO:     172.20.10.2:60318 - "GET /camera?page=1&limit=5&camera_name= HTTP/1.1" 200 OK

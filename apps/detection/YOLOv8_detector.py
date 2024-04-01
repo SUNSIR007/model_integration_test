@@ -71,3 +71,13 @@ class ResultProcessor:
             result_list_json.append(result_dict)
 
         return result_list_json
+
+
+if __name__ == '__main__':
+    detector = YOLOv8Detector('weights/sibao_v8n.pt')
+    detector.predict(input_path='input/sibao/sibao.jpg',
+                     output_path='output/sibao_out.jpg',
+                     conf=0.5,
+                     selected_region=None,
+                     intersection_ratio_threshold=0.2
+                     )

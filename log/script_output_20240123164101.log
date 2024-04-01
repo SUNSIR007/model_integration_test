@@ -22854,3 +22854,54 @@ INFO:     192.168.3.213:3811 - "POST /alarms/statistics HTTP/1.1" 200 OK
 INFO:     192.168.3.213:3810 - "POST /alarms/statistics HTTP/1.1" 200 OK
 INFO:     192.168.3.213:3812 - "POST /alarms/statistics HTTP/1.1" 200 OK
 INFO:     192.168.3.213:3811 - "POST /alarms/statistics HTTP/1.1" 200 OK
+[2024-01-24 00:00:00,044: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-24 00:00:00,073: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d966f525-ce7f-4993-8826-5d5a2d3f9557] received
+[2024-01-24 00:00:00,083: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d966f525-ce7f-4993-8826-5d5a2d3f9557] succeeded in 0.00710976000118535s: None
+[2024-01-24 04:00:00,029: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-24 04:00:00,042: INFO/MainProcess] Task celery.backend_cleanup[3f49ce23-3b42-47a0-833b-7440169477ab] received
+[2024-01-24 04:00:00,046: INFO/MainProcess] Task celery.backend_cleanup[3f49ce23-3b42-47a0-833b-7440169477ab] succeeded in 0.000610008995863609s: None
+[2024-01-25 00:00:00,057: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-25 00:00:00,067: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[c328883b-bdee-46f4-9c4d-10e109b0845c] received
+[2024-01-25 00:00:00,077: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[c328883b-bdee-46f4-9c4d-10e109b0845c] succeeded in 0.006403346982551739s: None
+[2024-01-25 04:00:00,085: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-25 04:00:00,096: INFO/MainProcess] Task celery.backend_cleanup[872643cb-4149-4e12-b88a-dcdc7bf2757e] received
+[2024-01-25 04:00:00,100: INFO/MainProcess] Task celery.backend_cleanup[872643cb-4149-4e12-b88a-dcdc7bf2757e] succeeded in 0.0006287879950832576s: None
+[2024-01-26 00:00:00,094: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-26 00:00:00,105: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d14ff787-9cf0-4ef7-b6c0-56d2e04c417e] received
+[2024-01-26 00:00:00,114: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d14ff787-9cf0-4ef7-b6c0-56d2e04c417e] succeeded in 0.006008894997648895s: None
+[2024-01-26 04:00:00,094: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-26 04:00:00,103: INFO/MainProcess] Task celery.backend_cleanup[d35e992d-b6ee-4756-a9ab-57ec47f3ade4] received
+[2024-01-26 04:00:00,107: INFO/MainProcess] Task celery.backend_cleanup[d35e992d-b6ee-4756-a9ab-57ec47f3ade4] succeeded in 0.00035178300458937883s: None
+[2024-01-27 00:00:00,059: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-27 00:00:00,071: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d827b65c-1074-4dfb-9d07-ea23aaf5d953] received
+[2024-01-27 00:00:00,080: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d827b65c-1074-4dfb-9d07-ea23aaf5d953] succeeded in 0.0054411820019595325s: None
+[2024-01-27 04:00:00,089: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-27 04:00:00,099: INFO/MainProcess] Task celery.backend_cleanup[ccd3e1bd-68c4-4e70-9345-e4caf6d66957] received
+[2024-01-27 04:00:00,103: INFO/MainProcess] Task celery.backend_cleanup[ccd3e1bd-68c4-4e70-9345-e4caf6d66957] succeeded in 0.0003380000125616789s: None
+[2024-01-28 00:00:00,061: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-28 00:00:00,072: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[275a159c-9f59-4402-8f0d-93f74523d330] received
+[2024-01-28 00:00:00,081: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[275a159c-9f59-4402-8f0d-93f74523d330] succeeded in 0.006106104992795736s: None
+[2024-01-28 04:00:00,094: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-28 04:00:00,104: INFO/MainProcess] Task celery.backend_cleanup[b33c51fb-b2e5-4f36-a0a4-0fe782c54cd6] received
+[2024-01-28 04:00:00,109: INFO/MainProcess] Task celery.backend_cleanup[b33c51fb-b2e5-4f36-a0a4-0fe782c54cd6] succeeded in 0.0005212950054556131s: None
+[2024-01-29 00:00:00,094: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-29 00:00:00,104: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d6408a5e-eb5e-4142-a27c-c241d1a696d8] received
+[2024-01-29 00:00:00,114: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[d6408a5e-eb5e-4142-a27c-c241d1a696d8] succeeded in 0.006000160006806254s: None
+[2024-01-29 04:00:00,080: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-29 04:00:00,090: INFO/MainProcess] Task celery.backend_cleanup[4a15c086-9b04-4f1d-a37a-e180850d3a12] received
+[2024-01-29 04:00:00,094: INFO/MainProcess] Task celery.backend_cleanup[4a15c086-9b04-4f1d-a37a-e180850d3a12] succeeded in 0.00048171600792557s: None
+[2024-01-30 00:00:00,072: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-30 00:00:00,082: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[9f5cdef0-132a-4540-849f-e1e9dc1e5e28] received
+[2024-01-30 00:00:00,091: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[9f5cdef0-132a-4540-849f-e1e9dc1e5e28] succeeded in 0.006311679957434535s: None
+[2024-01-30 04:00:00,048: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-30 04:00:00,058: INFO/MainProcess] Task celery.backend_cleanup[074a7593-0f68-47fe-9346-389ff06ab532] received
+[2024-01-30 04:00:00,062: INFO/MainProcess] Task celery.backend_cleanup[074a7593-0f68-47fe-9346-389ff06ab532] succeeded in 0.00035317009314894676s: None
+[2024-01-31 00:00:00,048: INFO/Beat] Scheduler: Sending due task clean_folders_task (apps.worker.celery_worker.clean_folders_task)
+[2024-01-31 00:00:00,059: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[622872bf-e3b2-44a9-ae06-2d33426d22b0] received
+[2024-01-31 00:00:00,070: INFO/MainProcess] Task apps.worker.celery_worker.clean_folders_task[622872bf-e3b2-44a9-ae06-2d33426d22b0] succeeded in 0.008312184945680201s: None
+[2024-01-31 04:00:00,095: INFO/Beat] Scheduler: Sending due task celery.backend_cleanup (celery.backend_cleanup)
+[2024-01-31 04:00:00,106: INFO/MainProcess] Task celery.backend_cleanup[26ccba3d-bb9e-46ef-96da-84b04662edbe] received
+[2024-01-31 04:00:00,109: INFO/MainProcess] Task celery.backend_cleanup[26ccba3d-bb9e-46ef-96da-84b04662edbe] succeeded in 0.00032519898377358913s: None
+
+worker: Warm shutdown (MainProcess)
+[2024-01-31 08:57:41,430: INFO/MainProcess] beat: Shutting down...

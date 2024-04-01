@@ -5,10 +5,12 @@ from PIL import Image, ImageDraw, ImageFont
 from apps.detection.myutils import is_bbox_partially_inside_region
 from apps.config import settings
 
+import pathlib
+pathlib.WindowsPath = pathlib.PosixPath
 
 class YOLOv5Detector:
     def __init__(self, model_path):
-        self.model = torch.hub.load('apps/detection/yolov5', 'custom', path=model_path, source='local', device=settings.device)
+        self.model = torch.hub.load('yolov5', 'custom', path=model_path, source='local', device=settings.device)
         self.class_names = self.model.names
 
     def predict(self, input_path, output_path, conf, selected_region=None, intersection_ratio_threshold=0.5):
@@ -40,7 +42,8 @@ class YOLOv5Detector:
         image = Image.open(input_path)
         draw = ImageDraw.Draw(image)
         font_size = 30
-        font = ImageFont.truetype("arial.ttf", font_size)
+        #font = ImageFont.truetype("arial.ttf", font_size)
+        font = ImageFont.load_default()
 
         for item in inside_filtered_result:
             bbox = item[:4].cpu().numpy()
@@ -60,6 +63,6 @@ class YOLOv5Detector:
 
 
 if __name__ == '__main__':
-    model = YOLOv5Detector('weights/garbage.pt')
-    res = model.predict('input/garbage.jpg', 'output/1.png', 0.2)
+    model = YOLOv5Detector('weights/sibao.pt')
+    res = model.predict('input/sibao.jpg', 'output/1.png', 0.2)
     print(res)

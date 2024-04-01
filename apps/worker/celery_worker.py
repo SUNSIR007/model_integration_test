@@ -204,7 +204,7 @@ def start_video_task(kwg):
             if frame is not None:
                 current_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
                 filename = f"{algorithm_id}-{current_time}.jpg"
-                input_file = os.path.join(input_dir, filename)
+                input_file = os.path.join(input_dir, filename) #结合input_dir目录和文件名filename来创建完整的输入文件路径input_file。
                 output_file = os.path.join(output_dir, filename)
                 cv2.imwrite(input_file, frame)
 

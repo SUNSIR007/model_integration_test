@@ -2,7 +2,7 @@ import torch
 from ultralytics import YOLO
 
 
-model = YOLO('weights/weeds.pt')
+model = YOLO('weights/sibao_v8n.pt')
 print(model.names)
 
 

@@ -64,7 +64,7 @@ class ProdSettings(ServiceBaseSettings):
     proj_dir: str = PROJ_DIR
     data_dir: str = os.path.join('static/data')
 
-    device: str = '0'
+    device: str = 'cpu'
 
     # jwt config
     jwt_secret_key: str = "e9fccd82cb91f2dc87097ddf78cf6a50"
